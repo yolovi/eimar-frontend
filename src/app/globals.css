@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 :root {
+  /* Sistema de colores EIMAR */
+  --eimar-primary: #000000;
+  --eimar-base: #fffafa;
+  --eimar-accent: #485f50;
+  --eimar-text-primary: #333333;
+  --eimar-text-secondary: #666666;
+
+  /* Variables de Next.js (mantener para compatibilidad) */
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -10,17 +18,39 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-accent: var(--font-playfair);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    /* Ajustar colores EIMAR para modo oscuro */
+    --eimar-accent: #485f50;
+    --eimar-text-primary: #fffafa;
+    --eimar-text-secondary: #a3a3a3;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Estilos base que Tailwind no maneja automáticamente */
+* {
+  box-sizing: border-box;
+}
+
+/* Clases de utilidad personalizadas (si necesitas) */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
