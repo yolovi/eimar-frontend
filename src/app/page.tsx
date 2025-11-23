@@ -1,10 +1,10 @@
-import Logo from '@/components/Logo';
-import { Button } from '@/components/ui';
-
-export default function Home() {
+const Home = () => {
   return (
-    <div className="p-8 space-y-4">
-      <Logo size="lg" className="text-primary mb-8" />
-    </div>
+    <>
+      {/* Slider imágenes menu / local */}
+      <h2>Importar Aquí Slider de imágenes</h2>
+    </>
   );
-}
+};
+
+export default Home;

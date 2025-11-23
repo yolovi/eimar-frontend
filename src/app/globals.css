@@ -1,53 +1,193 @@
 @import "tailwindcss";
 
-:root {
-  /* Sistema de colores EIMAR */
-  --eimar-primary: #000000;
-  --eimar-base: #fffafa;
-  --eimar-accent: #485f50;
-  --eimar-text-primary: #333333;
-  --eimar-text-secondary: #666666;
+/*
+ * ARQUITECTURA DE ESTILOS GLOBALES - EIMAR
+ * =========================================
+ * 
+ * RESPONSABILIDADES:
+ * - globals.css (este archivo): Design tokens, variables semánticas, estilos base
+ * - layout.tsx: Carga optimizada de fuentes con next/font + inyección de variables
+ * 
+ * FLUJO DE INTEGRACIÓN FONTS:
+ * 1. layout.tsx carga fuentes → genera --font-geist-sans, --font-geist-mono, --font-playfair
+ * 2. globals.css consume esas variables → define tipografía semántica
+ * 3. Componentes usan clases Tailwind → font-sans, font-mono, font-accent
+ * 
+ * SISTEMA DE VARIABLES CSS - 3 CAPAS
+ * ===================================
+ * Capa 1: Definiciones base (colores directos) 
+ * Capa 2: Variables semánticas (referencias)
+ * Capa 3: Uso en elementos (siempre variables)
+ */
 
-  /* Variables de Next.js (mantener para compatibilidad) */
-  --background: #ffffff;
-  --foreground: #171717;
+:root {
+  /* ===== CAPA 1: DEFINICIONES BASE ===== */
+  /* Colores primarios EIMAR (valores absolutos) */
+  --eimar-black: #000000;
+  --eimar-white-snow: #fffafa; 
+  --eimar-green: #485f50;
+  --eimar-gray-dark: #333333;
+  --eimar-gray-medium: #666666;
+  --eimar-gray-light: #a3a3a3;
+  
+  /* ===== CAPA 2: VARIABLES SEMÁNTICAS ===== */
+  /* Colores del sistema de diseño (referencias semánticas) */
+  --color-primary: var(--eimar-black);
+  --color-base: var(--eimar-white-snow);
+  --color-accent: var(--eimar-green);
+  
+  /* Sistema de texto */
+  --text-primary: var(--eimar-gray-dark);
+  --text-secondary: var(--eimar-gray-medium);
+  --text-light: var(--eimar-gray-light);
+  --text-inverse: var(--eimar-white-snow);
+  
+  /* Sistema de fondos */
+  --bg-primary: var(--eimar-white-snow);
+  --bg-secondary: var(--eimar-black);
+  --bg-accent: var(--eimar-green);
+  
+  /* Compatibilidad con Next.js */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
+  /* 
+   * INTEGRACIÓN CON VARIABLES DE FUENTES DE NEXT/FONT
+   * ==================================================
+   * 
+   * Estas variables consumen las que genera next/font en layout.tsx:
+   * - --font-geist-sans: viene de geistSans.variable (layout.tsx)
+   * - --font-geist-mono: viene de geistMono.variable (layout.tsx) 
+   * - --font-playfair: viene de playfairDisplay.variable (layout.tsx)
+   * 
+   * ¿Por qué esta separación?
+   * - layout.tsx: carga optimizada + genera variables CSS
+   * - globals.css: consume variables + define tipografía semántica
+   * 
+   * Resultado: mejor rendimiento + design system consistente
+   */
+  
+  /* Variables de color para Tailwind CSS v4 */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-primary: var(--eimar-primary);
-  --color-base: var(--eimar-base);
-  --color-accent: var(--eimar-accent);
-  --font-accent: var(--font-playfair);
+  --color-primary: var(--color-primary);
+  --color-base: var(--color-base);
+  --color-accent: var(--color-accent);
+  
+  /* Variables de fuentes (consumen las de next/font) */
+  --font-sans: var(--font-geist-sans);   /* ← Viene de layout.tsx */
+  --font-mono: var(--font-geist-mono);   /* ← Viene de layout.tsx */
+  --font-accent: var(--font-playfair);   /* ← Viene de layout.tsx */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    /* Ajustar colores EIMAR para modo oscuro */
-    --eimar-accent: #485f50;
-    --eimar-text-primary: #fffafa;
-    --eimar-text-secondary: #a3a3a3;
+    /* 
+     * POLÍTICA: Mantener tema claro siempre para EIMAR
+     * (Para activar modo oscuro, descomentar las líneas de abajo)
+     */
+    
+    /* Forzar tema claro independientemente de la preferencia del sistema */
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    
+    /* 
+     * MODO OSCURO (comentado por ahora)
+     * Descomenta estas líneas si quieres activar modo oscuro:
+     * 
+     * --color-primary: var(--eimar-white-snow);
+     * --color-base: var(--eimar-black);
+     * --text-primary: var(--eimar-white-snow);
+     * --text-secondary: var(--eimar-gray-light);
+     * --bg-primary: var(--eimar-black);
+     * --bg-secondary: var(--eimar-white-snow);
+     * --background: var(--bg-primary);
+     * --foreground: var(--text-primary);
+     */
   }
 }
 
-body {
-  background: var(--eimar-base);
-  color: var(--eimar-text-primary);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+/* ===== CAPA 3: APLICACIÓN EN ELEMENTOS ===== */
+
+/* Elemento raíz - siempre usa variables semánticas */
+html {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Estilos base que Tailwind no maneja automáticamente */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  
+  /* 
+   * TIPOGRAFÍA BASE CON NEXT/FONT
+   * ==============================
+   * 
+   * Aquí consumimos var(--font-geist-sans) que viene de:
+   * layout.tsx → geistSans.variable → inyecta --font-geist-sans al DOM
+   * 
+   * Fallbacks: Arial, Helvetica, sans-serif se usan si Geist no carga
+   * (aunque next/font hace esto muy improbable)
+   */
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  
+  /* Smooth transitions para cambios de tema */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Asegurar consistencia en elementos de Next.js */
+html, body, #__next, #root {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Herencia de colores por defecto */
 * {
+  color: inherit;
   box-sizing: border-box;
 }
 
-/* Clases de utilidad personalizadas */
+/* Elementos de contenido principales */
+main, article, section {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Tipografía consistente */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+p, span, div {
+  color: var(--text-primary);
+}
+
+/* Enlaces con estado hover */
+a {
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--text-primary);
+}
+
+/* Elementos específicos de Next.js - páginas de error */
+div[data-nextjs-container],
+div[data-nextjs-dialog],
+div[data-nextjs-dialog-overlay] {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ===== UTILIDADES Y COMPONENTES PERSONALIZADOS ===== */
+
+/* Clases de utilidad para funcionalidades específicas */
 @layer utilities {
+  /* Ocultar scrollbar manteniendo funcionalidad */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -56,4 +196,34 @@ body {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  
+  /* Utilidades de tema */
+  .theme-light {
+    --bg-primary: var(--eimar-white-snow);
+    --text-primary: var(--eimar-gray-dark);
+  }
+  
+  .theme-dark {
+    --bg-primary: var(--eimar-black);
+    --text-primary: var(--eimar-white-snow);
+  }
+  
+  /* Utilidades de transición */
+  .smooth-theme {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+}
+
+/* ===== COMPONENTES BASE ===== */
+
+/* Focus states accesibles */
+*:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Selección de texto */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--text-inverse);
 }

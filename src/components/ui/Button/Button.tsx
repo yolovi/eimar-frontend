@@ -7,7 +7,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
   secondary: "bg-accent/20 hover:bg-accent text-primary hover:text-white",
   outline: "bg-transparent border-2 text-primary hover:bg-primary hover:text-white",
   ghost: "bg-transparent text-primary hover:bg-accent/20 hover:text-accent border-transparent",
-  destructive: "bg-red-600 hover:bg-red-700 text-white border-red-600",
+  destructive: "bg-red-400 hover:bg-red-700 text-white",
 };
 
 const buttonSizes: Record<ButtonSize, string> = {

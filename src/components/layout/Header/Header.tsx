@@ -1,0 +1,93 @@
+"use client";
+
+import Link from "next/link";
+import Logo from "@/components/Logo";
+import HybridNavigation from "@/components/layout/Navigation/HybridNavigation";
+import { Button } from "@/components/ui";
+import { cn } from "@/lib/utils";
+import { CONTACT_INFO } from "@/constants/contact";
+import MobileMenuToggle from "../Navigation/MobileMenuToggle";
+import DesktopNavigation from "../Navigation/DesktopNavigation";
+
+//TODO: ajustar los iconos del menú hamburguesa y la distribución (añadir fondos, etc)
+
+const Header = () => {
+  return (
+    <header className="bg-base sticky top-0 z-50">
+      {/* Borde inferior gris sin llegar a los extremos */}
+      <div className="relative">
+        <div className="container mx-auto px-4 py-3">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center">
+            {/* Desktop Left: Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="hover:opacity-80 transition-opacity">
+                <Logo size="md" className="text-primary" />
+              </Link>
+            </div>
+
+            {/* Desktop Right: Navegación con espaciado */}
+            <div className="flex items-center flex-1 justify-end ml-12">
+              <DesktopNavigation />
+
+              {/* Actions - Para futura implementación */}
+              {/* <div className="flex items-center gap-3 ml-6">
+                <Button variant="primary" size="sm">
+                  Reservar Mesa
+                </Button>
+              </div> */}
+            </div>
+          </div>
+
+          {/* Mobile Layout */}
+          <div className="md:hidden flex items-center justify-between">
+            {/* Mobile Left: Phone Icon */}
+            <div className="flex-shrink-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2"
+                onClick={() => window.open(CONTACT_INFO.phone.primary.link, '_self')}
+                title={`Llamar: ${CONTACT_INFO.phone.primary.display}`}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-label="Teléfono"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+              </Button>
+            </div>
+
+            {/* Mobile Center: Logo - Link to Home */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="hover:opacity-80 transition-opacity">
+                <Logo size="sm" className="text-primary" />
+              </Link>
+            </div>
+
+            {/* Mobile Right: Menu Toggle */}
+            <div className="flex-shrink-0">
+              <MobileMenuToggle />
+            </div>
+          </div>
+        </div>
+        
+        {/* Borde inferior que no llega a los extremos */}
+        <div className="mx-4">
+          <div className="border-b border-gray-300"></div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
