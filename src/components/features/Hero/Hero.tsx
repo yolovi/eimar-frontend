@@ -48,6 +48,70 @@ const Hero = ({
     full: "h-screen",
   };
 
+  // Componente base para botones del hero
+  const HeroButton = ({ 
+    children, 
+    variant = "secondary",
+    onClick,
+    ...props 
+  }: {
+    children: React.ReactNode;
+    variant?: "primary" | "secondary";
+    onClick?: () => void;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+    const baseClasses = cn(
+      "group w-56 px-8 py-3 rounded-lg font-semibold",
+      "transition-all duration-300 backdrop-blur-sm",
+      "border-2",
+      "hover:scale-105 hover:shadow-xl",
+      "focus:outline-none focus:ring-2"
+    );
+
+    if (variant === "primary") {
+      return (
+        <button
+          className={cn(
+            baseClasses,
+            "border-transparent hover:border-[var(--eimar-white-snow)]",
+            "focus:ring-[var(--eimar-green)]"
+          )}
+          style={{
+            backgroundColor: "var(--eimar-green)",
+            color: "var(--eimar-white-snow)"
+          }}
+          onClick={onClick}
+          {...props}
+        >
+          {children}
+        </button>
+      );
+    }
+
+    return (
+      <button
+        className={cn(
+          baseClasses,
+          "border-[var(--eimar-gray-light)]",
+          "hover:bg-[var(--eimar-white-snow)] hover:border-transparent",
+          "focus:ring-[var(--eimar-white-snow)]"
+        )}
+        style={{
+          color: "var(--eimar-white-snow)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = "var(--eimar-green)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = "var(--eimar-white-snow)";
+        }}
+        onClick={onClick}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  };
+
   return (
     <section
       className={cn(
@@ -116,45 +180,13 @@ const Hero = ({
 
             {/* Botones de acción */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              {/* Botón primario */}
-              <button
-                className={cn(
-                  "group px-8 py-3 rounded-lg font-semibold",
-                  "transition-all duration-300 backdrop-blur-sm",
-                  "border-2 border-transparent",
-                  "hover:scale-105 hover:shadow-xl hover:border-[var(--eimar-white-snow)]",
-                  "focus:outline-none focus:ring-2 focus:ring-[var(--eimar-green)]"
-                )}
-                style={{
-                  backgroundColor: "var(--eimar-green)",
-                  color: "var(--eimar-white-snow)"
-                }}
-              >
+              <HeroButton variant="primary">
                 Ver Nuestra Carta
-              </button>
+              </HeroButton>
               
-              {/* Botón secundario */}
-              <button
-                className={cn(
-                  "group px-8 py-3 rounded-lg font-semibold",
-                  "transition-all duration-300 backdrop-blur-sm",
-                  "border-2 border-[var(--eimar-gray-light)]",
-                  "hover:scale-105 hover:shadow-xl",
-                  "hover:bg-[var(--eimar-white-snow)] hover:border-transparent",
-                  "focus:outline-none focus:ring-2 focus:ring-[var(--eimar-white-snow)]"
-                )}
-                style={{
-                  color: "var(--eimar-white-snow)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "var(--eimar-green)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "var(--eimar-white-snow)";
-                }}
-              >
+              <HeroButton variant="secondary">
                 Reservar Mesa
-              </button>
+              </HeroButton>
             </div>
           </div>
         </div>

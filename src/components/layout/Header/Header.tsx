@@ -70,7 +70,7 @@ const Header = () => {
             {/* Mobile Center: Logo - Link to Home */}
             <div className="flex-shrink-0">
               <Link href="/" className="hover:opacity-80 transition-opacity">
-                <Logo size="sm" className="text-primary" />
+                <Logo size="md" className="text-primary" />
               </Link>
             </div>
 
