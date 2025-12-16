@@ -11,7 +11,7 @@ interface HybridNavigationProps {
 
 const allNavigationItems = [
   // Elemento principal (home/about) - solo para mobile
-  { href: "/", label: "Nuestra Esencia" },
+  // { href: "/", label: "Nuestra Esencia" },
   // Carta con subelementos
   { href: "/nuestra-carta", label: "Nuestra Carta" },
   { href: "/nuestra-carta/almuerzos", label: "Almuerzos", isSubItem: true },

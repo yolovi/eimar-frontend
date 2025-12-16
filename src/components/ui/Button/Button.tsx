@@ -5,8 +5,10 @@ import { ButtonProps, ButtonVariant, ButtonSize } from "./Button.types";
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: "bg-primary hover:bg-accent text-white hover:text-white font-medium",
   secondary: "bg-accent/20 hover:bg-accent text-primary hover:text-white",
-  outline: "bg-transparent border-2 text-primary hover:bg-primary hover:text-white",
-  ghost: "bg-transparent text-primary hover:bg-accent/20 hover:text-accent border-transparent",
+  outline:
+    "bg-transparent border-2 text-primary hover:bg-primary hover:text-white",
+  ghost:
+    "bg-transparent text-primary hover:bg-accent/20 hover:text-accent border-transparent",
   destructive: "bg-red-400 hover:bg-red-700 text-white",
 };
 
@@ -34,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses =
-      "inline-flex items-center justify-center gap-2 rounded-tl-xl rounded-br-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+      "inline-flex items-center justify-center gap-2 rounded-tl-xl rounded-br-xl transition-all duration-200 disabled:pointer-events-none disabled:opacity-50";
 
     return (
       <button
