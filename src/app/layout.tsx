@@ -84,7 +84,7 @@ export default function RootLayout({
         <main className="min-h-screen">
           {children}
         </main>
-        {/* <Footer /> - Cuando lo crees */}
+        {/* <Footer /> - Cuando esté creado */}
       </body>
     </html>
   );

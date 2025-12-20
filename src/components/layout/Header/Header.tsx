@@ -16,7 +16,7 @@ const Header = () => {
     <header className="bg-base sticky top-0 z-50">
       {/* Borde inferior gris sin llegar a los extremos */}
       <div className="relative">
-        <div className="container mx-auto px-4 py-3">
+        <div className="w-full px-4 py-3">
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center">
             {/* Desktop Left: Logo */}
@@ -27,11 +27,11 @@ const Header = () => {
             </div>
 
             {/* Desktop Right: Navegación con espaciado */}
-            <div className="flex items-center flex-1 justify-end ml-12">
+            <div className="flex items-center flex-1 justify-end gap-8">
               <DesktopNavigation />
 
               {/* Actions - Para futura implementación */}
-              {/* <div className="flex items-center gap-3 ml-6">
+              {/* <div className="flex items-center gap-3">
                 <Button variant="primary" size="sm">
                   Reservar Mesa
                 </Button>
@@ -82,7 +82,7 @@ const Header = () => {
         </div>
         
         {/* Borde inferior que no llega a los extremos */}
-        <div className="mx-4">
+        <div className="px-4">
           <div className="border-b border-gray-300"></div>
         </div>
       </div>

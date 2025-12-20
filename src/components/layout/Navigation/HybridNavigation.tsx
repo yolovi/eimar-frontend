@@ -19,7 +19,7 @@ const allNavigationItems = [
   { href: "/nuestra-carta/menus", label: "Menús", isSubItem: true },
   // Resto de navegación
   { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "#contacto", label: "Contacto" },
 ];
 
 const HybridNavigation = ({ variant, className }: HybridNavigationProps) => {

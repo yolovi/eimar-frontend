@@ -1,4 +1,5 @@
 import Hero from "@/components/features/Hero";
+import Contact from "@/components/features/Contact";
 
 const Home = () => {
   return (
@@ -14,6 +15,9 @@ const Home = () => {
       {/* <About /> */}
       {/* <Menu /> */}
       {/* <Gallery /> */}
+      
+      {/* Contact Section */}
+      <Contact />
     </>
   );
 };

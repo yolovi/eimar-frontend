@@ -41,21 +41,25 @@ const BASE_EMAIL_DOMAIN = "restauranteeimar.com";
 
 // 📍 DIRECCIÓN BASE
 const BASE_ADDRESS = {
-  street: "Carrer de Valencia, 123",
+  street: "Carrer Mestre Palau, 98",
   city: "Paiporta", 
   province: "Valencia",
   postalCode: "46200",
   country: "España",
 };
 
-// �️ COORDENADAS BASE
+// 🗺️ COORDENADAS BASE (Paiporta, Valencia - aproximadas)
 const BASE_COORDINATES = {
   lat: 39.4263,
   lng: -0.4179,
 };
 
-// 💬 MENSAJE WHATSAPP BASE
-const BASE_WHATSAPP_MESSAGE = "Hola, me gustaría hacer una consulta sobre el restaurante Eimar";
+// 💬 MENSAJES WHATSAPP BASE
+const BASE_WHATSAPP_MESSAGES = {
+  general: "Hola, me gustaría hacer una consulta sobre el restaurante Eimar",
+  reservation: "Hola, me gustaría hacer una reserva en el restaurante Eimar. ¿Podrían ayudarme?",
+  info: "Hola, me gustaría obtener más información sobre el restaurante Eimar.",
+} as const;
 
 // 🕐 HORARIOS BASE
 const BASE_SCHEDULE = {
@@ -114,10 +118,14 @@ export const CONTACT_INFO = {
     number: formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC),
     display: formatPhoneDisplay(BASE_PHONE_PRIMARY, COUNTRY_CODE_DISPLAY),
     link: createWhatsAppLink(formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC)),
-    message: BASE_WHATSAPP_MESSAGE,
+    messages: BASE_WHATSAPP_MESSAGES,
     linkWithMessage: createWhatsAppLink(
       formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC), 
-      BASE_WHATSAPP_MESSAGE
+      BASE_WHATSAPP_MESSAGES.general
+    ),
+    linkWithReservation: createWhatsAppLink(
+      formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC), 
+      BASE_WHATSAPP_MESSAGES.reservation
     ),
   },
 

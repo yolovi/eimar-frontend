@@ -169,10 +169,19 @@ p, span, div {
 a {
   color: var(--color-accent);
   transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 a:hover {
   color: var(--text-primary);
+}
+
+/* Botones con cursor pointer por defecto */
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
 }
 
 /* Elementos específicos de Next.js - páginas de error */

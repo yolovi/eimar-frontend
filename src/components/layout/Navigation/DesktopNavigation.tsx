@@ -14,7 +14,7 @@ const DesktopNavigation = () => {
 
   const navigationItems = [
     { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
-    { href: "/contacto", label: "Contacto" },
+    { href: "#contacto", label: "Contacto" },
   ];
 
   // Función para manejar el delay del cierre del menú
