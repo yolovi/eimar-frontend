@@ -25,6 +25,32 @@ interface AboutProps {
   className?: string;
 }
 
+// Constantes de contenido para evitar repetición
+const ABOUT_CONTENT = {
+  title: "Hay lugares que no solo se visitan, se sienten.",
+  subtitle: "Eimar es uno de ellos.",
+
+  paragraphs: {
+    opening:
+      "Volvemos con alma nueva, pero con la misma pasión que nos ha unido siempre: la de",
+    openingHighlight: "compartir, saborear y disfrutar.",
+
+    space: "Un espacio acogedor que combina lo",
+    spaceHighlight: "mediterráneo con un toque urbano y fresco.",
+    experience:
+      "Aquí, la comida se saborea, pero también se vive: desde unas tapas con amigos mientras ves el partido, una burger original con sabor casero, hasta un almuerzo de los de siempre o una cena especial al aire libre en nuestra terraza, abierta todo el año.",
+
+    meetingPoint: "Porque más que un restaurante, somos un punto de encuentro.",
+    identity:
+      "Hoy seguimos siendo los de siempre, pero con una nueva identidad centrada en que disfrutes no solo de la comida sino del ambiente.",
+  },
+
+  quote: "Nos alegra verte llegar, y más aún verte volver.",
+
+  welcome: "Bienvenido a",
+  welcomeHighlight: "Eimar.",
+};
+
 const About = ({ className }: AboutProps) => {
   return (
     <section
@@ -54,61 +80,52 @@ const About = ({ className }: AboutProps) => {
             <div className="order-1 space-y-6">
               {/* Título principal */}
               <div className="space-y-4">
-                <h2 className="eimar-section-title">
-                  Hay lugares que no solo se visitan, se sienten.
-                </h2>
+                <h2 className="eimar-section-title">{ABOUT_CONTENT.title}</h2>
 
-                <p className="eimar-subtitle">Eimar es uno de ellos.</p>
+                <p className="eimar-subtitle">{ABOUT_CONTENT.subtitle}</p>
               </div>
 
               {/* Párrafo principal */}
               <div className="space-y-4">
                 <p className="eimar-body-large">
-                  Volvemos con alma nueva, pero con la misma pasión que nos ha
-                  unido siempre: la de{" "}
+                  {ABOUT_CONTENT.paragraphs.opening}{" "}
                   <span
                     className="font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    compartir, saborear y disfrutar.
+                    {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
                 </p>
 
                 <p className="eimar-body-large">
-                  Un espacio acogedor que combina lo{" "}
+                  {ABOUT_CONTENT.paragraphs.space}{" "}
                   <span
                     className="font-semibold"
                     style={{ color: "var(--color-accent)" }}
                   >
-                    mediterráneo con un toque urbano y fresco.
+                    {ABOUT_CONTENT.paragraphs.spaceHighlight}
                   </span>{" "}
-                  Aquí, la comida se saborea, pero también se vive: desde unas
-                  tapas con amigos mientras ves el partido, una burger original
-                  con sabor casero, hasta un almuerzo de los de siempre o una
-                  cena especial al aire libre en nuestra terraza, abierta todo
-                  el año. Porque más que un restaurante, somos un punto de
-                  encuentro.
+                  {ABOUT_CONTENT.paragraphs.experience}{" "}
+                  {ABOUT_CONTENT.paragraphs.meetingPoint}
                 </p>
 
                 <p className="eimar-body-large">
-                  Hoy seguimos siendo los de siempre, pero con una nueva
-                  identidad centrada en que disfrutes no solo de la comida sino
-                  del ambiente.
+                  {ABOUT_CONTENT.paragraphs.identity}
                 </p>
 
                 {/* Frase destacada */}
                 <blockquote className="eimar-quote my-6">
-                  Nos alegra verte llegar, y más aún verte volver.
+                  {ABOUT_CONTENT.quote}
                 </blockquote>
 
                 {/* Bienvenida final */}
                 <p className="eimar-body-large font-medium">
-                  Bienvenido a{" "}
+                  {ABOUT_CONTENT.welcome}{" "}
                   <span
                     className="font-display font-bold text-xl"
                     style={{ color: "var(--color-accent)" }}
                   >
-                    Eimar.
+                    {ABOUT_CONTENT.welcomeHighlight}
                   </span>
                 </p>
               </div>
@@ -119,22 +136,54 @@ const About = ({ className }: AboutProps) => {
         {/* Layout desktop - Título arriba con imagen, texto en columnas abajo */}
         <div className="hidden lg:block">
           {/* Sección superior - Título e imagen */}
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-12">
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-4">
             {/* Título principal */}
             <div className="space-y-4">
-              <h2 className="eimar-section-title">
-                Hay lugares que no solo se visitan, se sienten.
-              </h2>
+              <h2 className="eimar-section-title">{ABOUT_CONTENT.title}</h2>
 
-              <p className="eimar-subtitle">Eimar es uno de ellos.</p>
+              <p className="eimar-subtitle">{ABOUT_CONTENT.subtitle}</p>
+              {/* Imagen del restaurante izquierda*/}
+              <div>
+                <div className="relative h-[400] rounded-lg overflow-hidden shadow-xl">
+                  <Image
+                    src="/images/restaurant/ambiente1.png"
+                    alt="Interior del restaurante Eimar con ambiente acogedor"
+                    fill
+                    className="object-cover"
+                    sizes="50vw"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Imagen del restaurante */}
             <div>
-              <div className="relative h-[400] rounded-lg overflow-hidden shadow-xl">
+              <div className="space-y-4 mt-48">
+                <p className="eimar-body-large">
+                  {ABOUT_CONTENT.paragraphs.opening}{" "}
+                  <span
+                    className="font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {ABOUT_CONTENT.paragraphs.openingHighlight}
+                  </span>
+                </p>
+                <p className="eimar-body-large">
+                  {ABOUT_CONTENT.paragraphs.space}{" "}
+                  <span
+                    className="font-semibold"
+                    style={{ color: "var(--color-accent)" }}
+                  >
+                    {ABOUT_CONTENT.paragraphs.spaceHighlight}
+                  </span>{" "}
+                  {ABOUT_CONTENT.paragraphs.experience}
+                </p>
+              </div>
+              {/* Imagen del restaurante derecha*/}
+              <div className="relative h-[145] rounded-lg overflow-hidden shadow-xl mb-8 mt-8">
                 <Image
-                  src="/images/restaurant/ambiente1.png"
-                  alt="Interior del restaurante Eimar con ambiente acogedor"
+                  src="/images/restaurant/about-1.png"
+                  alt="ensalada"
                   fill
                   className="object-cover"
                   sizes="50vw"
@@ -145,62 +194,26 @@ const About = ({ className }: AboutProps) => {
           </div>
 
           {/* Sección inferior - Contenido en columnas */}
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Columna izquierda */}
-            <div className="space-y-4">
-              <p className="eimar-body-large">
-                Volvemos con alma nueva, pero con la misma pasión que nos ha
-                unido siempre: la de{" "}
-                <span
-                  className="font-semibold"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  compartir, saborear y disfrutar.
-                </span>
-              </p>
-
-              <p className="eimar-body-large">
-                Un espacio acogedor que combina lo{" "}
-                <span
-                  className="font-semibold"
-                  style={{ color: "var(--color-accent)" }}
-                >
-                  mediterráneo con un toque urbano y fresco.
-                </span>{" "}
-                Aquí, la comida se saborea, pero también se vive: desde unas
-                tapas con amigos mientras ves el partido, una burger original
-                con sabor casero, hasta un almuerzo de los de siempre o una cena
-                especial al aire libre en nuestra terraza, abierta todo el año.
-              </p>
-            </div>
-
-            {/* Columna derecha */}
-            <div className="space-y-4">
-              <p className="eimar-body-large">
-                Porque más que un restaurante, somos un punto de encuentro.
-              </p>
-
-              <p className="eimar-body-large">
-                Hoy seguimos siendo los de siempre, pero con una nueva identidad
-                centrada en que disfrutes no solo de la comida sino del
-                ambiente.
-              </p>
-            </div>
+          <div className="space-y-4">
+            <p className="eimar-body-large">
+              {ABOUT_CONTENT.paragraphs.meetingPoint}{" "}
+              {ABOUT_CONTENT.paragraphs.identity}
+            </p>
           </div>
 
           {/* Frase destacada y bienvenida final */}
-          <div className="mt-12 text-center space-y-6">
+          <div className="mt-12 space-y-6">
             <blockquote className="eimar-quote">
-              Nos alegra verte llegar, y más aún verte volver.
+              {ABOUT_CONTENT.quote}
             </blockquote>
 
             <p className="eimar-body-large font-medium">
-              Bienvenido a{" "}
+              {ABOUT_CONTENT.welcome}{" "}
               <span
                 className="font-display font-bold text-xl"
                 style={{ color: "var(--color-accent)" }}
               >
-                Eimar.
+                {ABOUT_CONTENT.welcomeHighlight}
               </span>
             </p>
           </div>
