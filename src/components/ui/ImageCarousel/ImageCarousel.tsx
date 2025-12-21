@@ -102,7 +102,7 @@ const ImageCarousel = ({
             
             {/* Overlay con título si existe */}
             {image.title && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+              <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-4">
                 <h4 
                   className="text-white font-medium text-sm md:text-base"
                   style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}

@@ -3,37 +3,45 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { NAVIGATION_DATA } from "@/constants/navigation";
 
 interface NavigationProps {
   isMobile?: boolean;
+  showSubItems?: boolean;
+  className?: string;
+  onItemClick?: () => void;
 }
 
-// logo Eimar: about -->{ href: "/nuestra-esencia", label: "Eimar" }
-// const eimarAbout = { href: "/nuestra-esencia" }
-
-//TODO: ajustar los enlaces al diseño
-const navigationItems = [
-  { href: "/nuestra-carta", label: "Nuestra Carta" },
-  { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
-  { href: "/contacto", label: "Contacto" },
-];
-
-const Navigation = ({ isMobile = false }: NavigationProps) => {
+const Navigation = ({ isMobile = false, showSubItems = false, className, onItemClick }: NavigationProps) => {
   const pathname = usePathname();
+
+  // Determinar qué elementos mostrar usando datos centralizados
+  const navigationItems = showSubItems 
+    ? NAVIGATION_DATA.all 
+    : NAVIGATION_DATA.all.filter(item => !item.isSubItem);
 
   const linkBaseClasses = "font-accent transition-colors duration-200";
   const linkVariants = {
     desktop: "px-4 py-2 rounded-lg hover:bg-accent/10",
-    mobile: "block px-4 py-3 border-b border-accent/10 last:border-b-0",
+    mobile: "block py-4 hover:bg-accent/5 border-b border-accent/10 last:border-b-0 text-right",
   };
   const linkStates = {
-    active: "text-accent font-semibold",
+    active: "text-accent font-semibold bg-accent/10",
     inactive: "text-primary hover:text-accent",
+  };
+
+  // Función para obtener clases específicas de padding según si es subitem (solo móvil)
+  const getMobilePadding = (item: any) => {
+    return item.isSubItem ? "px-10" : "px-6";
   };
 
   return (
     <nav
-      className={cn("flex", isMobile ? "flex-col" : "items-center space-x-2")}
+      className={cn(
+        "flex", 
+        isMobile ? "flex-col" : "items-center space-x-2",
+        className
+      )}
     >
       {navigationItems.map((item) => {
         const isActive = pathname === item.href;
@@ -45,8 +53,12 @@ const Navigation = ({ isMobile = false }: NavigationProps) => {
             className={cn(
               linkBaseClasses,
               isMobile ? linkVariants.mobile : linkVariants.desktop,
-              isActive ? linkStates.active : linkStates.inactive
+              isMobile && getMobilePadding(item),
+              isActive ? linkStates.active : linkStates.inactive,
+              // Estilo especial para subitems en mobile
+              item.isSubItem && isMobile && "text-sm text-text-secondary"
             )}
+            onClick={onItemClick}
           >
             {item.label}
           </Link>

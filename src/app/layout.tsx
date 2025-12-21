@@ -81,6 +81,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
       >
         <Header />
+        {/* Header contiene el Navbar para que esté presente en todas las páginas */}
         <main className="min-h-screen">
           {children}
         </main>

@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import HybridNavigation from "@/components/layout/Navigation/HybridNavigation";
 import { Button } from "@/components/ui";
-import { cn } from "@/lib/utils";
 import { CONTACT_INFO } from "@/constants/contact";
 import MobileMenuToggle from "../Navigation/MobileMenuToggle";
 import DesktopNavigation from "../Navigation/DesktopNavigation";
@@ -20,8 +18,17 @@ const Header = () => {
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center">
             {/* Desktop Left: Logo */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="hover:opacity-80 transition-opacity">
+            <div className="shrink-0">
+              <Link 
+                href="/" 
+                className="hover:opacity-80 transition-opacity"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  // Limpiar URL y volver a la ruta raíz
+                  window.history.replaceState(null, '', '/');
+                }}
+              >
                 <Logo size="md" className="text-primary" />
               </Link>
             </div>
@@ -30,7 +37,7 @@ const Header = () => {
             <div className="flex items-center flex-1 justify-end gap-8">
               <DesktopNavigation />
 
-              {/* Actions - Para futura implementación */}
+              {/* TODO: Actions - Para futura implementación. Descomentar cuando se implemente */}
               {/* <div className="flex items-center gap-3">
                 <Button variant="primary" size="sm">
                   Reservar Mesa
@@ -42,7 +49,7 @@ const Header = () => {
           {/* Mobile Layout */}
           <div className="md:hidden flex items-center justify-between">
             {/* Mobile Left: Phone Icon */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <Button
                 variant="ghost"
                 size="sm"
@@ -68,14 +75,23 @@ const Header = () => {
             </div>
 
             {/* Mobile Center: Logo - Link to Home */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="hover:opacity-80 transition-opacity">
+            <div className="shrink-0">
+              <Link 
+                href="/" 
+                className="hover:opacity-80 transition-opacity"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  // Limpiar URL y volver a la ruta raíz
+                  window.history.replaceState(null, '', '/');
+                }}
+              >
                 <Logo size="md" className="text-primary" />
               </Link>
             </div>
 
             {/* Mobile Right: Menu Toggle */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <MobileMenuToggle />
             </div>
           </div>

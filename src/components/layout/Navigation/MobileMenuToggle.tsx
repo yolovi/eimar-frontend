@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { useState, useEffect } from "react";
-import HybridNavigation from "./HybridNavigation";
+import Navigation from "./Navigation";
 import { HeroButton } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { CONTACT_INFO } from "@/constants/contact";
@@ -61,10 +60,12 @@ const MobileMenuToggle = () => {
           {/* Slide-in Menu from Right */}
           <div
             className={cn(
-              "fixed right-0 bg-base/90 shadow-2xl z-50 md:hidden",
+              "fixed right-0 bg-base/95 backdrop-blur-sm shadow-2xl z-50 md:hidden",
               "w-62 max-w-[65vw]",
-              "transform transition-transform duration-300 ease-in-out",
-              isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+              "transform transition-all duration-500 ease-out",
+              isMobileMenuOpen 
+                ? "translate-x-0 opacity-100" 
+                : "translate-x-full opacity-0"
             )}
             style={{
               top: "56px", // Justo debajo del navbar (altura aproximada)
@@ -75,9 +76,11 @@ const MobileMenuToggle = () => {
             <div className="flex flex-col h-full">
               {/* Navigation Items con texto a la derecha */}
               <div className="flex-1 py-6">
-                <HybridNavigation
-                  variant="mobile-full"
+                <Navigation
+                  isMobile={true}
+                  showSubItems={true}
                   className="text-right"
+                  onItemClick={() => setIsMobileMenuOpen(false)}
                 />
               </div>
 
@@ -86,7 +89,7 @@ const MobileMenuToggle = () => {
                 <HeroButton
                   variant="secondary"
                   size="sm"
-                  className="flex items-center justify-center gap-2 !text-[var(--eimar-green)]"
+                  className="flex items-center justify-center gap-2 text-(--eimar-green)!"
                   onClick={() => {
                     window.open(CONTACT_INFO.phone.secondary.link, "_self");
                     setIsMobileMenuOpen(false);
@@ -113,7 +116,7 @@ const MobileMenuToggle = () => {
                 <HeroButton 
                   variant="primary" 
                   size="sm"
-                  className="flex items-center justify-center hover:!border-[var(--eimar-green)]"
+                  className="flex items-center justify-center hover:border(--eimar-green)!"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Reservar Mesa

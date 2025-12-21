@@ -205,7 +205,7 @@ const ImageSlider = ({
                   
                   {/* Overlay con título */}
                   {image.title && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+                    <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-3">
                       <p 
                         className="text-white text-sm font-medium"
                         style={{ textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}

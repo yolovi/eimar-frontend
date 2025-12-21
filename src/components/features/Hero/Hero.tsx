@@ -72,7 +72,7 @@ const Hero = ({
         
         {/* Overlay gradient para legibilidad del texto */}
         <div
-          className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/60"
+          className="absolute inset-0 bg-linear-to-b from-black/30 via-black/40 to-black/60"
           aria-hidden="true"
         />
         
@@ -115,14 +115,24 @@ const Hero = ({
               </p>
             )}
 
-            {/* Botones de acción */}
+            {/* Botones de acción - TEMPORALMENTE DESHABILITADOS */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              {/* 
               <HeroButton variant="primary">
                 Ver Nuestra Carta
               </HeroButton>
               
               <HeroButton variant="secondary">
                 Reservar Mesa
+              </HeroButton>
+              */}
+              
+              {/* TODO: Botón temporal mientras se desarrollan las otras secciones. Descomentar el los HeroeButtons anteriores y elimiar el siguiente cuando estén terminadas las acciones */}
+              <HeroButton variant="primary" onClick={() => {
+                const contactSection = document.querySelector('#contacto');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}>
+                Conoce más
               </HeroButton>
             </div>
           </div>

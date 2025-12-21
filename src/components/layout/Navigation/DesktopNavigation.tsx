@@ -1,21 +1,14 @@
-import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { NAVIGATION_DATA } from "@/constants/navigation";
 
 const DesktopNavigation = () => {
   const [isCartaOpen, setIsCartaOpen] = useState(false);
 
-  const cartaItems = [
-    { href: "/nuestra-carta/almuerzos", label: "Almuerzos" },
-    { href: "/nuestra-carta/carta", label: "Carta" },
-    { href: "/nuestra-carta/menus", label: "Menús" },
-  ];
-
-  const navigationItems = [
-    { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
-    { href: "#contacto", label: "Contacto" },
-  ];
+  // Usar datos centralizados
+  const { carta, main: navigationItems } = NAVIGATION_DATA;
+  const cartaItems = carta.subitems;
 
   // Función para manejar el delay del cierre del menú
   const handleCloseDropdown = () => {
@@ -31,7 +24,7 @@ const DesktopNavigation = () => {
         onMouseLeave={handleCloseDropdown}
       >
         <button className="font-accent px-4 py-2 rounded-lg hover:bg-accent/10 text-primary hover:text-accent transition-colors duration-200 flex items-center gap-1">
-          Nuestra Carta
+          {carta.main.label}
           <svg
             className={cn(
               "w-4 h-4 transition-transform duration-200",

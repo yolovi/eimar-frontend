@@ -314,7 +314,10 @@ const Contact = ({ className }: ContactProps) => {
                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                     />
                   </svg>
-                  <p className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                  <p
+                    className="font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     Mascotas
                   </p>
                 </div>
@@ -326,8 +329,9 @@ const Contact = ({ className }: ContactProps) => {
               </div>
             </div>
 
-            {/* Botón de reserva */}
+            {/* Botón de reserva - TEMPORALMENTE DESHABILITADO */}
             <div className="flex justify-center lg:justify-start pt-4">
+              {/* 
               <HeroButton
                 variant="primary"
                 size="md"
@@ -335,6 +339,17 @@ const Contact = ({ className }: ContactProps) => {
                 className="px-8"
               >
                 Reservar Mesa
+              </HeroButton>
+              */}
+
+              {/* TODO: Botón temporal con acción de llamada directa. Descomentar botones anteriores cuando estén preparadas las acciones. Eliminar el siguiente temporal */}
+              <HeroButton
+                variant="primary"
+                size="md"
+                onClick={handlePhoneClick}
+                className="px-8"
+              >
+                💬 Contactar
               </HeroButton>
             </div>
           </div>
