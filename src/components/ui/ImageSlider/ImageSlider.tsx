@@ -19,7 +19,7 @@
 
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -31,11 +31,19 @@ interface SliderImage {
 
 interface ImageSliderProps {
   images: SliderImage[];
+  autoPlay?: boolean;
+  autoPlayInterval?: number;
   className?: string;
 }
 
-const ImageSlider = ({ images, className }: ImageSliderProps) => {
+const ImageSlider = ({ 
+  images, 
+  autoPlay = true,
+  autoPlayInterval = 3000,
+  className 
+}: ImageSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Configuración responsive: imágenes visibles por pantalla
@@ -56,6 +64,23 @@ const ImageSlider = ({ images, className }: ImageSliderProps) => {
 
   const maxIndex = Math.max(0, images.length - getImagesPerView());
 
+  // AutoPlay functionality
+  useEffect(() => {
+    if (!autoPlay || images.length <= getImagesPerView() || isHovered) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => {
+        // Si llegamos al final, volver al inicio
+        if (prev >= maxIndex) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, autoPlayInterval);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, autoPlayInterval, images.length, maxIndex, isHovered]);
+
   const goToPrevious = () => {
     setCurrentIndex(prev => Math.max(0, prev - 1));
   };
@@ -69,7 +94,11 @@ const ImageSlider = ({ images, className }: ImageSliderProps) => {
   }
 
   return (
-    <div className={cn("relative w-full", className)}>
+    <div 
+      className={cn("relative w-full", className)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Contenedor principal */}
       <div className="relative">
         
@@ -131,7 +160,7 @@ const ImageSlider = ({ images, className }: ImageSliderProps) => {
         <div className="overflow-hidden mx-8">
           <div 
             ref={sliderRef}
-            className="flex transition-transform duration-300 ease-in-out gap-4"
+            className="flex transition-transform duration-700 ease-out gap-4"
             style={{
               transform: `translateX(-${currentIndex * (100 / getImagesPerView())}%)`
             }}
