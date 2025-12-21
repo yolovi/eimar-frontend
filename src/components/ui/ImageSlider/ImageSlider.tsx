@@ -44,13 +44,14 @@ const ImageSlider = ({
 }: ImageSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentImagesPerView, setCurrentImagesPerView] = useState(4);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Configuración responsive: imágenes visibles por pantalla
   const imagesPerView = {
     mobile: 1,
-    tablet: 2, 
-    desktop: 3
+    tablet: 3, 
+    desktop: 4
   };
 
   // Calcular cuántas imágenes mostrar según el tamaño de pantalla
@@ -62,11 +63,29 @@ const ImageSlider = ({
     return imagesPerView.desktop;
   };
 
-  const maxIndex = Math.max(0, images.length - getImagesPerView());
+  // Actualizar imagesPerView cuando cambie el tamaño de pantalla
+  useEffect(() => {
+    const updateImagesPerView = () => {
+      const newImagesPerView = getImagesPerView();
+      setCurrentImagesPerView(newImagesPerView);
+      // Resetear index si es necesario
+      setCurrentIndex(prev => {
+        const newMaxIndex = Math.max(0, images.length - newImagesPerView);
+        return Math.min(prev, newMaxIndex);
+      });
+    };
+
+    updateImagesPerView();
+    window.addEventListener('resize', updateImagesPerView);
+    
+    return () => window.removeEventListener('resize', updateImagesPerView);
+  }, [images.length]);
+
+  const maxIndex = Math.max(0, images.length - currentImagesPerView);
 
   // AutoPlay functionality
   useEffect(() => {
-    if (!autoPlay || images.length <= getImagesPerView() || isHovered) return;
+    if (!autoPlay || images.length <= currentImagesPerView || isHovered) return;
 
     const interval = setInterval(() => {
       setCurrentIndex(prev => {
@@ -79,7 +98,7 @@ const ImageSlider = ({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, images.length, maxIndex, isHovered]);
+  }, [autoPlay, autoPlayInterval, images.length, maxIndex, isHovered, currentImagesPerView]);
 
   const goToPrevious = () => {
     setCurrentIndex(prev => Math.max(0, prev - 1));
@@ -106,15 +125,15 @@ const ImageSlider = ({
         {currentIndex > 0 && (
           <button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg p-3 rounded-full transition-all duration-200"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white/35 hover:bg-white/90 shadow-lg hover:shadow-xl p-2 md:p-3 rounded-full transition-all duration-200"
             style={{ 
               color: "var(--color-accent)",
-              border: "1px solid var(--eimar-gray-light)"
+              border: "1px solid transparent"
             }}
             aria-label="Imágenes anteriores"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4 md:w-5 md:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -133,15 +152,15 @@ const ImageSlider = ({
         {currentIndex < maxIndex && (
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg p-3 rounded-full transition-all duration-200"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/35 hover:bg-white/90 shadow-lg hover:shadow-xl p-2 md:p-3 rounded-full transition-all duration-200"
             style={{ 
               color: "var(--color-accent)",
-              border: "1px solid var(--eimar-gray-light)"
+              border: "1px solid transparent"
             }}
             aria-label="Siguientes imágenes"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4 md:w-5 md:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -157,26 +176,31 @@ const ImageSlider = ({
         )}
 
         {/* Contenedor de imágenes */}
-        <div className="overflow-hidden mx-8">
+        <div className="overflow-hidden">
           <div 
             ref={sliderRef}
             className="flex transition-transform duration-700 ease-out gap-4"
             style={{
-              transform: `translateX(-${currentIndex * (100 / getImagesPerView())}%)`
+              transform: `translateX(-${currentIndex * (100 / currentImagesPerView)}%)`
             }}
           >
-            {images.map((image, index) => (
-              <div
-                key={`${image.src}-${index}`}
-                className="flex-none w-full md:w-1/2 lg:w-1/3"
-              >
+            {images.map((image, index) => {
+              // Calcular ancho dinámicamente
+              const widthPercentage = 100 / currentImagesPerView;
+              
+              return (
+                <div
+                  key={`${image.src}-${index}`}
+                  className="flex-none"
+                  style={{ width: `${widthPercentage}%` }}
+                >
                 <div className="relative h-[200px] md:h-[250px] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                   />
                   
                   {/* Overlay con título */}
@@ -191,14 +215,15 @@ const ImageSlider = ({
                     </div>
                   )}
                 </div>
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
       {/* Indicadores de posición */}
-      {images.length > getImagesPerView() && (
+      {images.length > currentImagesPerView && (
         <div className="flex justify-center mt-4 gap-2">
           {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <button

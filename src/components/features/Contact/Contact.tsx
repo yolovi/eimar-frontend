@@ -36,29 +36,39 @@ const Contact = ({ className }: ContactProps) => {
   // Imágenes del restaurante para el carrusel
   const restaurantImages = [
     {
-      src: "/images/restaurant/ambiente1.jpg",
+      src: "/images/restaurant/ambiente1.png",
       alt: "Interior del restaurante Eimar",
       title: "Ambiente acogedor y familiar",
     },
     {
-      src: "/images/restaurant/comida1.jpg",
+      src: "/images/restaurant/comida1.png",
       alt: "Paella del restaurante Eimar",
       title: "Especialidad de la casa: Paella",
     },
     {
-      src: "/images/restaurant/ambiente2.jpg",
+      src: "/images/restaurant/ambiente2.png",
       alt: "Terraza del restaurante Eimar",
       title: "Terraza exterior - Pet friendly",
     },
     {
-      src: "/images/restaurant/comida2.jpg",
+      src: "/images/restaurant/comida2.png",
       alt: "Platos del menú del día",
       title: "Platos del menú diario",
     },
     {
-      src: "/images/restaurant/local-exterior.jpg",
-      alt: "Fachada del restaurante Eimar en Paiporta",
-      title: "Restaurante Eimar - Paiporta",
+      src: "/images/restaurant/comida3.png",
+      alt: "Especialidades de la casa",
+      title: "Nuestras especialidades",
+    },
+    {
+      src: "/images/restaurant/bebida1.png",
+      alt: "Bebidas y vinos del restaurante",
+      title: "Carta de bebidas",
+    },
+    {
+      src: "/images/restaurant/postre1.png",
+      alt: "Postres caseros",
+      title: "Postres de la casa",
     },
   ];
 
@@ -127,9 +137,6 @@ const Contact = ({ className }: ContactProps) => {
         {/* Layout principal */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Mapa interactivo */}
-          {/* //TODO: ajustar las coordenadas de contact info para que te lleven a Eimar */}
-          {/* //TODO: vista responsive mobile: ajustar orden: 1. mapa 2. slilder imagnes 3. info 4. reseñas */}
-
           <div className="order-2 lg:order-1">
             <div className="relative h-[400px] lg:h-[500px] rounded-lg overflow-hidden shadow-lg">
               <iframe
@@ -146,9 +153,9 @@ const Contact = ({ className }: ContactProps) => {
           </div>
 
           {/* Información del restaurante */}
-          <div className="order-1 lg:order-2 space-y-8">
+          <div className="order-1 lg:order-2 space-y-8 text-center lg:text-left">
             {/* Nombre del restaurante */}
-            <div className="text-center lg:text-left">
+            <div>
               <h3
                 className="text-2xl md:text-3xl font-display font-bold tracking-wide"
                 style={{ color: "var(--text-primary)" }}
@@ -160,10 +167,10 @@ const Contact = ({ className }: ContactProps) => {
             {/* Información de contacto */}
             <div className="space-y-6">
               {/* Cómo llegar */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 mt-1">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+                <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     style={{ color: "var(--color-accent)" }}
                     fill="none"
                     stroke="currentColor"
@@ -182,14 +189,14 @@ const Contact = ({ className }: ContactProps) => {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                </div>
-                <div className="flex-1">
                   <h4
-                    className="font-semibold mb-2"
+                    className="font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
                     Cómo llegar
                   </h4>
+                </div>
+                <div className="flex-1 text-center lg:text-left">
                   <p
                     className="mb-3"
                     style={{ color: "var(--text-secondary)" }}
@@ -212,10 +219,10 @@ const Contact = ({ className }: ContactProps) => {
               </div>
 
               {/* Teléfono */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 mt-1">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+                <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     style={{ color: "var(--color-accent)" }}
                     fill="none"
                     stroke="currentColor"
@@ -228,14 +235,14 @@ const Contact = ({ className }: ContactProps) => {
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                     />
                   </svg>
-                </div>
-                <div className="flex-1">
                   <h4
-                    className="font-semibold mb-2"
+                    className="font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
                     Teléfono
                   </h4>
+                </div>
+                <div className="flex-1 text-center lg:text-left">
                   <button
                     onClick={handlePhoneClick}
                     className="text-lg font-medium hover:underline transition-all duration-200"
@@ -254,10 +261,10 @@ const Contact = ({ className }: ContactProps) => {
               </div>
 
               {/* Horarios */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 mt-1">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+                <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     style={{ color: "var(--color-accent)" }}
                     fill="none"
                     stroke="currentColor"
@@ -270,14 +277,14 @@ const Contact = ({ className }: ContactProps) => {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                </div>
-                <div className="flex-1">
                   <h4
-                    className="font-semibold mb-2"
+                    className="font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Horario:
+                    Horario
                   </h4>
+                </div>
+                <div className="flex-1 text-center lg:text-left">
                   <p
                     className="mb-1"
                     style={{ color: "var(--text-secondary)" }}
@@ -291,10 +298,10 @@ const Contact = ({ className }: ContactProps) => {
               </div>
 
               {/* Mascotas */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 mt-1">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+                <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     style={{ color: "var(--color-accent)" }}
                     fill="none"
                     stroke="currentColor"
@@ -307,10 +314,13 @@ const Contact = ({ className }: ContactProps) => {
                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                     />
                   </svg>
+                  <p className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                    Mascotas
+                  </p>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-center lg:text-left">
                   <p style={{ color: "var(--text-secondary)" }}>
-                    Mascotas bienvenidas en terraza
+                    Bienvenidas en terraza
                   </p>
                 </div>
               </div>
@@ -332,15 +342,6 @@ const Contact = ({ className }: ContactProps) => {
 
         {/* Galería de imágenes */}
         <div className="mt-16">
-          <div className="text-center mb-8">
-            <h3
-              className="text-2xl md:text-3xl font-display font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              AMBIENTE Y ESPECIALIDADES
-            </h3>
-          </div>
-
           <ImageSlider images={restaurantImages} className="" />
         </div>
 
