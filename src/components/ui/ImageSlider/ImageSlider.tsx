@@ -194,7 +194,7 @@ const ImageSlider = ({
                   className="flex-none"
                   style={{ width: `${widthPercentage}%` }}
                 >
-                <div className="relative h-[200px] md:h-[250px] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="relative h-[200] md:h-[250] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                   <Image
                     src={image.src}
                     alt={image.alt}

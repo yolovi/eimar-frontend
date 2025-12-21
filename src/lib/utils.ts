@@ -9,6 +9,11 @@ import { twMerge } from "tailwind-merge";
  * 🎨 ESTILOS & CSS:
  * • cn() - Combina clases CSS con Tailwind merge
  * 
+ * 🏃‍♂️ NAVEGACIÓN & SCROLL:
+ * • smoothScrollTo() - Scroll animado personalizable hacia elemento o posición
+ * • scrollToTop() - Scroll suave hacia arriba
+ * • scrollToSection() - Scroll hacia sección por ID con offset para header
+ * 
  * 💰 FORMATEO:
  * • formatCurrency() - Formatea números como moneda EUR
  * • formatDate() - Formatea fechas en español
@@ -191,6 +196,96 @@ export function formatWhatsAppNumber(number: string, countryCode: string = "34")
 export function isValidTime(time: string): boolean {
   const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
   return timeRegex.test(time);
+}
+
+/* ============================================================================
+ * 🏃‍♂️ NAVEGACIÓN & SMOOTH SCROLL
+ * ============================================================================ */
+
+/**
+ * Scroll animado personalizable hacia un elemento o posición específica
+ * @param target - Elemento del DOM o número de píxeles desde arriba
+ * @param duration - Duración de la animación en milisegundos (default: 2000ms)
+ * @param offset - Offset adicional en píxeles (default: -80 para header)
+ * @returns Promise que se resuelve cuando termina la animación
+ * @example
+ * // Scroll hacia elemento
+ * smoothScrollTo(document.querySelector('#about'), 1500);
+ * // Scroll hacia posición
+ * smoothScrollTo(500, 1000);
+ */
+export function smoothScrollTo(
+  target: Element | number,
+  duration: number = 2000,
+  offset: number = -80
+): Promise<void> {
+  return new Promise((resolve) => {
+    const start = window.pageYOffset;
+    const targetPosition = typeof target === 'number'
+      ? target
+      : target.getBoundingClientRect().top + start + offset;
+    
+    const distance = targetPosition - start;
+    let startTime: number | null = null;
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      
+      // Función de easing cúbica mejorada para movimiento natural (funciona en ambas direcciones)
+      // Ease-in-out cubic: empieza despacio, acelera en medio, termina despacio
+      const ease = progress < 0.5
+        ? 4 * progress * progress * progress // Primera mitad: acceleración cúbica
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2; // Segunda mitad: deceleración cúbica
+      
+      window.scrollTo(0, start + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        resolve();
+      }
+    };
+
+    requestAnimationFrame(animation);
+  });
+}
+
+/**
+ * Scroll suave hacia arriba (útil para logos/botones "volver arriba")
+ * @param duration - Duración de la animación en milisegundos (default: 1500ms)
+ * @example
+ * scrollToTop(1000); // Scroll hacia arriba en 1 segundo
+ */
+export function scrollToTop(duration: number = 1500): Promise<void> {
+  return smoothScrollTo(0, duration, 0);
+}
+
+/**
+ * Scroll hacia una sección específica por ID con configuración optimizada
+ * @param sectionId - ID de la sección (con o sin #)
+ * @param duration - Duración de la animación (default: 2000ms)
+ * @param fallbackDistance - Distancia de fallback si no encuentra la sección
+ * @example
+ * scrollToSection('about'); // Busca #about
+ * scrollToSection('#contacto', 1500);
+ */
+export function scrollToSection(
+  sectionId: string,
+  duration: number = 2000,
+  fallbackDistance: number = typeof window !== 'undefined' ? window.innerHeight * 0.8 : 600
+): Promise<void> {
+  const cleanId = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+  const section = document.querySelector(cleanId) || 
+                  document.querySelector(`[id*="${sectionId}"]`);
+  
+  if (section) {
+    return smoothScrollTo(section, duration);
+  } else {
+    // Fallback: scroll relativo
+    return smoothScrollTo(fallbackDistance, duration, 0);
+  }
 }
 
 /**

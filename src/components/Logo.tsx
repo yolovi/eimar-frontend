@@ -1,10 +1,18 @@
+import { scrollToTop } from "@/lib/utils";
+
 interface LogoProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: string;
+  clickable?: boolean; // Nueva prop para habilitar scroll al top
 }
 
-const Logo = ({ className = '', size = 'md', color = 'currentColor' }: LogoProps) => {
+const Logo = ({ 
+  className = '', 
+  size = 'md', 
+  color = 'currentColor',
+  clickable = false 
+}: LogoProps) => {
   const sizeClasses = {
     sm: 'w-12 h-4',    // Proporción 47:13 mantenida
     md: 'w-24 h-7',    // ~2x del original
@@ -12,9 +20,13 @@ const Logo = ({ className = '', size = 'md', color = 'currentColor' }: LogoProps
     xl: 'w-47 h-13'    // Tamaño original
   };
 
-  return (
+  const logoSvg = (
     <svg 
-      className={`${sizeClasses[size]} ${className}`}
+      className={`${
+        sizeClasses[size]
+      } ${className} ${
+        clickable ? 'transition-all duration-300 hover:scale-110 cursor-pointer' : ''
+      }`}
       viewBox="0 0 47 13" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +37,22 @@ const Logo = ({ className = '', size = 'md', color = 'currentColor' }: LogoProps
       />
     </svg>
   );
+
+  // Si es clickeable, envolver en button para scroll al top
+  if (clickable) {
+    return (
+      <button
+        onClick={() => scrollToTop(6000)} // 2 segundos igual que en Hero
+        className="focus:outline-none focus:ring-2 focus:ring-current/50 rounded-sm"
+        aria-label="Volver al inicio"
+        title="Volver al inicio"
+      >
+        {logoSvg}
+      </button>
+    );
+  }
+
+  return logoSvg;
 };
 
 export default Logo;

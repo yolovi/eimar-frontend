@@ -1,6 +1,7 @@
 /**
  * IMAGE CAROUSEL COMPONENT - EIMAR
  * =================================
+ * FIXME: actualmente no se está usando
  * 
  * Carrusel de imágenes responsive para mostrar ambiente del restaurante.
  * Incluye navegación por flechas, indicadores y autoplay opcional.
@@ -82,7 +83,7 @@ const ImageCarousel = ({
   return (
     <div className={cn("relative w-full", className)}>
       {/* Contenedor principal de imágenes */}
-      <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-lg">
+      <div className="relative h-[300] md:h-[400] rounded-lg overflow-hidden shadow-lg">
         {images.map((image, index) => (
           <div
             key={`${image.src}-${index}`}

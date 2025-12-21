@@ -20,7 +20,7 @@
 "use client";
 
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { HeroButton } from "@/components/ui";
 
 interface HeroProps {
@@ -139,16 +139,20 @@ const Hero = ({
         </div>
       </div>
 
-      {/* Indicador de scroll */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="animate-bounce opacity-70">
+      {/* Indicador de scroll - Clickeable */}
+      <button
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-full p-2"
+        onClick={() => scrollToSection('about', 2000)}
+        aria-label="Desplazarse a la sección Acerca de nosotros"
+        title="Ver más información"
+      >
+        <div className="animate-bounce opacity-70 hover:opacity-100 transition-opacity duration-300">
           <svg
             className="w-6 h-6"
             style={{ color: "var(--eimar-white-snow)" }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -158,7 +162,7 @@ const Hero = ({
             />
           </svg>
         </div>
-      </div>
+      </button>
     </section>
   );
 };
