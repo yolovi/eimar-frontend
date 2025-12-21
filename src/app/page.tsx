@@ -1,4 +1,5 @@
 import Hero from "@/components/features/Hero";
+import About from "@/components/features/About";
 import Contact from "@/components/features/Contact";
 
 const Home = () => {
@@ -11,8 +12,10 @@ const Home = () => {
         height="lg"
       />
       
+      {/* About Section - Historia e identidad del restaurante */}
+      <About />
+      
       {/* Futuras secciones */}
-      {/* <About /> */}
       {/* <Menu /> */}
       {/* <Gallery /> */}
       
