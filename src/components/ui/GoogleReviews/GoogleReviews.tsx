@@ -1,17 +1,17 @@
 /**
  * GOOGLE REVIEWS COMPONENT - EIMAR
  * =================================
- * 
+ *
  * Componente para mostrar reseñas de Google Maps del restaurante.
  * Incluye rating con estrellas y diseño responsive.
- * 
+ *
  * CARACTERÍSTICAS:
  * - Diseño responsive con grid adaptativo
  * - Estrellas visuales para rating
  * - Formato de fecha legible
  * - Sistema de variables CSS EIMAR
  * - Placeholders para datos reales
- * 
+ *
  * USO:
  * import GoogleReviews from '@/components/ui/GoogleReviews';
  * <GoogleReviews />
@@ -72,20 +72,22 @@ const mockReviews: Review[] = [
 
 const GoogleReviews = ({ className }: GoogleReviewsProps) => {
   // Calcular rating promedio
-  const averageRating = mockReviews.reduce((acc, review) => acc + review.rating, 0) / mockReviews.length;
-  
+  const averageRating =
+    mockReviews.reduce((acc, review) => acc + review.rating, 0) /
+    mockReviews.length;
+
   // Función para renderizar estrellas
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => {
       const isFilled = index < Math.floor(rating);
       const isHalf = index < rating && index >= Math.floor(rating);
-      
+
       return (
         <svg
           key={index}
           className="w-4 h-4"
-          style={{ 
-            color: isFilled || isHalf ? "#fbbf24" : "#e5e7eb" // yellow-400 : gray-200
+          style={{
+            color: isFilled || isHalf ? "#fbbf24" : "#e5e7eb", // yellow-400 : gray-200
           }}
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -112,29 +114,26 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
     <div className={cn("w-full", className)}>
       {/* Header con rating promedio */}
       <div className="text-center mb-8">
-        <h3 
+        <h3
           className="text-2xl md:text-3xl font-display font-bold mb-4"
           style={{ color: "var(--text-primary)" }}
         >
           RESEÑAS DE CLIENTES
         </h3>
-        
+
         <div className="flex items-center justify-center gap-4 mb-2">
           <div className="flex items-center gap-1">
             {renderStars(averageRating)}
           </div>
-          <span 
+          <span
             className="text-2xl font-semibold"
             style={{ color: "var(--text-primary)" }}
           >
             {averageRating.toFixed(1)}
           </span>
         </div>
-        
-        <p 
-          className="text-sm"
-          style={{ color: "var(--text-secondary)" }}
-        >
+
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
           Basado en {mockReviews.length} reseñas de Google
         </p>
       </div>
@@ -145,16 +144,16 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
           <div
             key={review.id}
             className="p-6 rounded-lg border shadow-sm transition-shadow duration-200 hover:shadow-md"
-            style={{ 
+            style={{
               backgroundColor: "var(--bg-primary)",
-              borderColor: "var(--eimar-gray-light)"
+              borderColor: "var(--eimar-gray-light)",
             }}
           >
             {/* Header de la reseña */}
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 
+                  <h4
                     className="font-semibold text-sm"
                     style={{ color: "var(--text-primary)" }}
                   >
@@ -173,12 +172,12 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
                     </svg>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
                     {renderStars(review.rating)}
                   </div>
-                  <span 
+                  <span
                     className="text-xs"
                     style={{ color: "var(--text-light)" }}
                   >
@@ -189,7 +188,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
             </div>
 
             {/* Texto de la reseña */}
-            <p 
+            <p
               className="text-sm leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
@@ -204,14 +203,14 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
         <button
           onClick={() => {
             // TODO: revisar que --> En producción, esto abriría el perfil de Google del restaurante
-            window.open("https://maps.google.com/?q=Restaurante+Eimar+Paiporta", "_blank");
+            window.open(
+              "https://maps.google.com/?q=Restaurante+Eimar+Paiporta",
+              "_blank"
+            );
           }}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-accent/10"
           style={{ color: "var(--color-accent)" }}
         >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.407-5.957 1.407-5.957s-.359-.719-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.745.096.118.11.219.082.339-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001.017 0z"/>
-          </svg>
           Ver más reseñas en Google
         </button>
       </div>

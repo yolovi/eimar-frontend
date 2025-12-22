@@ -119,8 +119,9 @@ const Contact = ({ className }: ContactProps) => {
       {/* Sección del mapa e información con fondo gris */}
       <div
         className="w-full py-16"
-        style={{ 
-          backgroundColor: "color-mix(in srgb, var(--bg-accent) 10%, transparent)"
+        style={{
+          backgroundColor:
+            "color-mix(in srgb, var(--bg-accent) 10%, transparent)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4">
@@ -130,7 +131,7 @@ const Contact = ({ className }: ContactProps) => {
             <div className="order-2 lg:order-1">
               <div className="relative h-[400] lg:h-[500] rounded-lg overflow-hidden shadow-lg">
                 <iframe
-                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3081.234567!2d${CONTACT_INFO.coordinates.lng}!3d${CONTACT_INFO.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDI1JzM0LjciTiAwwrAyNScwNC40Ilc!5e0!3m2!1ses!2ses!4v1234567890123`}
+                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6163.34797038494!2d${CONTACT_INFO.coordinates.lng}!3d${CONTACT_INFO.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd604e58f9e16bbf%3A0x7e141fefed57a1fd!2sRestaurante%20Eimar!5e0!3m2!1ses!2ses!4v1766364556562!5m2!1ses!2ses`}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
