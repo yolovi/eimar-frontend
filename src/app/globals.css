@@ -24,29 +24,29 @@
   /* ===== CAPA 1: DEFINICIONES BASE ===== */
   /* Colores primarios EIMAR (valores absolutos) */
   --eimar-black: #000000;
-  --eimar-white-snow: #fffafa; 
+  --eimar-white-snow: #fffafa;
   --eimar-green: #485f50;
   --eimar-gray-dark: #333333;
   --eimar-gray-medium: #666666;
   --eimar-gray-light: #a3a3a3;
-  
+
   /* ===== CAPA 2: VARIABLES SEMÁNTICAS ===== */
   /* Colores del sistema de diseño (referencias semánticas) */
   --color-primary: var(--eimar-black);
   --color-base: var(--eimar-white-snow);
   --color-accent: var(--eimar-green);
-  
+
   /* Sistema de texto */
   --text-primary: var(--eimar-gray-dark);
   --text-secondary: var(--eimar-gray-medium);
   --text-light: var(--eimar-gray-light);
   --text-inverse: var(--eimar-white-snow);
-  
+
   /* Sistema de fondos */
   --bg-primary: var(--eimar-white-snow);
   --bg-secondary: var(--eimar-black);
   --bg-accent: var(--eimar-green);
-  
+
   /* Compatibilidad con Next.js */
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
@@ -68,18 +68,18 @@
    * 
    * Resultado: mejor rendimiento + design system consistente
    */
-  
+
   /* Variables de color para Tailwind CSS v4 */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--color-primary);
   --color-base: var(--color-base);
   --color-accent: var(--color-accent);
-  
+
   /* Variables de fuentes (consumen las de next/font) */
-  --font-sans: var(--font-geist-sans);   /* ← Viene de layout.tsx */
-  --font-mono: var(--font-geist-mono);   /* ← Viene de layout.tsx */
-  --font-accent: var(--font-playfair);   /* ← Viene de layout.tsx */
+  --font-sans: var(--font-geist-sans); /* ← Viene de layout.tsx */
+  --font-mono: var(--font-geist-mono); /* ← Viene de layout.tsx */
+  --font-accent: var(--font-playfair); /* ← Viene de layout.tsx */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,11 +88,11 @@
      * POLÍTICA: Mantener tema claro siempre para EIMAR
      * (Para activar modo oscuro, descomentar las líneas de abajo)
      */
-    
+
     /* Forzar tema claro independientemente de la preferencia del sistema */
     --background: var(--bg-primary);
     --foreground: var(--text-primary);
-    
+
     /* 
      * MODO OSCURO (comentado por ahora)
      * Descomenta estas líneas si quieres activar modo oscuro:
@@ -120,7 +120,7 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  
+
   /* 
    * TIPOGRAFÍA BASE CON NEXT/FONT
    * ==============================
@@ -132,13 +132,16 @@ body {
    * (aunque next/font hace esto muy improbable)
    */
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  
+
   /* Smooth transitions para cambios de tema */
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Asegurar consistencia en elementos de Next.js */
-html, body, #__next, #root {
+html,
+body,
+#__next,
+#root {
   background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
@@ -150,18 +153,27 @@ html, body, #__next, #root {
 }
 
 /* Elementos de contenido principales */
-main, article, section {
+main,
+article,
+section {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
 /* Tipografía consistente */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-primary);
   font-weight: 600;
 }
 
-p, span, div {
+p,
+span,
+div {
   color: var(--text-primary);
 }
 
@@ -205,25 +217,67 @@ div[data-nextjs-dialog-overlay] {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Utilidades de tema */
   .theme-light {
     --bg-primary: var(--eimar-white-snow);
     --text-primary: var(--eimar-gray-dark);
   }
-  
+
   .theme-dark {
     --bg-primary: var(--eimar-black);
     --text-primary: var(--eimar-white-snow);
   }
-  
+
   /* Utilidades de transición */
   .smooth-theme {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease,
+      border-color 0.3s ease;
   }
 }
 
 /* ===== COMPONENTES BASE ===== */
+
+/* SISTEMA DE ALTURAS RESPONSIVAS EIMAR */
+.eimar-height-sm {
+  min-height: 60vh;
+}
+
+.eimar-height-md {
+  min-height: 70vh;
+}
+
+.eimar-height-lg {
+  min-height: 80vh;
+}
+
+.eimar-height-xl {
+  min-height: 90vh;
+}
+
+.eimar-height-full {
+  min-height: 100vh;
+}
+
+/* SISTEMA DE LISTAS EIMAR */
+.eimar-list {
+  list-style: none;
+  padding: 0;
+}
+
+.eimar-list-bulleted {
+  list-style: disc;
+  margin-left: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.eimar-list-bulleted li {
+  margin-bottom: 0.5rem;
+}
+
+.eimar-list-bulleted li::marker {
+  color: var(--color-accent);
+}
 
 /* SISTEMA DE TIPOGRAFÍA EIMAR */
 /* Encabezados jerárquicos con responsive design */
@@ -280,8 +334,9 @@ div[data-nextjs-dialog-overlay] {
   font-family: var(--font-accent);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--text-primary);
+  color: var(--text-inverse);
   font-size: 2.25rem; /* 36px */
+  text-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
 .eimar-section-title {
@@ -299,6 +354,15 @@ div[data-nextjs-dialog-overlay] {
   line-height: 1.4;
   color: var(--color-accent);
   font-size: 1.25rem; /* 20px */
+}
+
+.eimar-hero-subtitle {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-inverse);
+  font-size: 1.125rem; /* 18px */
+  text-shadow: 0 0 15px rgba(0,0,0,0.7);
 }
 
 .eimar-body-large {
@@ -325,6 +389,20 @@ div[data-nextjs-dialog-overlay] {
   font-size: 0.875rem; /* 14px */
 }
 
+.eimar-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.875rem; /* 14px */
+}
+
+.eimar-error {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: #dc2626;
+  font-size: 0.875rem; /* 14px */
+}
+
 /* Quote/Destacados */
 .eimar-quote {
   font-family: var(--font-accent);
@@ -339,29 +417,73 @@ div[data-nextjs-dialog-overlay] {
 
 /* Responsive breakpoints */
 @media (min-width: 768px) {
-  .eimar-h1 { font-size: 3rem; } /* 48px */
-  .eimar-h2 { font-size: 2.25rem; } /* 36px */
-  .eimar-h3 { font-size: 1.875rem; } /* 30px */
-  .eimar-hero-title { font-size: 3rem; } /* 48px */
-  .eimar-section-title { font-size: 2.25rem; } /* 36px */
-  .eimar-subtitle { font-size: 1.5rem; } /* 24px */
-  .eimar-quote { font-size: 1.5rem; } /* 24px */
+  .eimar-h1 {
+    font-size: 3rem;
+  } /* 48px */
+  .eimar-h2 {
+    font-size: 2.25rem;
+  } /* 36px */
+  .eimar-h3 {
+    font-size: 1.875rem;
+  } /* 30px */
+  .eimar-hero-title {
+    font-size: 3rem;
+  } /* 48px */
+  .eimar-hero-subtitle {
+    font-size: 1.25rem;
+  } /* 20px */
+  .eimar-section-title {
+    font-size: 2.25rem;
+  } /* 36px */
+  .eimar-subtitle {
+    font-size: 1.5rem;
+  } /* 24px */
+  .eimar-quote {
+    font-size: 1.5rem;
+  } /* 24px */
 }
 
 @media (min-width: 1024px) {
-  .eimar-h1 { font-size: 3.75rem; } /* 60px */
-  .eimar-h2 { font-size: 3rem; } /* 48px */
-  .eimar-h3 { font-size: 2.25rem; } /* 36px */
-  .eimar-hero-title { font-size: 4rem; } /* 64px */
-  .eimar-section-title { font-size: 3rem; } /* 48px */
-  .eimar-subtitle { font-size: 1.75rem; } /* 28px */
-  .eimar-quote { font-size: 1.75rem; } /* 28px */
+  .eimar-h1 {
+    font-size: 3.75rem;
+  } /* 60px */
+  .eimar-h2 {
+    font-size: 3rem;
+  } /* 48px */
+  .eimar-h3 {
+    font-size: 2.25rem;
+  } /* 36px */
+  .eimar-hero-title {
+    font-size: 4rem;
+  } /* 64px */
+  .eimar-hero-subtitle {
+    font-size: 1.5rem;
+  } /* 24px */
+  .eimar-section-title {
+    font-size: 3rem;
+  } /* 48px */
+  .eimar-subtitle {
+    font-size: 1.75rem;
+  } /* 28px */
+  .eimar-quote {
+    font-size: 1.75rem;
+  } /* 28px */
 }
 
 /* Focus states accesibles */
 *:focus:not(button):not([role="button"]) {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/*focus inputs*/
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Eliminar outline de botones */

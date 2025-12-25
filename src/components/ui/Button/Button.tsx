@@ -36,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses =
-      "inline-flex items-center justify-center gap-2 rounded-tl-xl rounded-br-xl transition-all duration-200 disabled:pointer-events-none disabled:opacity-50";
+      "inline-flex items-center justify-center gap-2 rounded transition-all duration-200 disabled:pointer-events-none disabled:opacity-50";
 
     return (
       <button
@@ -53,13 +53,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {/* Left Icon */}
         {leftIcon && !isLoading && (
-          <span className="flex-shrink-0">{leftIcon}</span>
+          <span className="shrink-0">{leftIcon}</span>
         )}
 
         {/* Loading Spinner */}
         {isLoading && (
           <svg
-            className="animate-spin h-4 w-4 flex-shrink-0"
+            className="animate-spin h-4 w-4 shrink-0"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -85,7 +85,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
         {/* Right Icon */}
         {rightIcon && !isLoading && (
-          <span className="flex-shrink-0">{rightIcon}</span>
+          <span className="shrink-0">{rightIcon}</span>
         )}
       </button>
     );

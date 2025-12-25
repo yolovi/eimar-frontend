@@ -1,6 +1,6 @@
 /**
  * UI components library barrel export
- * Allows: import { Button, HeroButton, ImageCarousel, ImageSlider, GoogleReviews } from '@/components/ui'
+ * Allows: import { Button, HeroButton, ImageCarousel, ImageSlider, GoogleReviews, ReservationForm, ActionButton, MenuIcon, PhoneIcon, WhatsAppIcon } from '@/components/ui'
  */
 export { Button } from "./Button";
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./Button";
@@ -9,6 +9,11 @@ export type { HeroButtonProps, HeroButtonVariant, HeroButtonSize } from "./HeroB
 export { default as ImageCarousel } from "./ImageCarousel";
 export { default as ImageSlider } from "./ImageSlider";
 export { default as GoogleReviews } from "./GoogleReviews";
+export { default as ReservationForm } from "./ReservationForm";
+export type { ReservationFormData, ReservationFormProps } from "./ReservationForm";
+export { default as ActionButton } from "./ActionButton";
+export type { ActionButtonProps } from "./ActionButton";
+export { MenuIcon, PhoneIcon, WhatsAppIcon } from "./ActionButton";
 // TODO: Add more UI components here
 // export { Input } from './Input';
 // export { Modal } from './Modal';

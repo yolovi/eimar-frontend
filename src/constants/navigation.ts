@@ -44,20 +44,20 @@ export const NAVIGATION_DATA: NavigationData = {
     ]
   },
   
-  //  TODO: Navegación principal (sin carta) temporalmente hasta tener la seccion correspondiente terminada
+  //  Navegación principal
   main: [
-    // { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" }, // Deshabilitado
+    { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
     { href: "#contacto", label: "Contacto" },
   ],
   
-  // TODO: Todos los elementos en formato plano (para mobile)
+  // Todos los elementos en formato plano (para mobile)
   all: [
     // Temporalmente deshabilitados:
     // { href: "/nuestra-carta", label: "Nuestra Carta" },
     // { href: "/nuestra-carta/almuerzos", label: "Almuerzos", isSubItem: true },
     // { href: "/nuestra-carta/carta", label: "Carta", isSubItem: true },
     // { href: "/nuestra-carta/menus", label: "Menús", isSubItem: true },
-    // { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
+    { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
     { href: "#contacto", label: "Contacto" },
   ]
 };
