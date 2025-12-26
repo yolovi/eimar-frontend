@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Navigation from "./Navigation";
-import { HeroButton } from "@/components/ui";
+import { HeroButton, Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { CONTACT_INFO } from "@/constants/contact";
 
@@ -179,32 +179,18 @@ const MobileMenuToggle = () => {
 
               {/* Actions at Bottom con safe area para dispositivos con notch */}
               <div className="p-6 pb-8 border-t border-accent/20 space-y-4 flex flex-col items-center" style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom))" }}>
-                <HeroButton
-                  variant="secondary"
+                <Button
+                  variant="ghost"
                   size="sm"
-                  className="flex items-center justify-center gap-2 w-full"
+                  className="flex items-center justify-center w-full"
                   onClick={() => {
                     window.open(CONTACT_INFO.phone.secondary.link, "_self");
                     closeMenu();
                   }}
                   title={`Llamar: ${CONTACT_INFO.phone.secondary.display}`}
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-label="Teléfono"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
                   Llamar
-                </HeroButton>
+                </Button>
                 
                 <HeroButton 
                   variant="primary" 

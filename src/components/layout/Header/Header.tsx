@@ -24,9 +24,15 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                  // Limpiar URL y volver a la ruta raíz
-                  window.history.replaceState(null, '', '/');
+                  // Si estamos en la página principal, scroll to top y limpiar URL
+                  if (window.location.pathname === '/') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Limpiar cualquier anchor de la URL
+                    window.history.replaceState(null, '', '/');
+                  } else {
+                    // Si estamos en otra página, navegar a la página principal
+                    window.location.href = '/';
+                  }
                 }}
               >
                 <Logo size="md" className="text-primary" />
@@ -81,9 +87,15 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                  // Limpiar URL y volver a la ruta raíz
-                  window.history.replaceState(null, '', '/');
+                  // Si estamos en la página principal, scroll to top y limpiar URL
+                  if (window.location.pathname === '/') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Limpiar cualquier anchor de la URL
+                    window.history.replaceState(null, '', '/');
+                  } else {
+                    // Si estamos en otra página, navegar a la página principal
+                    window.location.href = '/';
+                  }
                 }}
               >
                 <Logo size="md" className="text-primary" />

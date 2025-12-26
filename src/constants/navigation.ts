@@ -57,7 +57,7 @@ export const NAVIGATION_DATA: NavigationData = {
     // { href: "/nuestra-carta/almuerzos", label: "Almuerzos", isSubItem: true },
     // { href: "/nuestra-carta/carta", label: "Carta", isSubItem: true },
     // { href: "/nuestra-carta/menus", label: "Menús", isSubItem: true },
-    { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
+    { href: "#reservas-y-pedidos", label: "Reservas y Pedidos" },
     { href: "#contacto", label: "Contacto" },
   ]
 };
