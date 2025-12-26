@@ -113,6 +113,7 @@ const Reservations = ({
 
   return (
     <section
+      id="reservas-y-pedidos"
       className={cn("w-full py-12 mb-8", heightClasses[height], className)}
       style={{ backgroundColor: "var(--bg-primary)" }}
       aria-label="Reservation section"

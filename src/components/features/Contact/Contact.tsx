@@ -360,6 +360,7 @@ const Contact = ({ className }: ContactProps) => {
 
       {/* Galería de imágenes con fondo normal */}
       <div
+        id="galeria"
         className="py-16 px-4"
         style={{ backgroundColor: "var(--bg-primary)" }}
       >

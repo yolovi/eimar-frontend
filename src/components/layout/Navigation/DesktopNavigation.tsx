@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, handleNavigationClick } from "@/lib/utils";
 import { NAVIGATION_DATA } from "@/constants/navigation";
 
 const DesktopNavigation = () => {
@@ -70,6 +70,7 @@ const DesktopNavigation = () => {
           key={item.href}
           href={item.href}
           className="font-accent px-4 py-2 rounded-lg hover:bg-accent/10 text-primary hover:text-accent transition-colors duration-200"
+          onClick={(e) => handleNavigationClick(e, item.href)}
         >
           {item.label}
         </Link>

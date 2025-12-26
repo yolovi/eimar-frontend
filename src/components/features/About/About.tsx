@@ -55,7 +55,7 @@ const About = ({ className }: AboutProps) => {
   return (
     <section
       id="nosotros"
-      className={cn("w-full py-16 px-4", className)}
+      className={cn("w-full py-12 px-4", className)}
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       <div className="max-w-7xl mx-auto">

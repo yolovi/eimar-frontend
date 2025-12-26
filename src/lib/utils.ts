@@ -5,15 +5,16 @@ import { twMerge } from "tailwind-merge";
  * 📚 ÍNDICE DE UTILIDADES DISPONIBLES
  * ===================================
  * Puedes encontrar una explicación ampliada en el README de lib
- * 
+ *
  * 🎨 ESTILOS & CSS:
  * • cn() - Combina clases CSS con Tailwind merge
- * 
+ *
  * 🏃‍♂️ NAVEGACIÓN & SCROLL:
  * • smoothScrollTo() - Scroll animado personalizable hacia elemento o posición
  * • scrollToTop() - Scroll suave hacia arriba
  * • scrollToSection() - Scroll hacia sección por ID con offset para header
- * 
+ * • handleNavigationClick() - Maneja clics de navegación con scroll suave para anchors
+ *
  * 💰 FORMATEO:
  * • formatCurrency() - Formatea números como moneda EUR
  * • formatDate() - Formatea fechas en español
@@ -21,23 +22,40 @@ import { twMerge } from "tailwind-merge";
  * • formatTimeRange() - Formatea rangos de horario
  * • formatPhoneDisplay() - Formatea números para mostrar ("+34 672 14 96 07")
  * • formatWhatsAppNumber() - Genera números internacionales para WhatsApp
- * 
+ *
  * 🔗 URLS & LINKS:
  * • createPhoneLink() - Genera enlaces tel: formatados
  * • createWhatsAppLink() - Genera enlaces WhatsApp con mensaje opcional
  * • createEmailLink() - Genera enlaces mailto: con asunto opcional
- * 
+ *
  * 📅 FECHAS & TIEMPO:
  * • getCurrentDay() - Obtiene el día actual como string
  * • isValidTime() - Valida formato de horario
-*/
+ */
 
-/* cn --> Class Names. Combina clsx y tailwind-merge*/
+/**
+ * cn:
+ * Combina clases CSS usando clsx y tailwind-merge
+ * @param inputs - Clases CSS variadas
+ * @returns Clases combinadas y optimizadas
+ * @example
+ * cn("btn", "btn-primary", { "btn-disabled": isDisabled }) → "btn btn-primary btn-disabled"
+ * Usar para combinar clases condicionales en componentes
+ * Evita conflictos de Tailwind y duplica clases automáticamente
+ * Ejemplo: className={cn("base-classes", isActive ? "active-classes" : "inactive-classes")}
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/* Para formatear precios en el menú. Ejemplo const precio = formatCurrency(12.90); → "12,90 €" */
+/**
+ * formatCurrency:
+ * Formatea números como moneda EUR en español
+ * @param amount - Monto numérico
+ * @returns Monto formateado como string
+ * Para formatear precios en el menú.
+ * Ejemplo const precio = formatCurrency(12.90); → "12,90 €"
+ */
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("es-ES", {
     style: "currency",
@@ -46,7 +64,15 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-/* Para fechas de reserva. Ejemplo: const reserva = formatDate(new Date('2025-11-15')); → "15 de noviembre de 2025"*/
+/**
+ * formatDate:
+ * Formatea fechas en español
+ * @param date - Objeto Date
+ * @returns Fecha formateada como string
+ * Para fechas de reserva.
+ * Ejemplo: const reserva = formatDate(new Date('2025-11-15')); → "15 de noviembre de 2025"
+ */
+
 export function formatDate(date: Date): string {
   return new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
@@ -56,8 +82,9 @@ export function formatDate(date: Date): string {
 }
 
 /**
+ * formatTime:
  * Formatea horarios en formato legible
- * @param time - Horario en formato "HH:MM" 
+ * @param time - Horario en formato "HH:MM"
  * @returns Horario formateado o "Hora inválida"
  * @example formatTime("14:30") → "14:30"
  */
@@ -69,29 +96,35 @@ export function formatTime(time: string): string {
 }
 
 /**
+ * formatTimeRange:
  * Formatea rangos de horario
  * @param openTime - Hora de apertura "HH:MM"
- * @param closeTime - Hora de cierre "HH:MM" 
+ * @param closeTime - Hora de cierre "HH:MM"
  * @param isClosed - Si está cerrado
  * @returns Rango formateado o "Cerrado"
  * @example formatTimeRange("12:00", "16:00", false) → "12:00 - 16:00"
  */
-export function formatTimeRange(openTime: string, closeTime: string, isClosed: boolean = false): string {
+export function formatTimeRange(
+  openTime: string,
+  closeTime: string,
+  isClosed: boolean = false
+): string {
   if (isClosed) {
     return "Cerrado";
   }
-  
+
   const formattedOpen = formatTime(openTime);
   const formattedClose = formatTime(closeTime);
-  
+
   if (formattedOpen === "Hora inválida" || formattedClose === "Hora inválida") {
     return "Horario inválido";
   }
-  
+
   return `${formattedOpen} - ${formattedClose}`;
 }
 
 /**
+ * createPhoneLink:
  * Genera enlaces de teléfono formatados
  * @param number - Número con código de país (ej: "+34672149607")
  * @returns Enlace tel: válido
@@ -99,11 +132,12 @@ export function formatTimeRange(openTime: string, closeTime: string, isClosed: b
  */
 export function createPhoneLink(number: string): string {
   // Limpiar número de espacios y guiones
-  const cleanNumber = number.replace(/[\s-]/g, '');
+  const cleanNumber = number.replace(/[\s-]/g, "");
   return `tel:${cleanNumber}`;
 }
 
 /**
+ * createWhatsAppLink:
  * Genera enlaces de WhatsApp con mensaje opcional
  * @param number - Número internacional sin + (ej: "34672149607")
  * @param message - Mensaje predeterminado (opcional)
@@ -112,16 +146,17 @@ export function createPhoneLink(number: string): string {
  */
 export function createWhatsAppLink(number: string, message?: string): string {
   const baseUrl = `https://wa.me/${number}`;
-  
+
   if (message) {
     const encodedMessage = encodeURIComponent(message);
     return `${baseUrl}?text=${encodedMessage}`;
   }
-  
+
   return baseUrl;
 }
 
 /**
+ * createEmailLink:
  * Genera enlaces de email con asunto opcional
  * @param email - Dirección de email
  * @param subject - Asunto del email (opcional)
@@ -130,64 +165,88 @@ export function createWhatsAppLink(number: string, message?: string): string {
  */
 export function createEmailLink(email: string, subject?: string): string {
   const baseUrl = `mailto:${email}`;
-  
+
   if (subject) {
     const encodedSubject = encodeURIComponent(subject);
     return `${baseUrl}?subject=${encodedSubject}`;
   }
-  
+
   return baseUrl;
 }
 
 /**
+ * getCurrentDay:
  * Obtiene el día actual como string
  * @returns Día de la semana en inglés
  * @example getCurrentDay() → "monday"
  */
 export function getCurrentDay(): string {
-  const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
   const today = new Date().getDay();
   return days[today];
 }
 
 /**
+ * formatPhoneDisplay:
  * Formatea número de teléfono para display
  * @param number - Número sin formato (ej: "672149607")
  * @param countryCode - Código de país (default: "+34")
  * @returns Número formateado para mostrar
  * @example formatPhoneDisplay("672149607") → "+34 672 14 96 07"
  */
-export function formatPhoneDisplay(number: string, countryCode: string = "+34"): string {
+export function formatPhoneDisplay(
+  number: string,
+  countryCode: string = "+34"
+): string {
   // Limpiar número de cualquier formato previo
-  const cleanNumber = number.replace(/[\s\-\+]/g, '');
-  
+  const cleanNumber = number.replace(/[\s\-\+]/g, "");
+
   // Formatear según longitud española típica (9 dígitos)
   if (cleanNumber.length === 9) {
-    return `${countryCode} ${cleanNumber.slice(0, 3)} ${cleanNumber.slice(3, 5)} ${cleanNumber.slice(5, 7)} ${cleanNumber.slice(7, 9)}`;
+    return `${countryCode} ${cleanNumber.slice(0, 3)} ${cleanNumber.slice(
+      3,
+      5
+    )} ${cleanNumber.slice(5, 7)} ${cleanNumber.slice(7, 9)}`;
   }
-  
+
   // Para números de 6 dígitos (números cortos)
   if (cleanNumber.length === 6) {
-    return `${countryCode} ${cleanNumber.slice(0, 3)} ${cleanNumber.slice(3, 6)}`;
+    return `${countryCode} ${cleanNumber.slice(0, 3)} ${cleanNumber.slice(
+      3,
+      6
+    )}`;
   }
-  
+
   // Fallback: devolver con código de país
   return `${countryCode} ${cleanNumber}`;
 }
 
 /**
+ * formatWhatsAppNumber:
  * Genera número internacional para WhatsApp
- * @param number - Número sin formato (ej: "672149607") 
+ * @param number - Número sin formato (ej: "672149607")
  * @param countryCode - Código numérico de país (default: "34")
  * @returns Número internacional sin + para WhatsApp
  * @example formatWhatsAppNumber("672149607") → "34672149607"
  */
-export function formatWhatsAppNumber(number: string, countryCode: string = "34"): string {
-  const cleanNumber = number.replace(/[\s\-\+]/g, '');
+export function formatWhatsAppNumber(
+  number: string,
+  countryCode: string = "34"
+): string {
+  const cleanNumber = number.replace(/[\s\-\+]/g, "");
   return `${countryCode}${cleanNumber}`;
 }
 
 /**
+ * isValidTime:
  * Valida formato de horario HH:MM
  * @param time - Horario a validar
  * @returns true si es válido
@@ -203,15 +262,16 @@ export function isValidTime(time: string): boolean {
  * ============================================================================ */
 
 /**
+ * smoothScrollTo:
  * Scroll animado personalizable hacia un elemento o posición específica
  * @param target - Elemento del DOM o número de píxeles desde arriba
  * @param duration - Duración de la animación en milisegundos (default: 2000ms)
  * @param offset - Offset adicional en píxeles (default: -80 para header)
  * @returns Promise que se resuelve cuando termina la animación
  * @example
- * // Scroll hacia elemento
+ * Scroll hacia elemento:
  * smoothScrollTo(document.querySelector('#about'), 1500);
- * // Scroll hacia posición
+ * Scroll hacia posición:
  * smoothScrollTo(500, 1000);
  */
 export function smoothScrollTo(
@@ -221,10 +281,11 @@ export function smoothScrollTo(
 ): Promise<void> {
   return new Promise((resolve) => {
     const start = window.pageYOffset;
-    const targetPosition = typeof target === 'number'
-      ? target
-      : target.getBoundingClientRect().top + start + offset;
-    
+    const targetPosition =
+      typeof target === "number"
+        ? target
+        : target.getBoundingClientRect().top + start + offset;
+
     const distance = targetPosition - start;
     let startTime: number | null = null;
 
@@ -232,13 +293,14 @@ export function smoothScrollTo(
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
-      
+
       // Función de easing cúbica mejorada para movimiento natural (funciona en ambas direcciones)
       // Ease-in-out cubic: empieza despacio, acelera en medio, termina despacio
-      const ease = progress < 0.5
-        ? 4 * progress * progress * progress // Primera mitad: acceleración cúbica
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2; // Segunda mitad: deceleración cúbica
-      
+      const ease =
+        progress < 0.5
+          ? 4 * progress * progress * progress // Primera mitad: acceleración cúbica
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2; // Segunda mitad: deceleración cúbica
+
       window.scrollTo(0, start + distance * ease);
 
       if (timeElapsed < duration) {
@@ -253,6 +315,7 @@ export function smoothScrollTo(
 }
 
 /**
+ * scrollToTop:
  * Scroll suave hacia arriba (útil para logos/botones "volver arriba")
  * @param duration - Duración de la animación en milisegundos (default: 1500ms)
  * @example
@@ -263,6 +326,7 @@ export function scrollToTop(duration: number = 1500): Promise<void> {
 }
 
 /**
+ * scrollToSection:
  * Scroll hacia una sección específica por ID con configuración optimizada
  * @param sectionId - ID de la sección (con o sin #)
  * @param duration - Duración de la animación (default: 2000ms)
@@ -274,18 +338,56 @@ export function scrollToTop(duration: number = 1500): Promise<void> {
 export function scrollToSection(
   sectionId: string,
   duration: number = 2000,
-  fallbackDistance: number = typeof window !== 'undefined' ? window.innerHeight * 0.8 : 600
+  fallbackDistance: number = typeof window !== "undefined"
+    ? window.innerHeight * 0.8
+    : 600
 ): Promise<void> {
-  const cleanId = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
-  const section = document.querySelector(cleanId) || 
-                  document.querySelector(`[id*="${sectionId}"]`);
-  
+  const cleanId = sectionId.startsWith("#") ? sectionId : `#${sectionId}`;
+  const section =
+    document.querySelector(cleanId) ||
+    document.querySelector(`[id*="${sectionId}"]`);
+
   if (section) {
     return smoothScrollTo(section, duration);
   } else {
     // Fallback: scroll relativo
     return smoothScrollTo(fallbackDistance, duration, 0);
   }
+}
+
+/**
+ * handleNavigationClick:
+ * Maneja clics en enlaces de navegación, aplicando scroll suave para anchors internos
+ * @param event - Evento del click
+ * @param href - URL del enlace
+ * @param onComplete - Callback opcional cuando termina el scroll
+ * @example
+ * handleNavigationClick(e, '#contacto', () => setMenuOpen(false));
+ */
+export function handleNavigationClick(
+  event: React.MouseEvent,
+  href: string,
+  onComplete?: () => void
+): void {
+  // Solo manejar enlaces anchor internos (que empiecen con #)
+  if (!href.startsWith("#")) {
+    return; // Dejar que Next.js maneje la navegación normal
+  }
+
+  event.preventDefault();
+
+  const sectionId = href.substring(1); // Quitar el #
+
+  scrollToSection(sectionId, 2000)
+    .then(() => {
+      // Actualizar URL sin recargar la página
+      window.history.replaceState(null, "", href);
+      onComplete?.();
+    })
+    .catch(() => {
+      // Fallback: navegación normal si falla el scroll
+      window.location.href = href;
+    });
 }
 
 /**
@@ -309,4 +411,3 @@ export function nombreFuncion(param1: tipo): tipoRetorno {
 
 Esta plantilla debe ir siempre al final (añade las nuevas funciones por encima)
 */
-

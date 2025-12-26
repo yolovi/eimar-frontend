@@ -49,8 +49,49 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Restaurante Eimar",
-  description: "Restaurante Eimar en Paiporta. Comida mediterranea, eventos y reservas.",
+  title: {
+    default: "Restaurante Eimar Paiporta - Comida Mediterránea Auténtica",
+    template: "%s | Restaurante Eimar Paiporta"
+  },
+  description: "Restaurante Eimar en Paiporta. Auténtica comida mediterránea con ingredientes frescos. Reservas por WhatsApp, eventos familiares y pedidos para llevar. ¡Ven a disfrutar!",
+  keywords: [
+    "restaurante Paiporta",
+    "comida mediterránea Valencia", 
+    "restaurante familiar Valencia",
+    "reservas restaurante",
+    "pedidos para llevar Paiporta",
+    "eventos restaurante Valencia",
+    "Eimar Paiporta"
+  ],
+  authors: [{ name: "Restaurante Eimar Paiporta" }],
+  creator: "Restaurante Eimar Paiporta",
+  publisher: "Restaurante Eimar Paiporta",
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    siteName: "Restaurante Eimar Paiporta",
+    title: "Restaurante Eimar Paiporta - Comida Mediterránea Auténtica",
+    description: "Auténtica comida mediterránea en el corazón de Paiporta. Reservas fáciles por WhatsApp y ambiente familiar.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Restaurante Eimar Paiporta - Comida Mediterránea",
+    description: "Auténtica comida mediterránea en Paiporta. ¡Reserva ya!",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // google: "tu-código-de-google-search-console", // Agregar cuando configures Search Console
+  }
 };
 
 export default function RootLayout({

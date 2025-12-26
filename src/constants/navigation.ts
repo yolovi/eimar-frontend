@@ -46,7 +46,7 @@ export const NAVIGATION_DATA: NavigationData = {
   
   //  Navegación principal
   main: [
-    { href: "/reservas-y-pedidos", label: "Reservas y Pedidos" },
+    { href: "#reservas-y-pedidos", label: "Reservas y Pedidos" },
     { href: "#contacto", label: "Contacto" },
   ],
   

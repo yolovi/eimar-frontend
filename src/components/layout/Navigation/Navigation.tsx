@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, handleNavigationClick } from "@/lib/utils";
 import { NAVIGATION_DATA } from "@/constants/navigation";
 
 interface NavigationProps {
@@ -58,7 +58,9 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
               // Estilo especial para subitems en mobile
               item.isSubItem && isMobile && "text-sm text-text-secondary"
             )}
-            onClick={onItemClick}
+            onClick={(e) => {
+              handleNavigationClick(e, item.href, onItemClick);
+            }}
           >
             {item.label}
           </Link>
