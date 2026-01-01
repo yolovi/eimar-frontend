@@ -73,7 +73,7 @@ const DesktopNavigation = () => {
           key={item.href}
           href={item.href}
           className="font-accent px-4 py-2 rounded-lg hover:bg-accent/10 text-primary hover:text-accent transition-colors duration-200"
-          onClick={(e) => handleNavigationClick(e, item.href, undefined, pathname, router)}
+          onClick={(e) => handleNavigationClick(e, item.href, pathname, router)}
         >
           {item.label}
         </Link>

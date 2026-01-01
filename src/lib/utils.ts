@@ -10,10 +10,13 @@ import { twMerge } from "tailwind-merge";
  * • cn() - Combina clases CSS con Tailwind merge
  *
  * 🏃‍♂️ NAVEGACIÓN & SCROLL:
- * • smoothScrollTo() - Scroll animado personalizable hacia elemento o posición
+ * • smoothScrollTo() - Función principal de scroll animado con configuración avanzada
  * • scrollToTop() - Scroll suave hacia arriba
- * • scrollToSection() - Scroll hacia sección por ID con offset para header
- * • handleNavigationClick() - Maneja clics de navegación con scroll suave para anchors y navegación entre páginas
+ * • scrollToSection() - Scroll hacia sección por ID
+ * • scrollToElement() - Scroll hacia elemento del DOM
+ * • navigateToHome() - Navegación inteligente al home
+ * • handleSectionNavigation() - Navegación cross-page a secciones
+ * • handleNavigationClick() - Handler unificado para clics de navegación
  *
  * 💰 FORMATEO:
  * • formatCurrency() - Formatea números como moneda EUR
@@ -258,52 +261,116 @@ export function isValidTime(time: string): boolean {
 }
 
 /* ============================================================================
- * 🏃‍♂️ NAVEGACIÓN & SMOOTH SCROLL
+ * 🏃‍♂️ NAVEGACIÓN & SMOOTH SCROLL - ARQUITECTURA CLEAN & SOLID
  * ============================================================================ */
 
+// TIPOS Y INTERFACES (Single Responsibility)
+interface ScrollOptions {
+  duration?: number;
+  offset?: number;
+  easing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
+}
+
+interface NavigationOptions extends ScrollOptions {
+  onComplete?: () => void;
+  isMobile?: boolean;
+}
+
+// CONSTANTES DE CONFIGURACIÓN (Open/Closed Principle)
+const SCROLL_CONFIG = {
+  DEFAULT_DURATION: 2000,
+  DEFAULT_OFFSET: -80,
+  MOBILE_OFFSET: -60,
+  DESKTOP_OFFSET: -120,
+  HEADER_THRESHOLD: 768, // Breakpoint para mobile/desktop
+} as const;
+
+// FUNCIONES DE EASING (Single Responsibility)
+const easingFunctions = {
+  'ease-in-out': (progress: number): number => 
+    progress < 0.5
+      ? 4 * progress * progress * progress
+      : 1 - Math.pow(-2 * progress + 2, 3) / 2,
+  'ease-in': (progress: number): number => progress * progress * progress,
+  'ease-out': (progress: number): number => 1 - Math.pow(1 - progress, 3),
+  'linear': (progress: number): number => progress,
+};
+
+// UTILIDADES PRIVADAS (Dependency Inversion)
+const getOptimalOffset = (customOffset?: number, isMobile?: boolean): number => {
+  if (customOffset !== undefined) return customOffset;
+  if (isMobile !== undefined) return isMobile ? SCROLL_CONFIG.MOBILE_OFFSET : SCROLL_CONFIG.DESKTOP_OFFSET;
+  return typeof window !== 'undefined' && window.innerWidth < SCROLL_CONFIG.HEADER_THRESHOLD 
+    ? SCROLL_CONFIG.MOBILE_OFFSET 
+    : SCROLL_CONFIG.DESKTOP_OFFSET;
+};
+
+const findSectionElement = (sectionId: string): Element | null => {
+  const cleanId = sectionId.startsWith("#") ? sectionId.substring(1) : sectionId;
+  return document.querySelector(`#${cleanId}`) || 
+         document.querySelector(`[id*="${cleanId}"]`) ||
+         document.querySelector(`[data-section="${cleanId}"]`);
+};
+
+// FUNCIÓN PRINCIPAL DE SCROLL (Single Responsibility)
 /**
  * smoothScrollTo:
- * Scroll animado personalizable hacia un elemento o posición específica
+ * Función principal de scroll animado con configuración avanzada
  * @param target - Elemento del DOM o número de píxeles desde arriba
- * @param duration - Duración de la animación en milisegundos (default: 2000ms)
- * @param offset - Offset adicional en píxeles (default: -80 para header)
+ * @param options - Configuración del scroll (duración, offset, easing)
  * @returns Promise que se resuelve cuando termina la animación
  * @example
- * Scroll hacia elemento:
- * smoothScrollTo(document.querySelector('#about'), 1500);
- * Scroll hacia posición:
- * smoothScrollTo(500, 1000);
+ * // Scroll básico
+ * smoothScrollTo(document.querySelector('#about'))
+ * // Scroll avanzado
+ * smoothScrollTo('#about', { duration: 1000, offset: -100, easing: 'ease-out' })
  */
 export function smoothScrollTo(
-  target: Element | number,
-  duration: number = 2000,
-  offset: number = -80
+  target: Element | number | string,
+  options: ScrollOptions = {}
 ): Promise<void> {
   return new Promise((resolve) => {
+    const {
+      duration = SCROLL_CONFIG.DEFAULT_DURATION,
+      offset,
+      easing = 'ease-in-out'
+    } = options;
+
     const start = window.pageYOffset;
-    const targetPosition =
-      typeof target === "number"
-        ? target
-        : target.getBoundingClientRect().top + start + offset;
+    let targetPosition: number;
+
+    // Determinar posición objetivo (Interface Segregation)
+    if (typeof target === 'number') {
+      targetPosition = target;
+    } else if (typeof target === 'string') {
+      const element = findSectionElement(target);
+      if (!element) {
+        console.warn(`Element not found: ${target}`);
+        resolve();
+        return;
+      }
+      targetPosition = element.getBoundingClientRect().top + start + getOptimalOffset(offset);
+    } else {
+      targetPosition = target.getBoundingClientRect().top + start + getOptimalOffset(offset);
+    }
 
     const distance = targetPosition - start;
     let startTime: number | null = null;
+    const easingFn = easingFunctions[easing];
 
     const animation = (currentTime: number) => {
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
+      const easedProgress = easingFn(progress);
 
-      // Función de easing cúbica mejorada para movimiento natural (funciona en ambas direcciones)
-      // Ease-in-out cubic: empieza despacio, acelera en medio, termina despacio
-      const ease =
-        progress < 0.5
-          ? 4 * progress * progress * progress // Primera mitad: acceleración cúbica
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2; // Segunda mitad: deceleración cúbica
+      window.scrollTo({
+        top: start + distance * easedProgress,
+        left: 0,
+        behavior: 'auto'
+      });
 
-      window.scrollTo(0, start + distance * ease);
-
-      if (timeElapsed < duration) {
+      if (progress < 1) {
         requestAnimationFrame(animation);
       } else {
         resolve();
@@ -314,118 +381,148 @@ export function smoothScrollTo(
   });
 }
 
+// FUNCIONES DE ALTO NIVEL (Liskov Substitution Principle)
 /**
  * scrollToTop:
- * Scroll suave hacia arriba (útil para logos/botones "volver arriba")
- * @param duration - Duración de la animación en milisegundos (default: 1500ms)
- * @example
- * scrollToTop(1000); // Scroll hacia arriba en 1 segundo
+ * Scroll suave hacia arriba
+ * @param options - Configuración opcional del scroll
  */
-export function scrollToTop(duration: number = 1500): Promise<void> {
-  return smoothScrollTo(0, duration, 0);
+export function scrollToTop(options: ScrollOptions = {}): Promise<void> {
+  return smoothScrollTo(0, { ...options, offset: 0 });
 }
 
 /**
  * scrollToSection:
- * Scroll hacia una sección específica por ID con configuración optimizada
+ * Scroll hacia una sección específica por ID
  * @param sectionId - ID de la sección (con o sin #)
- * @param duration - Duración de la animación (default: 2000ms)
- * @param fallbackDistance - Distancia de fallback si no encuentra la sección
- * @example
- * scrollToSection('about'); // Busca #about
- * scrollToSection('#contacto', 1500);
+ * @param options - Configuración opcional del scroll
  */
 export function scrollToSection(
   sectionId: string,
-  duration: number = 2000,
-  fallbackDistance: number = typeof window !== "undefined"
-    ? window.innerHeight * 0.8
-    : 600
+  options: ScrollOptions = {}
 ): Promise<void> {
-  const cleanId = sectionId.startsWith("#") ? sectionId : `#${sectionId}`;
-  const section =
-    document.querySelector(cleanId) ||
-    document.querySelector(`[id*="${sectionId}"]`);
+  return smoothScrollTo(sectionId, options);
+}
 
-  if (section) {
-    return smoothScrollTo(section, duration);
+/**
+ * scrollToElement:
+ * Scroll hacia un elemento específico del DOM
+ * @param element - Elemento del DOM
+ * @param options - Configuración opcional del scroll
+ */
+export function scrollToElement(
+  element: Element,
+  options: ScrollOptions = {}
+): Promise<void> {
+  return smoothScrollTo(element, options);
+}
+
+// FUNCIONES DE NAVEGACIÓN ESPECÍFICAS (Single Responsibility)
+/**
+ * navigateToHome:
+ * Maneja navegación inteligente al home
+ * @param pathname - Ruta actual
+ * @param router - Router de Next.js
+ * @param options - Opciones de scroll
+ */
+export function navigateToHome(
+  pathname?: string,
+  router?: any,
+  options: ScrollOptions = {}
+): void {
+  if (pathname === '/') {
+    // Ya estamos en home, scroll al top
+    scrollToTop(options);
+    // Limpiar anchor de la URL
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', '/');
+    }
   } else {
-    // Fallback: scroll relativo
-    return smoothScrollTo(fallbackDistance, duration, 0);
+    // Navegar a home
+    if (router) {
+      router.push('/');
+    } else if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
   }
 }
 
 /**
+ * handleSectionNavigation:
+ * Maneja navegación inteligente a secciones con soporte cross-page
+ * @param sectionId - ID de la sección objetivo
+ * @param pathname - Ruta actual
+ * @param router - Router de Next.js
+ * @param options - Configuración de navegación
+ */
+export function handleSectionNavigation(
+  sectionId: string,
+  pathname?: string,
+  router?: any,
+  options: NavigationOptions = {}
+): Promise<void> {
+  const { onComplete, ...scrollOptions } = options;
+
+  return new Promise((resolve) => {
+    // Si estamos en otra página, navegar a home primero
+    if (pathname && pathname !== '/') {
+      const targetUrl = `/#${sectionId.replace('#', '')}`;
+      if (router) {
+        router.push(targetUrl);
+      } else if (typeof window !== 'undefined') {
+        window.location.href = targetUrl;
+      }
+      onComplete?.();
+      resolve();
+      return;
+    }
+
+    // Si estamos en home, hacer scroll
+    scrollToSection(sectionId, scrollOptions)
+      .then(() => {
+        // Actualizar URL
+        if (typeof window !== 'undefined') {
+          const anchor = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+          window.history.replaceState(null, '', anchor);
+        }
+        onComplete?.();
+        resolve();
+      })
+      .catch(() => {
+        // Fallback
+        if (router) {
+          router.push(`/#${sectionId.replace('#', '')}`);
+        }
+        onComplete?.();
+        resolve();
+      });
+  });
+}
+
+/**
  * handleNavigationClick:
- * Maneja clics en enlaces de navegación, aplicando scroll suave para anchors internos
- * y navegación entre páginas cuando es necesario
+ * Handler unificado para clics de navegación (Facade Pattern)
  * @param event - Evento del click
  * @param href - URL del enlace
- * @param onComplete - Callback opcional cuando termina el scroll
- * @param pathname - Pathname actual de la página (desde usePathname)
- * @param router - Router de Next.js (desde useRouter)
- * @example
- * handleNavigationClick(e, '#contacto', () => setMenuOpen(false), pathname, router);
+ * @param pathname - Ruta actual
+ * @param router - Router de Next.js
+ * @param options - Configuración de navegación
  */
 export function handleNavigationClick(
   event: React.MouseEvent,
   href: string,
-  onComplete?: () => void,
   pathname?: string,
-  router?: any
+  router?: any,
+  options: NavigationOptions = {}
 ): void {
-  // Solo manejar enlaces anchor internos (que empiecen con #)
-  if (!href.startsWith("#")) {
-    return; // Dejar que Next.js maneje la navegación normal
-  }
+  // Solo manejar enlaces anchor internos
+  if (!href.startsWith("#")) return;
 
   event.preventDefault();
+  event.stopPropagation();
 
-  // Si estamos en una página diferente a la homepage, redirigir a la homepage con la sección
-  if (pathname && pathname !== '/') {
-    if (router) {
-      // Usar Next.js router para navegar limpiamente
-      router.push('/' + href);
-      onComplete?.();
-      return;
-    } else {
-      // Fallback si no se pasa router
-      window.location.href = '/' + href;
-      onComplete?.();
-      return;
-    }
-  }
-
-  // Si estamos en la homepage, hacer scroll usando la función que ya funciona
   const sectionId = href.substring(1);
-  const section = document.querySelector(`#${sectionId}`);
-  
-  if (section) {
-    // Usar smoothScrollTo con offset adecuado para el header
-    smoothScrollTo(section, 1500, -120)
-      .then(() => {
-        // Actualizar URL después del scroll
-        window.history.replaceState(null, '', href);
-        onComplete?.();
-      })
-      .catch(() => {
-        // Fallback usando router o window.location
-        if (router) {
-          router.push('/' + href);
-        } else {
-          window.location.href = '/' + href;
-        }
-        onComplete?.();
-      });
-  } else {
-    // Fallback si no encuentra la sección
-    if (router) {
-      router.push('/' + href);
-    } else {
-      window.location.href = '/' + href;
-    }
-    onComplete?.();
-  }
+  handleSectionNavigation(sectionId, pathname, router, options);
 }
 
 /**

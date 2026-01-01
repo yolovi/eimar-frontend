@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Navigation from "./Navigation";
 import { HeroButton, Button } from "@/components/ui";
-import { cn } from "@/lib/utils";
+import { cn, handleSectionNavigation } from "@/lib/utils";
 import { CONTACT_INFO } from "@/constants/contact";
 
 const MobileMenuToggle = () => {
@@ -11,6 +12,8 @@ const MobileMenuToggle = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Función de animación suave personalizada para el sidebar
   const animateSidebar = (isOpening: boolean) => {
@@ -196,7 +199,13 @@ const MobileMenuToggle = () => {
                   variant="primary" 
                   size="sm"
                   className="flex items-center justify-center w-full"
-                  onClick={closeMenu}
+                  onClick={() => {
+                    closeMenu();
+                    handleSectionNavigation('reservas-y-pedidos', pathname, router, {
+                      onComplete: undefined,
+                      isMobile: true
+                    });
+                  }}
                 >
                   Reservar Mesa
                 </HeroButton>

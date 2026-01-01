@@ -1,15 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui";
 import { CONTACT_INFO } from "@/constants/contact";
+import { navigateToHome } from "@/lib/utils";
 import MobileMenuToggle from "../Navigation/MobileMenuToggle";
 import DesktopNavigation from "../Navigation/DesktopNavigation";
 
 //TODO: ajustar los iconos del menú hamburguesa y la distribución (añadir fondos, etc)
 
 const Header = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigateToHome(pathname, router);
+  };
+
   return (
     <header className="bg-base sticky top-0 z-50">
       {/* Borde inferior gris sin llegar a los extremos */}
@@ -22,18 +33,7 @@ const Header = () => {
               <Link 
                 href="/" 
                 className="hover:opacity-80 transition-opacity"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Si estamos en la página principal, scroll to top y limpiar URL
-                  if (window.location.pathname === '/') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // Limpiar cualquier anchor de la URL
-                    window.history.replaceState(null, '', '/');
-                  } else {
-                    // Si estamos en otra página, navegar a la página principal
-                    window.location.href = '/';
-                  }
-                }}
+                onClick={handleLogoClick}
               >
                 <Logo size="md" className="text-primary" />
               </Link>
@@ -85,18 +85,7 @@ const Header = () => {
               <Link 
                 href="/" 
                 className="hover:opacity-80 transition-opacity"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Si estamos en la página principal, scroll to top y limpiar URL
-                  if (window.location.pathname === '/') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // Limpiar cualquier anchor de la URL
-                    window.history.replaceState(null, '', '/');
-                  } else {
-                    // Si estamos en otra página, navegar a la página principal
-                    window.location.href = '/';
-                  }
-                }}
+                onClick={handleLogoClick}
               >
                 <Logo size="md" className="text-primary" />
               </Link>

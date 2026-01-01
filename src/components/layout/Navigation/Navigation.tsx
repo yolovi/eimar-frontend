@@ -60,7 +60,22 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
               item.isSubItem && isMobile && "text-sm text-text-secondary"
             )}
             onClick={(e) => {
-              handleNavigationClick(e, item.href, onItemClick, pathname, router);
+              // Si es mobile, cerrar menú primero y ejecutar scroll después
+              if (isMobile && onItemClick) {
+                onItemClick(); // Cerrar menú inmediatamente
+                // Pequeño delay para que el menú termine de cerrarse
+                setTimeout(() => {
+                  handleNavigationClick(e, item.href, pathname, router, { 
+                    onComplete: undefined,
+                    isMobile: true 
+                  });
+                }, 100);
+              } else {
+                // Desktop: comportamiento normal
+                handleNavigationClick(e, item.href, pathname, router, { 
+                  onComplete: onItemClick 
+                });
+              }
             }}
           >
             {item.label}

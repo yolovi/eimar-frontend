@@ -20,7 +20,7 @@
 "use client";
 
 import Image from "next/image";
-import { cn, smoothScrollTo } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { HeroButton } from "@/components/ui";
 
 interface HeroProps {
@@ -127,12 +127,9 @@ const Hero = ({
               </HeroButton>
               */}
               
-              {/* TODO: Botón temporal mientras se desarrollan las otras secciones. Descomentar el los HeroeButtons anteriores y elimiar el siguiente cuando estén terminadas las acciones */}
+              {/* TODO: Botón temporal mientras se desarrollan las otras secciones */}
               <HeroButton variant="primary" onClick={() => {
-                const galeriaSection = document.querySelector('#galeria');
-                if (galeriaSection) {
-                  smoothScrollTo(galeriaSection, 2000, -120);
-                }
+                scrollToSection('galeria');
               }}>
                 Conoce más
               </HeroButton>
@@ -145,10 +142,7 @@ const Hero = ({
       <button
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-full p-2"
         onClick={() => {
-          const aboutSection = document.querySelector('#nosotros') || document.querySelector('[id*="about"]');
-          if (aboutSection) {
-            smoothScrollTo(aboutSection, 2000, -80); // Offset reducido para compensar el padding menor
-          }
+          scrollToSection('nosotros');
         }}
         aria-label="Desplazarse a la sección Acerca de nosotros"
         title="Ver más información"
