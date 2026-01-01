@@ -20,7 +20,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui";
+import { Button, OrderSection } from "@/components/ui";
 import { CONTACT_INFO } from "@/constants/contact";
 
 export interface ReservationFormData {
@@ -39,6 +39,12 @@ export interface ReservationFormProps {
   className?: string;
 }
 
+// Función helper para obtener fecha actual en formato YYYY-MM-DD
+const getTodayDate = (): string => {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+};
+
 const ReservationForm = ({
   title = "Haz tu reserva",
   subtitle = "Reserva a través de nuestro formulario, por teléfono o por WhatsApp.",
@@ -49,8 +55,8 @@ const ReservationForm = ({
   const [formData, setFormData] = useState<ReservationFormData>({
     name: "",
     phone: "",
-    date: "",
-    time: "",
+    date: getTodayDate(),
+    time: "12:00",
     people: "",
   });
 
@@ -239,11 +245,13 @@ const ReservationForm = ({
               value={formData.time}
               onChange={(e) => handleInputChange("time", e.target.value)}
               className={cn(
-                "w-full px-4 py-3 border rounded-lg transition-colors",
+                "w-full px-4 py-3 border rounded-lg transition-colors cursor-pointer",
+                "hover:border-gray-300",
                 errors.time
                   ? "border-red-300 focus:border-red-500"
                   : "border-gray-200"
               )}
+              placeholder="12:00"
               aria-invalid={!!errors.time}
               aria-describedby={errors.time ? "time-error" : undefined}
             />
@@ -298,26 +306,7 @@ const ReservationForm = ({
       </form>
 
       {/* Sección de pedidos para llevar */}
-      {showOrderSection && (
-        <div className="mt-8 pt-8 border-t border-gray-200">
-          <h2
-            className="font-accent"
-            style={{
-              color: "var(--color-accent)",
-              fontSize: "2rem",
-            }}
-          >
-            Haz tu pedido{" "}
-          </h2>
-          <p className="eimar-body mb-2 font-medium">
-            y recógelo en nuestro restaurante
-          </p>
-          <p className="eimar-body-small mb-4">
-            Disfruta de nuestros platos en casa. Llama o envía un WhatsApp para
-            realizar tu pedido y te avisaremos cuando esté listo para recoger.
-          </p>
-        </div>
-      )}
+      {showOrderSection && <OrderSection />}
     </div>
   );
 };

@@ -471,19 +471,19 @@ div[data-nextjs-dialog-overlay] {
 }
 
 /* Focus states accesibles */
-*:focus:not(button):not([role="button"]) {
-  outline: 2px solid var(--color-accent);
+/* *:focus:not(button):not([role="button"]) {
+  outline: 1px solid var(--eimar-green);
   outline-offset: 2px;
-}
+} */
 
 /*focus inputs*/
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border-color: var(--eimar-green);
+  border-width: 2px;
+  transition: border-color 0.2s ease, border-width 0.2s ease;
 }
 
 /* Eliminar outline de botones */

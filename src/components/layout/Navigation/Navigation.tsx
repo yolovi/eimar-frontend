@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn, smoothScrollTo } from "@/lib/utils";
+import { usePathname, useRouter } from "next/navigation";
+import { cn, handleNavigationClick } from "@/lib/utils";
 import { NAVIGATION_DATA } from "@/constants/navigation";
 
 interface NavigationProps {
@@ -14,6 +14,7 @@ interface NavigationProps {
 
 const Navigation = ({ isMobile = false, showSubItems = false, className, onItemClick }: NavigationProps) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   // Determinar qué elementos mostrar usando datos centralizados
   const navigationItems = showSubItems 
@@ -59,42 +60,7 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
               item.isSubItem && isMobile && "text-sm text-text-secondary"
             )}
             onClick={(e) => {
-              if (item.href.startsWith('#')) {
-                e.preventDefault();
-                
-                // Si estamos en una página diferente, ir a la homepage primero
-                if (window.location.pathname !== '/') {
-                  // Navegar a la homepage con el anchor
-                  window.location.href = '/' + item.href;
-                  onItemClick?.();
-                  return;
-                }
-                
-                // Si estamos en la homepage, hacer scroll usando la función que ya funciona
-                const sectionId = item.href.substring(1);
-                const section = document.querySelector(`#${sectionId}`);
-                
-                if (section) {
-                  // Usar smoothScrollTo con offset adecuado para el header
-                  smoothScrollTo(section, 1500, -120)
-                    .then(() => {
-                      // Actualizar URL después del scroll
-                      window.history.replaceState(null, '', item.href);
-                    })
-                    .catch(() => {
-                      // Fallback
-                      window.location.href = '/' + item.href;
-                    });
-                } else {
-                  // Fallback si no encuentra la sección
-                  window.location.href = '/' + item.href;
-                }
-                
-                onItemClick?.();
-              } else {
-                // Para enlaces normales, dejar que Next.js maneje
-                onItemClick?.();
-              }
+              handleNavigationClick(e, item.href, onItemClick, pathname, router);
             }}
           >
             {item.label}

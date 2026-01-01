@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn, handleNavigationClick } from "@/lib/utils";
 import { NAVIGATION_DATA } from "@/constants/navigation";
 
 const DesktopNavigation = () => {
   const [isCartaOpen, setIsCartaOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Usar datos centralizados
   const { carta, main: navigationItems } = NAVIGATION_DATA;
@@ -70,7 +73,7 @@ const DesktopNavigation = () => {
           key={item.href}
           href={item.href}
           className="font-accent px-4 py-2 rounded-lg hover:bg-accent/10 text-primary hover:text-accent transition-colors duration-200"
-          onClick={(e) => handleNavigationClick(e, item.href)}
+          onClick={(e) => handleNavigationClick(e, item.href, undefined, pathname, router)}
         >
           {item.label}
         </Link>

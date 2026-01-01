@@ -13,7 +13,7 @@ import { twMerge } from "tailwind-merge";
  * • smoothScrollTo() - Scroll animado personalizable hacia elemento o posición
  * • scrollToTop() - Scroll suave hacia arriba
  * • scrollToSection() - Scroll hacia sección por ID con offset para header
- * • handleNavigationClick() - Maneja clics de navegación con scroll suave para anchors
+ * • handleNavigationClick() - Maneja clics de navegación con scroll suave para anchors y navegación entre páginas
  *
  * 💰 FORMATEO:
  * • formatCurrency() - Formatea números como moneda EUR
@@ -358,16 +358,21 @@ export function scrollToSection(
 /**
  * handleNavigationClick:
  * Maneja clics en enlaces de navegación, aplicando scroll suave para anchors internos
+ * y navegación entre páginas cuando es necesario
  * @param event - Evento del click
  * @param href - URL del enlace
  * @param onComplete - Callback opcional cuando termina el scroll
+ * @param pathname - Pathname actual de la página (desde usePathname)
+ * @param router - Router de Next.js (desde useRouter)
  * @example
- * handleNavigationClick(e, '#contacto', () => setMenuOpen(false));
+ * handleNavigationClick(e, '#contacto', () => setMenuOpen(false), pathname, router);
  */
 export function handleNavigationClick(
   event: React.MouseEvent,
   href: string,
-  onComplete?: () => void
+  onComplete?: () => void,
+  pathname?: string,
+  router?: any
 ): void {
   // Solo manejar enlaces anchor internos (que empiecen con #)
   if (!href.startsWith("#")) {
@@ -376,18 +381,51 @@ export function handleNavigationClick(
 
   event.preventDefault();
 
-  const sectionId = href.substring(1); // Quitar el #
-
-  scrollToSection(sectionId, 2000)
-    .then(() => {
-      // Actualizar URL sin recargar la página
-      window.history.replaceState(null, "", href);
+  // Si estamos en una página diferente a la homepage, redirigir a la homepage con la sección
+  if (pathname && pathname !== '/') {
+    if (router) {
+      // Usar Next.js router para navegar limpiamente
+      router.push('/' + href);
       onComplete?.();
-    })
-    .catch(() => {
-      // Fallback: navegación normal si falla el scroll
-      window.location.href = href;
-    });
+      return;
+    } else {
+      // Fallback si no se pasa router
+      window.location.href = '/' + href;
+      onComplete?.();
+      return;
+    }
+  }
+
+  // Si estamos en la homepage, hacer scroll usando la función que ya funciona
+  const sectionId = href.substring(1);
+  const section = document.querySelector(`#${sectionId}`);
+  
+  if (section) {
+    // Usar smoothScrollTo con offset adecuado para el header
+    smoothScrollTo(section, 1500, -120)
+      .then(() => {
+        // Actualizar URL después del scroll
+        window.history.replaceState(null, '', href);
+        onComplete?.();
+      })
+      .catch(() => {
+        // Fallback usando router o window.location
+        if (router) {
+          router.push('/' + href);
+        } else {
+          window.location.href = '/' + href;
+        }
+        onComplete?.();
+      });
+  } else {
+    // Fallback si no encuentra la sección
+    if (router) {
+      router.push('/' + href);
+    } else {
+      window.location.href = '/' + href;
+    }
+    onComplete?.();
+  }
 }
 
 /**
