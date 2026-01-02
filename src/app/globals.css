@@ -508,3 +508,17 @@ button:focus-visible,
   background-color: var(--color-accent);
   color: var(--text-inverse);
 }
+
+/* ================================================================ */
+/* ESTILOS ESPECÍFICOS DEL MENÚ                                   */
+/* ================================================================ */
+
+/* Scroll sin scrollbar visible para navegación del menú */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
