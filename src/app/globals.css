@@ -4,6 +4,14 @@
  * ARQUITECTURA DE ESTILOS GLOBALES - EIMAR
  * =========================================
  * 
+ * ESTRUCTURA ORGANIZADA:
+ * 1. CSS Reset moderno
+ * 2. Variables CSS (Design Tokens)
+ * 3. Tipografía base 
+ * 4. Componentes sistema EIMAR
+ * 5. Utilidades específicas
+ * 6. Estados y interacciones
+ * 
  * RESPONSABILIDADES:
  * - globals.css (este archivo): Design tokens, variables semánticas, estilos base
  * - layout.tsx: Carga optimizada de fuentes con next/font + inyección de variables
@@ -515,8 +523,8 @@ button:focus-visible,
 
 /* Scroll sin scrollbar visible para navegación del menú */
 .scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {

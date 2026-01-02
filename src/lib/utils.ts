@@ -2,42 +2,27 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 /**
- * 📚 ÍNDICE DE UTILIDADES DISPONIBLES
- * ===================================
- * Puedes encontrar una explicación ampliada en el README de lib
- *
- * 🎨 ESTILOS & CSS:
- * • cn() - Combina clases CSS con Tailwind merge
- *
- * 🏃‍♂️ NAVEGACIÓN & SCROLL:
- * • smoothScrollTo() - Función principal de scroll animado con configuración avanzada
- * • scrollToTop() - Scroll suave hacia arriba
- * • scrollToSection() - Scroll hacia sección por ID
- * • scrollToElement() - Scroll hacia elemento del DOM
- * • navigateToHome() - Navegación inteligente al home
- * • handleSectionNavigation() - Navegación cross-page a secciones
- * • handleNavigationClick() - Handler unificado para clics de navegación
- *
- * 💰 FORMATEO:
- * • formatCurrency() - Formatea números como moneda EUR
- * • formatDate() - Formatea fechas en español
- * • formatTime() - Formatea horarios en formato HH:MM
- * • formatTimeRange() - Formatea rangos de horario
- * • formatPhoneDisplay() - Formatea números para mostrar ("+34 672 14 96 07")
- * • formatWhatsAppNumber() - Genera números internacionales para WhatsApp
- *
- * 🔗 URLS & LINKS:
- * • createPhoneLink() - Genera enlaces tel: formatados
- * • createWhatsAppLink() - Genera enlaces WhatsApp con mensaje opcional
- * • createEmailLink() - Genera enlaces mailto: con asunto opcional
- *
- * 📅 FECHAS & TIEMPO:
- * • getCurrentDay() - Obtiene el día actual como string
- * • isValidTime() - Valida formato de horario
- */
+========================================
+📝 PLANTILLA PARA NUEVAS UTILIDADES
+========================================
+Al añadir nuevas funciones:
+1. Actualiza el índice del README
+2. Usa esta plantilla para documentar la función:
+
+ * Descripción breve de qué hace
+ * @param param1 - Descripción del parámetro
+ * @returns - Qué devuelve
+ * @example
+ * nombreFuncion('ejemplo') // → "resultado"
+
+export function nombreFuncion(param1: tipo): tipoRetorno {
+  // implementación
+}
+========================================
+*/
 
 /**
- * cn:
+ ** cn:
  * Combina clases CSS usando clsx y tailwind-merge
  * @param inputs - Clases CSS variadas
  * @returns Clases combinadas y optimizadas
@@ -52,7 +37,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * formatCurrency:
+ ** formatCurrency:
  * Formatea números como moneda EUR en español
  * @param amount - Monto numérico
  * @returns Monto formateado como string
@@ -68,7 +53,7 @@ export function formatCurrency(amount: number): string {
 }
 
 /**
- * formatDate:
+ ** formatDate:
  * Formatea fechas en español
  * @param date - Objeto Date
  * @returns Fecha formateada como string
@@ -85,7 +70,7 @@ export function formatDate(date: Date): string {
 }
 
 /**
- * formatTime:
+ ** formatTime:
  * Formatea horarios en formato legible
  * @param time - Horario en formato "HH:MM"
  * @returns Horario formateado o "Hora inválida"
@@ -99,7 +84,7 @@ export function formatTime(time: string): string {
 }
 
 /**
- * formatTimeRange:
+ ** formatTimeRange:
  * Formatea rangos de horario
  * @param openTime - Hora de apertura "HH:MM"
  * @param closeTime - Hora de cierre "HH:MM"
@@ -127,7 +112,7 @@ export function formatTimeRange(
 }
 
 /**
- * createPhoneLink:
+ ** createPhoneLink:
  * Genera enlaces de teléfono formatados
  * @param number - Número con código de país (ej: "+34672149607")
  * @returns Enlace tel: válido
@@ -140,7 +125,7 @@ export function createPhoneLink(number: string): string {
 }
 
 /**
- * createWhatsAppLink:
+ ** createWhatsAppLink:
  * Genera enlaces de WhatsApp con mensaje opcional
  * @param number - Número internacional sin + (ej: "34672149607")
  * @param message - Mensaje predeterminado (opcional)
@@ -159,7 +144,7 @@ export function createWhatsAppLink(number: string, message?: string): string {
 }
 
 /**
- * createEmailLink:
+ ** createEmailLink:
  * Genera enlaces de email con asunto opcional
  * @param email - Dirección de email
  * @param subject - Asunto del email (opcional)
@@ -178,7 +163,7 @@ export function createEmailLink(email: string, subject?: string): string {
 }
 
 /**
- * getCurrentDay:
+ ** getCurrentDay:
  * Obtiene el día actual como string
  * @returns Día de la semana en inglés
  * @example getCurrentDay() → "monday"
@@ -198,7 +183,7 @@ export function getCurrentDay(): string {
 }
 
 /**
- * formatPhoneDisplay:
+ ** formatPhoneDisplay:
  * Formatea número de teléfono para display
  * @param number - Número sin formato (ej: "672149607")
  * @param countryCode - Código de país (default: "+34")
@@ -233,7 +218,7 @@ export function formatPhoneDisplay(
 }
 
 /**
- * formatWhatsAppNumber:
+ ** formatWhatsAppNumber:
  * Genera número internacional para WhatsApp
  * @param number - Número sin formato (ej: "672149607")
  * @param countryCode - Código numérico de país (default: "34")
@@ -249,7 +234,7 @@ export function formatWhatsAppNumber(
 }
 
 /**
- * isValidTime:
+ ** isValidTime:
  * Valida formato de horario HH:MM
  * @param time - Horario a validar
  * @returns true si es válido
@@ -314,17 +299,18 @@ const findSectionElement = (sectionId: string): Element | null => {
 
 // FUNCIÓN PRINCIPAL DE SCROLL (Single Responsibility)
 /**
- * smoothScrollTo:
+ ** smoothScrollTo:
  * Función principal de scroll animado con configuración avanzada
  * @param target - Elemento del DOM o número de píxeles desde arriba
  * @param options - Configuración del scroll (duración, offset, easing)
  * @returns Promise que se resuelve cuando termina la animación
  * @example
- * // Scroll básico
+ * Scroll básico:
  * smoothScrollTo(document.querySelector('#about'))
- * // Scroll avanzado
+ * Scroll avanzado:
  * smoothScrollTo('#about', { duration: 1000, offset: -100, easing: 'ease-out' })
  */
+
 export function smoothScrollTo(
   target: Element | number | string,
   options: ScrollOptions = {}
@@ -383,7 +369,7 @@ export function smoothScrollTo(
 
 // FUNCIONES DE ALTO NIVEL (Liskov Substitution Principle)
 /**
- * scrollToTop:
+ ** scrollToTop:
  * Scroll suave hacia arriba
  * @param options - Configuración opcional del scroll
  */
@@ -392,7 +378,7 @@ export function scrollToTop(options: ScrollOptions = {}): Promise<void> {
 }
 
 /**
- * scrollToSection:
+ ** scrollToSection:
  * Scroll hacia una sección específica por ID
  * @param sectionId - ID de la sección (con o sin #)
  * @param options - Configuración opcional del scroll
@@ -405,7 +391,7 @@ export function scrollToSection(
 }
 
 /**
- * scrollToElement:
+ **scrollToElement:
  * Scroll hacia un elemento específico del DOM
  * @param element - Elemento del DOM
  * @param options - Configuración opcional del scroll
@@ -448,7 +434,7 @@ export function navigateToHome(
 }
 
 /**
- * handleSectionNavigation:
+ ** handleSectionNavigation:
  * Maneja navegación inteligente a secciones con soporte cross-page
  * @param sectionId - ID de la sección objetivo
  * @param pathname - Ruta actual
@@ -500,7 +486,7 @@ export function handleSectionNavigation(
 }
 
 /**
- * handleNavigationClick:
+ ** handleNavigationClick:
  * Handler unificado para clics de navegación (Facade Pattern)
  * @param event - Evento del click
  * @param href - URL del enlace
@@ -525,24 +511,3 @@ export function handleNavigationClick(
   handleSectionNavigation(sectionId, pathname, router, options);
 }
 
-/**
-========================================
-📝 PLANTILLA PARA NUEVAS UTILIDADES
-========================================
-Al añadir nuevas funciones:
-1. Actualiza el índice arriba ⬆️
-2. Añade documentación con ejemplos en README
-3. Usa esta plantilla:
-
- * Descripción breve de qué hace
- * @param param1 - Descripción del parámetro
- * @returns - Qué devuelve
- * @example
- * nombreFuncion('ejemplo') // → "resultado"
-
-export function nombreFuncion(param1: tipo): tipoRetorno {
-  // implementación
-}
-
-Esta plantilla debe ir siempre al final (añade las nuevas funciones por encima)
-*/

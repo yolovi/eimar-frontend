@@ -2,6 +2,8 @@
  * CONSTANTS BARREL EXPORT
  * ========================
  * Punto de entrada centralizado para todas las constantes de la aplicación
+ * 
+ * constants/ → Datos estáticos que nunca cambian (URLs, configuraciones, textos fijos)
  */
 
 // Información de contacto del restaurante

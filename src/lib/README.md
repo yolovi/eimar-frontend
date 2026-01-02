@@ -2,7 +2,81 @@
 
 Este archivo contiene todas las funciones de utilidad disponibles en el proyecto.
 
-## 📋 Índice de Funciones
+## 📋 Índice Simple de Funciones
+
+/**
+ * 📚 ÍNDICE DE UTILIDADES DISPONIBLES
+ * ===================================
+ * Puedes encontrar una explicación ampliada en el README de lib
+ *
+ * 🎨 ESTILOS & CSS:
+ * • cn() - Combina clases CSS con Tailwind merge
+ *
+ * 🏃‍♂️ NAVEGACIÓN & SCROLL:
+ * • smoothScrollTo() - Función principal de scroll animado con configuración avanzada
+ * • scrollToTop() - Scroll suave hacia arriba
+ * • scrollToSection() - Scroll hacia sección por ID
+ * • scrollToElement() - Scroll hacia elemento del DOM
+ * • navigateToHome() - Navegación inteligente al home
+ * • handleSectionNavigation() - Navegación cross-page a secciones
+ * • handleNavigationClick() - Handler unificado para clics de navegación
+ *
+ * 💰 FORMATEO:
+ * • formatCurrency() - Formatea números como moneda EUR
+ * • formatDate() - Formatea fechas en español
+ * • formatTime() - Formatea horarios en formato HH:MM
+ * • formatTimeRange() - Formatea rangos de horario
+ * • formatPhoneDisplay() - Formatea números para mostrar ("+34 672 14 96 07")
+ * • formatWhatsAppNumber() - Genera números internacionales para WhatsApp
+ *
+ * 🔗 URLS & LINKS:
+ * • createPhoneLink() - Genera enlaces tel: formatados
+ * • createWhatsAppLink() - Genera enlaces WhatsApp con mensaje opcional
+ * • createEmailLink() - Genera enlaces mailto: con asunto opcional
+ *
+ * 📅 FECHAS & TIEMPO:
+ * • getCurrentDay() - Obtiene el día actual como string
+ * • isValidTime() - Valida formato de horario
+ * 
+ * ========================================
+ **  TODO: 👉 OTRAS UTILIDADES implementar a futuro:
+ * ----------------------------------------
+ * 📍PERFORMANCE, UX & OPTIMIZACIÓN:
+ * • debounce(fn, delay) - Limita la frecuencia de ejecución de una función (optimizar búsquedas)
+ * • throttle(fn, limit) - Controla la tasa de ejecución de una función (limitar ejecuciones)
+ * • generateId() - Genera IDs únicos para elementos
+ * • slugify() - Convierte strings en slugs URL-friendly de la propia web: "Menú Degustación" → "menu-degustacion"
+ * 📍TEXTO:
+ * • TruncateText() - Trunca textos largos con "..."
+ * • capitalize() - Capitaliza la primera letra de un string
+ * • stripHtmlTags() - Elimina etiquetas HTML de un string
+ * 📍ARRAYS & OBJETOS:
+ * • groupBy() - Agrupa elementos de un array por clave
+ * • chunkArray() - Divide un array en chunks más pequeños
+ * 📍MANEJO DE ERRORES:
+ * • logError() - Registro centralizado de errores
+ * • formatErrorMessage() - Formatea mensajes de error para usuarios
+ * 📍VALIDACIONES:
+ * • validateEmail() - Valida formato de email
+ * • validatePhoneNumber() - Valida formato de número de teléfono
+ * • validateReservationData(data) - Valida datos de reserva
+ * 📍MENÚ & CATEGORÍAS:
+ * • filterMenuItems() - Filtra platos del menú por criterios (alérgenos, dieta, precio)
+ * • sortMenuItems() - Ordena platos del menú por nombre, precio, popularidad
+ * • searchMenuItems() - Busca platos del menú por texto
+ * 📍CARRITO & PEDIDOS:
+ * • calculateCartTotal() - Calcula total del carrito con impuestos y descuentos
+ * • formatOrderSummary() - Formatea resumen de pedido para display o envío
+ * • applyDiscountCode() - Aplica códigos de descuento al carrito
+ * 📍USUARIOS & AUTENTICACIÓN:
+ * • hashPassword() - Hashea contraseñas de usuarios
+ * • verifyPassword() - Verifica contraseñas hasheadas
+ * • generateAuthToken() - Genera tokens de autenticación JWT
+ * • parseAuthToken() - Parsea y valida tokens JWT
+ * 📍SISTEMA DE RESERVAS:
+ * • getAvailableSlots() - Calcula huecos disponibles para reservas
+ * 📍FECHAS & HORARIOS AVANZADO (reserva AVANZADO):
+ * • getAvailableReservationTimes() - Obtiene horarios disponibles para reservas
 
 ### 🎨 **Estilos & CSS**
 - [`cn()`](#cn) - Combina clases CSS con Tailwind merge
