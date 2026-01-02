@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { MENU_DATA } from '@/data';
 import type { MenuCategory, MenuItem } from '@/types';
 import { smoothScrollTo } from '@/lib/utils';
+import { MenuImage } from '@/components/ui';
 
 interface MenuTabsProps {
   categories: MenuCategory[];
@@ -52,6 +53,7 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
 
 interface MenuItemCardProps {
   item: MenuItem;
+  category: MenuCategory;
 }
 
 /**
@@ -61,7 +63,7 @@ interface MenuItemCardProps {
  * Muestra la información de cada plato con imagen, descripción, 
  * precio y características especiales (vegano, picante, etc.)
  */
-function MenuItemCard({ item }: MenuItemCardProps) {
+function MenuItemCard({ item, category }: MenuItemCardProps) {
   const badges = [];
   
   if (item.isVegetarian) badges.push({ text: 'Vegetariano', color: 'bg-green-100 text-green-800' });
@@ -71,16 +73,14 @@ function MenuItemCard({ item }: MenuItemCardProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md group">
-      {/* Imagen del plato */}
+      {/* Imagen del plato con manejo de errores */}
       <div className="aspect-w-16 aspect-h-9 bg-gray-100">
-        <img
+        <MenuImage
           src={item.image}
           alt={item.name}
+          dishName={item.name}
+          categoryName={category.name}
           className="w-full h-48 object-cover transition-transform duration-200 group-hover:scale-105"
-          onError={(e) => {
-            // Fallback si la imagen no existe
-            e.currentTarget.src = '/images/placeholder-food.jpg';
-          }}
         />
       </div>
       
@@ -157,7 +157,7 @@ function MenuCategorySection({ category, isActive }: MenuCategoryProps) {
         {/* Grid de platos */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {category.items.map((item) => (
-            <MenuItemCard key={item.id} item={item} />
+            <MenuItemCard key={item.id} item={item} category={category} />
           ))}
         </div>
       </div>

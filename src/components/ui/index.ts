@@ -15,6 +15,7 @@ export { default as OrderSection } from "./OrderSection";
 export { default as ActionButton } from "./ActionButton";
 export type { ActionButtonProps } from "./ActionButton";
 export { MenuIcon, PhoneIcon, WhatsAppIcon } from "./ActionButton";
+export { default as MenuImage } from "./MenuImage";
 // TODO: Add more UI components here
 // export { Input } from './Input';
 // export { Modal } from './Modal';
