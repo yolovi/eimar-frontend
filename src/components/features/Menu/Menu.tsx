@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MENU_DATA } from '@/data';
 import type { MenuCategory, MenuItem } from '@/types';
 import { smoothScrollTo } from '@/lib/utils';
@@ -13,38 +13,95 @@ interface MenuTabsProps {
 }
 
 /**
- * NAVEGACIÓN FIJA DEL MENÚ (Pestañas)
- * ===================================
+ * NAVEGACIÓN FIJA DEL MENÚ (Badges/Botones)
+ * =========================================
  * 
- * Navegación horizontal fija que permanece en la parte superior
- * cuando el usuario hace scroll. Estilo tipo pestañas de navegador.
+ * Navegación horizontal fija con estilo badge minimalista.
+ * Se mantiene visible durante el scroll para fácil navegación.
+ * Adapta su comportamiento según el espacio disponible.
  */
 function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProps) {
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Verificar si hay overflow y posición del scroll
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const hasOverflowContent = scrollWidth > clientWidth;
+      
+      setHasOverflow(hasOverflowContent);
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, []);
+
   return (
-    <div className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex overflow-x-auto scrollbar-hide">
-          {categories.map((category) => {
-            const isActive = activeCategory === category.id;
-            
-            return (
-              <button
-                key={category.id}
-                onClick={() => onCategoryChange(category.id)}
-                className={`
-                  flex items-center gap-2 px-4 py-4 whitespace-nowrap text-sm font-medium
-                  border-b-2 transition-all duration-200 hover:text-[var(--eimar-green)]
-                  ${isActive 
-                    ? 'border-[var(--eimar-green)] text-[var(--eimar-green)]' 
-                    : 'border-transparent text-gray-600 hover:border-gray-200'
-                  }
-                `}
-              >
-                <span className="text-lg">{category.icon}</span>
-                <span>{category.name}</span>
-              </button>
-            );
-          })}
+        <div className="relative">
+          {/* Indicador izquierdo */}
+          {hasOverflow && canScrollLeft && (
+            <div className="absolute left-0 top-0 bottom-1 w-8 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none flex items-center">
+              <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
+                <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+              </div>
+            </div>
+          )}
+          
+          {/* Indicador derecho */}
+          {hasOverflow && canScrollRight && (
+            <div className="absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none flex items-center justify-end">
+              <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
+                <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+              </div>
+            </div>
+          )}
+
+          <div 
+            ref={scrollContainerRef}
+            onScroll={checkScroll}
+            className={`flex gap-2 overflow-x-auto scrollbar-hide pb-1 ${
+              hasOverflow ? 'justify-start' : 'justify-center'
+            }`}
+          >
+            {categories.map((category) => {
+              const isActive = activeCategory === category.id;
+              
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => onCategoryChange(category.id)}
+                  className={`
+                    px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap
+                    transition-all duration-200 text-center
+                    ${hasOverflow 
+                      ? 'flex-shrink-0' 
+                      : 'flex-1 min-w-0'
+                    }
+                    ${isActive 
+                      ? 'bg-[var(--eimar-green)] text-white shadow-md' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
+                    }
+                  `}
+                >
+                  {category.name}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -165,7 +222,6 @@ function MenuCategorySection({ category, isActive }: MenuCategoryProps) {
         {/* Cabecera de la categoría */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">
-            <span className="text-4xl mr-3">{category.icon}</span>
             {category.name}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
