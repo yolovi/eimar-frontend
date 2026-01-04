@@ -5,6 +5,7 @@ import { MENU_DATA } from '@/data';
 import type { MenuCategory, MenuItem } from '@/types';
 import { smoothScrollTo } from '@/lib/utils';
 import { MenuImage } from '@/components/ui';
+import { Header } from '@/components/layout';
 
 interface MenuTabsProps {
   categories: MenuCategory[];
@@ -250,6 +251,10 @@ function MenuCategorySection({ category, isActive }: MenuCategoryProps) {
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState<string>(MENU_DATA[0]?.id || 'entrantes');
   const [isScrolling, setIsScrolling] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
 
   // Cambiar categoría y hacer scroll suave
   const handleCategoryChange = (categoryId: string) => {
@@ -264,8 +269,76 @@ const Menu = () => {
     }, 300);
   };
 
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Detectar scroll para mostrar botón "ir arriba" y navbar en móvil
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Mostrar/ocultar botón scroll to top
+      setShowScrollTop(currentScrollY > 400);
+      
+      // Detectar dirección del scroll
+      if (currentScrollY > lastScrollY) {
+        setScrollDirection('down');
+      } else {
+        setScrollDirection('up');
+      }
+      
+      // En móvil, mostrar navbar cuando scrollean hacia arriba y están lejos del top
+      const isMobile = window.innerWidth < 768; // md breakpoint
+      if (isMobile) {
+        if (scrollDirection === 'up' && currentScrollY > 200) {
+          setShowNavbar(true);
+        } else if (scrollDirection === 'down' || currentScrollY < 100) {
+          setShowNavbar(false);
+        }
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY, scrollDirection]);
+
+  // Detectar hover en la zona superior para desktop
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) return;
+      
+      // Mostrar navbar cuando el cursor esté en los primeros 60px de la pantalla
+      if (e.clientY < 60) {
+        setShowNavbar(true);
+      } else if (e.clientY > 150) {
+        // Ocultar cuando el cursor baje más de 150px
+        setShowNavbar(false);
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Navbar deslizante desde arriba */}
+      <div 
+        className={`fixed top-0 left-0 right-0 z-40 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+          showNavbar ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <Header />
+      </div>
+
       {/* Header de la página */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
@@ -296,6 +369,23 @@ const Menu = () => {
           />
         ))}
       </main>
+
+      {/* Botón scroll to top */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className={`
+            fixed bottom-6 right-6 z-50 w-12 h-12 bg-[var(--eimar-green)] text-white 
+            rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300
+            hover:scale-110 hover:bg-[var(--eimar-green)]/90 flex items-center justify-center
+          `}
+          aria-label="Volver arriba"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
 
       {/* Footer con información adicional */}
       <div className="bg-white border-t border-gray-200 mt-12">
