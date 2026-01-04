@@ -42,7 +42,7 @@ const Logo = ({
   if (clickable) {
     return (
       <button
-        onClick={() => scrollToTop(6000)} // 2 segundos igual que en Hero
+        onClick={() => scrollToTop()} // Sin parámetros, usa la configuración por defecto
         className="focus:outline-none focus:ring-2 focus:ring-current/50 rounded-sm"
         aria-label="Volver al inicio"
         title="Volver al inicio"
