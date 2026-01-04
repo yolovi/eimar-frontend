@@ -59,7 +59,7 @@ const createPlaceholderDataURL = (dishName: string, categoryName: string): strin
   const safeCategoryName = categoryName.substring(0, 15);
   
   const svg = `
-    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f3f4f6" stroke-width="1"/>
@@ -67,14 +67,14 @@ const createPlaceholderDataURL = (dishName: string, categoryName: string): strin
       </defs>
       <rect width="100%" height="100%" fill="#f8fafc"/>
       <rect width="100%" height="100%" fill="url(#grid)"/>
-      <circle cx="150" cy="80" r="20" fill="#e2e8f0"/>
-      <rect x="130" y="105" width="40" height="4" rx="2" fill="#e2e8f0"/>
-      <rect x="120" y="115" width="60" height="3" rx="1.5" fill="#f1f5f9"/>
-      <rect x="110" y="125" width="80" height="3" rx="1.5" fill="#f1f5f9"/>
-      <text x="150" y="160" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="12" font-weight="500">
+      <circle cx="150" cy="120" r="20" fill="#e2e8f0"/>
+      <rect x="130" y="145" width="40" height="4" rx="2" fill="#e2e8f0"/>
+      <rect x="120" y="155" width="60" height="3" rx="1.5" fill="#f1f5f9"/>
+      <rect x="110" y="165" width="80" height="3" rx="1.5" fill="#f1f5f9"/>
+      <text x="150" y="200" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="12" font-weight="500">
         ${safeDishName}
       </text>
-      <text x="150" y="175" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">
+      <text x="150" y="215" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">
         ${safeCategoryName} - Sin imagen
       </text>
     </svg>

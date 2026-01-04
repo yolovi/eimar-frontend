@@ -74,13 +74,13 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md group">
       {/* Imagen del plato con manejo de errores */}
-      <div className="aspect-w-16 aspect-h-9 bg-gray-100">
+      <div className="aspect-square bg-gray-100">
         <MenuImage
           src={item.image}
           alt={item.name}
           dishName={item.name}
           categoryName={category.name}
-          className="w-full h-48 object-cover transition-transform duration-200 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
         />
       </div>
       
