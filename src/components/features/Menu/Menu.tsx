@@ -72,9 +72,9 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
   if (item.isSpicy) badges.push({ text: '🌶️ Picante', color: 'bg-red-100 text-red-800' });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md group">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md group h-full flex flex-col">
       {/* Imagen del plato con manejo de errores */}
-      <div className="aspect-square bg-gray-100">
+      <div className="aspect-square bg-gray-100 flex-shrink-0">
         <MenuImage
           src={item.image}
           alt={item.name}
@@ -85,40 +85,59 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
       </div>
       
       {/* Información del plato */}
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[var(--eimar-green)] transition-colors">
+      <div className="p-3 flex flex-col flex-grow">
+        {/* Layout para móvil (2 columnas) - Título solo */}
+        <div className="md:hidden mb-2">
+          <h3 className="text-base font-semibold text-gray-900 group-hover:text-[var(--eimar-green)] transition-colors line-clamp-2 min-h-[2.5rem]">
             {item.name}
           </h3>
-          <span className="text-xl font-bold text-[var(--eimar-green)] ml-2">
+        </div>
+        
+        {/* Layout para tablet/desktop (3-4 columnas) - Título y precio en línea */}
+        <div className="hidden md:flex justify-between items-start mb-2 min-h-[2.5rem]">
+          <h3 className="text-base font-semibold text-gray-900 group-hover:text-[var(--eimar-green)] transition-colors line-clamp-2 flex-1">
+            {item.name}
+          </h3>
+          <span className="text-lg font-bold text-[var(--eimar-green)] ml-2 flex-shrink-0">
             {item.price.toFixed(2)}€
           </span>
         </div>
         
-        <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+        <p className="text-gray-600 text-xs leading-relaxed flex-grow line-clamp-3 mb-2 min-h-[3rem]">
           {item.description}
         </p>
         
+        {/* Precio para móvil - Debajo de la descripción */}
+        <div className="md:hidden mb-2">
+          <span className="text-lg font-bold text-[var(--eimar-green)]">
+            {item.price.toFixed(2)}€
+          </span>
+        </div>
+        
         {/* Badges de características especiales */}
-        {badges.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-3">
-            {badges.map((badge, index) => (
-              <span 
-                key={index}
-                className={`px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}
-              >
-                {badge.text}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="min-h-[1.5rem] mb-2">
+          {badges.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {badges.map((badge, index) => (
+                <span 
+                  key={index}
+                  className={`px-2 py-0.5 rounded-full text-xs font-medium ${badge.color}`}
+                >
+                  {badge.text}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
         
         {/* Información de alérgenos */}
-        {item.allergens && item.allergens.length > 0 && (
-          <div className="text-xs text-gray-500">
-            <span className="font-medium">Alérgenos:</span> {item.allergens.join(', ')}
-          </div>
-        )}
+        <div className="mt-auto min-h-[1rem]">
+          {item.allergens && item.allergens.length > 0 && (
+            <div className="text-xs text-gray-500">
+              <span className="font-medium">Alérgenos:</span> {item.allergens.join(', ')}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -155,7 +174,7 @@ function MenuCategorySection({ category, isActive }: MenuCategoryProps) {
         </div>
         
         {/* Grid de platos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {category.items.map((item) => (
             <MenuItemCard key={item.id} item={item} category={category} />
           ))}
