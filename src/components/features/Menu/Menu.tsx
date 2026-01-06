@@ -46,12 +46,12 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
   }, []);
 
   return (
-    <div className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm py-4">
+    <div className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
           {/* Indicador izquierdo */}
           {hasOverflow && canScrollLeft && (
-            <div className="absolute left-0 top-0 bottom-1 w-8 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none flex items-center">
+            <div className="absolute left-0 top-0 bottom-1 w-8 bg-linear-to-r from-white to-transparent z-10 pointer-events-none flex items-center">
               <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
                 <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -62,7 +62,7 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
           
           {/* Indicador derecho */}
           {hasOverflow && canScrollRight && (
-            <div className="absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none flex items-center justify-end">
+            <div className="absolute right-0 top-0 bottom-1 w-8 bg-linear-to-l from-white to-transparent z-10 pointer-events-none flex items-center justify-end">
               <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
                 <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
@@ -89,11 +89,11 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
                     px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap
                     transition-all duration-200 text-center
                     ${hasOverflow 
-                      ? 'flex-shrink-0' 
+                      ? 'shrink-0' 
                       : 'flex-1 min-w-0'
                     }
                     ${isActive 
-                      ? 'bg-[var(--eimar-green)] text-white shadow-md' 
+                      ? 'bg-(--eimar-green) text-white shadow-md' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
                     }
                   `}
@@ -132,7 +132,7 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md group h-full flex flex-col">
       {/* Imagen del plato con manejo de errores */}
-      <div className="aspect-square bg-gray-100 flex-shrink-0">
+      <div className="aspect-square bg-gray-100 shrink-0">
         <MenuImage
           src={item.image}
           alt={item.name}
@@ -143,37 +143,37 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
       </div>
       
       {/* Información del plato */}
-      <div className="p-3 flex flex-col flex-grow">
+      <div className="p-3 flex flex-col grow">
         {/* Layout para móvil (2 columnas) - Título solo */}
         <div className="md:hidden mb-2">
-          <h3 className="text-base font-semibold text-gray-900 group-hover:text-[var(--eimar-green)] transition-colors line-clamp-2 min-h-[2.5rem]">
+          <h3 className="text-base font-semibold text-(--text-primary) group-hover:text-(--eimar-green) transition-colors line-clamp-2 min-h-10">
             {item.name}
           </h3>
         </div>
         
         {/* Layout para tablet/desktop (3-4 columnas) - Título y precio en línea */}
-        <div className="hidden md:flex justify-between items-start mb-2 min-h-[2.5rem]">
-          <h3 className="text-base font-semibold text-gray-900 group-hover:text-[var(--eimar-green)] transition-colors line-clamp-2 flex-1">
+        <div className="hidden md:flex justify-between items-start mb-2 min-h-10">
+          <h3 className="text-base font-semibold text-(--text-primary) group-hover:text-(--eimar-green) transition-colors line-clamp-2 flex-1">
             {item.name}
           </h3>
-          <span className="text-lg font-bold text-[var(--eimar-green)] ml-2 flex-shrink-0">
+          <span className="text-lg font-bold text-(--eimar-green) ml-2 shrink-0">
             {item.price.toFixed(2)}€
           </span>
         </div>
         
-        <p className="text-gray-600 text-xs leading-relaxed flex-grow line-clamp-3 mb-2 min-h-[3rem]">
+        <p className="text-gray-600 text-xs leading-relaxed grow line-clamp-3 mb-2 min-h-12">
           {item.description}
         </p>
         
         {/* Precio para móvil - Debajo de la descripción */}
         <div className="md:hidden mb-2">
-          <span className="text-lg font-bold text-[var(--eimar-green)]">
+          <span className="text-lg font-bold text-(--eimar-green)">
             {item.price.toFixed(2)}€
           </span>
         </div>
         
         {/* Badges de características especiales */}
-        <div className="min-h-[1.5rem] mb-2">
+        <div className="min-h-6 mb-2">
           {badges.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {badges.map((badge, index) => (
@@ -189,7 +189,7 @@ function MenuItemCard({ item, category }: MenuItemCardProps) {
         </div>
         
         {/* Información de alérgenos */}
-        <div className="mt-auto min-h-[1rem]">
+        <div className="mt-auto min-h-4">
           {item.allergens && item.allergens.length > 0 && (
             <div className="text-xs text-gray-500">
               <span className="font-medium">Alérgenos:</span> {item.allergens.join(', ')}
@@ -209,9 +209,7 @@ interface MenuCategoryProps {
 /**
  * SECCIÓN DE CATEGORÍA DEL MENÚ
  * =============================
- * 
- * Muestra una categoría completa con su descripción y 
- * todos sus platos en formato grid.
+ * Muestra una categoría completa con su descripción y todos sus platos en formato grid.
  */
 function MenuCategorySection({ category, isActive }: MenuCategoryProps) {
   return (
@@ -375,9 +373,9 @@ const Menu = () => {
         <button
           onClick={scrollToTop}
           className={`
-            fixed bottom-6 right-6 z-50 w-12 h-12 bg-[var(--eimar-green)] text-white 
+            fixed bottom-6 right-6 z-50 w-12 h-12 bg-(--eimar-green) text-white 
             rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300
-            hover:scale-110 hover:bg-[var(--eimar-green)]/90 flex items-center justify-center
+            hover:scale-110 hover:bg-(--eimar-green)/90 flex items-center justify-center
           `}
           aria-label="Volver arriba"
         >
@@ -390,9 +388,6 @@ const Menu = () => {
       {/* Footer con información adicional */}
       <div className="bg-white border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Información Adicional
-          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600">
             <div>
               <h4 className="font-medium text-gray-900 mb-2">Alérgenos</h4>
