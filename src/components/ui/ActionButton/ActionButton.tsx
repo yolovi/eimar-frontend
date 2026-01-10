@@ -14,10 +14,10 @@
  *
  * USO:
  * import { ActionButton } from '@/components/ui';
- * 
- * <ActionButton 
- *   icon={<MenuIcon />} 
- *   label="Carta" 
+ *
+ * <ActionButton
+ *   icon={<MenuIcon />}
+ *   label="Carta"
  *   onClick={handleViewMenu}
  *   ariaLabel="Ver carta del restaurante"
  * />
@@ -63,13 +63,11 @@ const ActionButton = ({
       style={{ color: "var(--text-inverse)" }}
     >
       <div className="w-12 h-12 bg-base/80 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-accent/80 transition-colors">
-        <div className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
+        <div className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current group-hover:[&>svg]:fill-white transition-colors">
           {icon}
         </div>
       </div>
-      <span className="eimar-body-small font-medium">
-        {label}
-      </span>
+      <span className="eimar-body-small font-medium">{label}</span>
     </button>
   );
 };

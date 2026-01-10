@@ -36,17 +36,17 @@ export default function MenuIntro() {
     {
       src: "/images/restaurant/ambiente1.png",
       alt: "Interior del restaurante Eimar",
-      title: "Ambiente acogedor y familiar",
+      title: "Ambiente acogedor",
     },
     {
       src: "/images/restaurant/comida1.png",
-      alt: "Paella del restaurante Eimar",
-      title: "Especialidad de la casa: Paella",
+      alt: "Bocadillo Eimar",
+      title: "Bocadillo Eimar",
     },
     {
       src: "/images/restaurant/ambiente2.png",
       alt: "Terraza del restaurante Eimar",
-      title: "Terraza exterior - Pet friendly",
+      title: "Terraza exterior",
     },
     {
       src: "/images/restaurant/comida2.png",

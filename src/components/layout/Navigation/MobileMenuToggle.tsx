@@ -15,35 +15,45 @@ const MobileMenuToggle = () => {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Estilo común para los botones de contacto
+  const contactButtonClasses = "flex-1 h-12 px-4 py-2 rounded-lg font-semibold cursor-pointer transition-all duration-300 backdrop-blur-sm border-2 border-transparent hover:scale-105 hover:shadow-xl hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/60 flex items-center justify-center";
+
+  const contactButtonStyle = {
+    backgroundColor: "var(--color-base)",
+    color: "var(--color-accent)",
+    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+  };
+
   // Función de animación suave personalizada para el sidebar
   const animateSidebar = (isOpening: boolean) => {
     setIsAnimating(true);
-    
+
     if (isOpening) {
       setShowMenu(true);
     }
-    
+
     const duration = 800; // Duración más lenta para efecto cinematográfico
     let startTime: number | null = null;
-    
+
     const animation = (currentTime: number) => {
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
-      
+
       // Easing cúbico suave (igual que el scroll)
-      const ease = progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      
-      const translateX = isOpening ? 100 - (ease * 100) : ease * 100;
+      const ease =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      const translateX = isOpening ? 100 - ease * 100 : ease * 100;
       const opacity = isOpening ? ease : 1 - ease;
-      
+
       if (menuRef.current) {
         menuRef.current.style.transform = `translateX(${translateX}%)`;
         menuRef.current.style.opacity = opacity.toString();
       }
-      
+
       if (timeElapsed < duration) {
         requestAnimationFrame(animation);
       } else {
@@ -53,14 +63,14 @@ const MobileMenuToggle = () => {
         }
       }
     };
-    
+
     requestAnimationFrame(animation);
   };
 
   // Manejar solo apertura del menú (el cierre se hace desde la X del sidebar)
   const openMenu = () => {
     if (isAnimating || isMobileMenuOpen) return; // Evitar abrir si ya está abierto o animando
-    
+
     setIsMobileMenuOpen(true);
     animateSidebar(true);
   };
@@ -68,7 +78,7 @@ const MobileMenuToggle = () => {
   // Manejar solo cierre del menú (usado por la X del sidebar)
   const closeMenu = () => {
     if (isAnimating || !isMobileMenuOpen) return; // Evitar cerrar si ya está cerrado o animando
-    
+
     setIsMobileMenuOpen(false);
     animateSidebar(false);
   };
@@ -116,7 +126,7 @@ const MobileMenuToggle = () => {
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/50 z-50 md:hidden"
-            style={{ 
+            style={{
               top: "0", // Cubrir toda la pantalla desde arriba
               // height: "100vh", // Altura completa del viewport
               height: "100dvh", // Dynamic viewport height para móviles
@@ -169,7 +179,7 @@ const MobileMenuToggle = () => {
                   </svg>
                 </button>
               </div>
-              
+
               {/* Navigation Items con texto a la derecha */}
               <div className="flex-1 py-6 px-2 pt-16">
                 <Navigation
@@ -181,12 +191,18 @@ const MobileMenuToggle = () => {
               </div>
 
               {/* Actions at Bottom con safe area para dispositivos con notch */}
-              <div className="p-6 pb-8 border-t border-accent/20 space-y-4 flex flex-col items-center" style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom))" }}>
-                {/* Iconos de contacto */}
-                <div className="flex gap-4 w-full justify-center mb-2">
+              <div
+                className="p-6 pb-8 border-t border-accent/20 space-y-4 flex flex-col items-center"
+                style={{
+                  paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
+                }}
+              >
+                {/* Iconos de contacto estilo HeroButton personalizado */}
+                <div className="flex gap-4 w-full mb-2">
                   {/* Botón de teléfono */}
                   <button
-                    className="flex items-center justify-center w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                    className={contactButtonClasses}
+                    style={contactButtonStyle}
                     onClick={() => {
                       window.open(CONTACT_INFO.phone.primary.link, "_self");
                       closeMenu();
@@ -194,14 +210,15 @@ const MobileMenuToggle = () => {
                     title={`Llamar: ${CONTACT_INFO.phone.primary.display}`}
                     aria-label="Llamar por teléfono"
                   >
-                    <svg className="w-6 h-6 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
                     </svg>
                   </button>
 
                   {/* Botón de WhatsApp */}
                   <button
-                    className="flex items-center justify-center w-12 h-12 bg-green-500 hover:bg-green-600 rounded-full transition-colors"
+                    className={contactButtonClasses}
+                    style={contactButtonStyle}
                     onClick={() => {
                       window.open(CONTACT_INFO.whatsapp.linkWithReservation, "_blank");
                       closeMenu();
@@ -209,22 +226,27 @@ const MobileMenuToggle = () => {
                     title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
                     aria-label="Contactar por WhatsApp"
                   >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.472,14.382c-0.297-0.149-1.758-0.867-2.03-0.967c-0.273-0.099-0.471-0.148-0.670.15c-0.197,0.297-0.767,0.966-0.94,1.164c-0.173,0.199-0.347,0.223-0.644,0.075c-0.297-0.15-1.255-0.463-2.39-1.475c-0.883-0.788-1.48-1.761-1.653-2.059c-0.173-0.297-0.018-0.458,0.13-0.606c0.134-0.133,0.298-0.347,0.446-0.52C9.889,9.367,9.939,9.26,10.037,9.061c0.099-0.198,0.05-0.371-0.025-0.52C9.962,8.390,9.366,6.929,9.143,6.335c-0.220-0.593-0.444-0.513-0.607-0.513C8.39,5.822,8.192,5.822,7.994,5.822c-0.198,0-0.52,0.074-0.792,0.372C6.930,6.491,6.16,7.164,6.16,8.624s1.004,2.319,1.144,2.479c0.139,0.148,1.96,2.994,4.75,4.199c0.664,0.287,1.182,0.458,1.586,0.587c0.668,0.212,1.276,0.182,1.757,0.11c0.536-0.08,1.758-0.719,2.006-1.413c0.248-0.694,0.248-1.289,0.173-1.413C18.452,14.927,18.769,14.531,17.472,14.382z M12.056,21.785c-1.665,0-3.293-0.448-4.718-1.294L2.051,21.8l1.367-4.95C2.51,15.402,2.056,13.681,2.056,11.896c0-5.455,4.434-9.889,9.889-9.889s9.889,4.434,9.889,9.889S17.511,21.785,12.056,21.785z M20.5,11.896c0-4.67-3.819-8.444-8.444-8.444s-8.444,3.774-8.444,8.444c0,1.487,0.389,2.984,1.13,4.300l0.111,0.175l-0.464,1.68l1.717-0.452l0.171,0.102c1.31,0.758,2.799,1.158,4.299,1.158C16.681,20.34,20.5,16.566,20.5,11.896z" />
                     </svg>
                   </button>
                 </div>
-                
-                <HeroButton 
-                  variant="primary" 
+
+                <HeroButton
+                  variant="primary"
                   size="sm"
                   className="flex items-center justify-center w-full"
                   onClick={() => {
                     closeMenu();
-                    handleSectionNavigation('reservas-y-pedidos', pathname, router, {
-                      onComplete: undefined,
-                      isMobile: true
-                    });
+                    handleSectionNavigation(
+                      "reservas-y-pedidos",
+                      pathname,
+                      router,
+                      {
+                        onComplete: undefined,
+                        isMobile: true,
+                      }
+                    );
                   }}
                 >
                   Reservar Mesa

@@ -237,6 +237,11 @@ div[data-nextjs-dialog-overlay] {
     --text-primary: var(--eimar-white-snow);
   }
 
+  /* Utilidades de texto */
+  .text-inverse {
+    color: var(--text-inverse);
+  }
+
   /* Utilidades de transición */
   .smooth-theme {
     transition: background-color 0.3s ease, color 0.3s ease,

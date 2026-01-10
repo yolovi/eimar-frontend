@@ -308,10 +308,10 @@ const Contact = ({ className }: ContactProps) => {
                 <HeroButton
                   variant="primary"
                   size="md"
-                  onClick={handlePhoneClick}
+                  onClick={() => window.open(CONTACT_INFO.whatsapp.linkWithReservation, "_blank")}
                   className="px-8"
                 >
-                  💬 Contactar
+                Contactar
                 </HeroButton>
               </div>
             </div>
