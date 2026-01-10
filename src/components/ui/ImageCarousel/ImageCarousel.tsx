@@ -215,14 +215,15 @@ const ImageCarousel = ({
                 : "transition-transform duration-700 ease-out" // Desktop: transform animado
             )}
             style={{
-              transform: currentImagesPerView === 1 ? 'none' : `translateX(-${currentIndex * (100 / currentImagesPerView)}%)`
+              transform: currentImagesPerView === 1 ? 'none' : 
+                `translateX(calc(-${currentIndex} * (calc((100% - ${(currentImagesPerView - 1) * 16}px) / ${currentImagesPerView}) + ${16}px)))`
             }}
           >
             {images.map((image, index) => {
               // En móvil: ancho fijo para scroll manual, en desktop: ancho dinámico
               const widthStyle = currentImagesPerView === 1
                 ? { width: '280px', flexShrink: 0 } // Ancho fijo para scroll manual en móvil
-                : { width: `${100 / currentImagesPerView}%` }; // Ancho dinámico para desktop
+                : { width: `calc((100% - ${(currentImagesPerView - 1) * 16}px) / ${currentImagesPerView})` }; // Ancho dinámico para desktop restando gaps
               
               return (
                 <div
@@ -285,7 +286,7 @@ const ImageCarousel = ({
                 )}
                 style={{
                   backgroundColor: index === currentIndex 
-                    ? "var(--color-accent)" 
+                    ? "var(--color-base)" 
                     : "var(--eimar-gray-light)"
                 }}
                 aria-label={`Ir a imagen ${index + 1}`}
@@ -305,7 +306,7 @@ const ImageCarousel = ({
                 )}
                 style={{
                   backgroundColor: index === currentIndex 
-                    ? "var(--color-accent)" 
+                    ? "var(--color-base)" 
                     : "var(--eimar-gray-light)"
                 }}
                 aria-label={`Ir al grupo ${index + 1}`}

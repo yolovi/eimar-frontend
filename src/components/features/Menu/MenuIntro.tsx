@@ -86,7 +86,7 @@ export default function MenuIntro() {
         </div>
 
         {/* Platos destacados (preview) */}
-        <div className="bg-[var(--eimar-green)] rounded-2xl p-8 mt-3.5 mb-12 text-white">
+        <div className="bg-(--eimar-green) rounded-2xl p-8 mt-3.5 mb-12 text-white">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
             {/* Contenido textual - 2 columnas */}
             <div className="lg:col-span-2">
@@ -127,8 +127,7 @@ export default function MenuIntro() {
                 <div className="text-center">
                   <Button
                     onClick={handleViewMenu}
-                    variant="primary"
-                    className="px-8 py-4 text-lg"
+                    className="bg-(--eimar-gray-light) hover:bg-(--eimar-gray-light)/60 border-2 border-transparent hover:border-(--eimar-gray-light) hover:text-(--eimar-gray-light) px-8 py-4 text-lg"
                   >
                     Ver Carta Completa
                   </Button>
