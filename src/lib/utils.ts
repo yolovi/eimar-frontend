@@ -434,6 +434,22 @@ export function navigateToHome(
 }
 
 /**
+ * *navigateToMenu:
+ * Maneja navegación a la página del menú
+ * @param router - Router de Next.js
+ * @example
+ * const handleViewMenu = () => navigateToMenu(router);
+ * Función reutilizable para navegación al menú desde cualquier componente
+ */
+export function navigateToMenu(router?: any): void {
+  if (router) {
+    router.push('/menu');
+  } else if (typeof window !== 'undefined') {
+    window.location.href = '/menu';
+  }
+}
+
+/**
  ** handleSectionNavigation:
  * Maneja navegación inteligente a secciones con soporte cross-page
  * @param sectionId - ID de la sección objetivo

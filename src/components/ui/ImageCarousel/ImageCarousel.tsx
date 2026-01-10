@@ -273,7 +273,7 @@ const ImageCarousel = ({
 
                         {/* Texto por encima del fondo */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-                          <p className="!text-gray-300 text-sm">
+                          <p className="text-gray-300! text-sm">
                             {image.title}
                           </p>
                         </div>

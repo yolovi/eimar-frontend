@@ -21,7 +21,6 @@
 
 import Image from "next/image";
 import { cn, scrollToSection } from "@/lib/utils";
-import { HeroButton } from "@/components/ui";
 
 interface HeroProps {
   title?: string;
@@ -114,8 +113,6 @@ const Hero = ({
                 {subtitle}
               </p>
             )}
-
-            {/* Botones de acción - TODO: TEMPORALMENTE DESHABILITADOS */}
           </div>
         </div>
       </div>

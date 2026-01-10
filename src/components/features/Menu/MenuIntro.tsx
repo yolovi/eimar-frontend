@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button, ImageCarousel } from "@/components/ui";
+import { navigateToMenu } from "@/lib/utils";
 
 /**
  * SECCIÓN INTRODUCTORIA DEL MENÚ
@@ -26,10 +27,6 @@ import { Button, ImageCarousel } from "@/components/ui";
 
 export default function MenuIntro() {
   const router = useRouter();
-
-  const handleViewMenu = () => {
-    router.push("/menu");
-  };
 
   // Imágenes del restaurante para el carrusel
   const restaurantImages = [
@@ -126,7 +123,7 @@ export default function MenuIntro() {
                 {/* Call to Action */}
                 <div className="text-center">
                   <Button
-                    onClick={handleViewMenu}
+                    onClick={() => navigateToMenu(router)}
                     className="bg-(--eimar-gray-light) hover:bg-(--eimar-gray-light)/60 border-2 border-transparent hover:border-(--eimar-gray-light) hover:text-(--eimar-gray-light) px-8 py-4 text-lg"
                   >
                     Ver Carta Completa

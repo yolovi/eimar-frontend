@@ -21,7 +21,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, navigateToMenu } from "@/lib/utils";
 import {
   ReservationForm,
   ActionButton,
@@ -31,6 +31,7 @@ import {
 } from "@/components/ui";
 import { CONTACT_INFO } from "@/constants/contact";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export interface ReservationsProps {
   title?: string;
@@ -81,11 +82,13 @@ const Reservations = ({
   // Mapeo a clases globales de altura responsiva
   const heightClasses = {
     sm: "eimar-height-sm",
-    md: "eimar-height-md", 
+    md: "eimar-height-md",
     lg: "eimar-height-lg",
     xl: "eimar-height-xl",
     full: "eimar-height-full",
   };
+
+  const router = useRouter();
 
   // Evitar hydration mismatch - solo ejecutar en cliente
   useEffect(() => {
@@ -100,15 +103,12 @@ const Reservations = ({
 
   // Función para WhatsApp reservas
   const handleWhatsAppReservation = () => {
+    const router = useRouter();
+
     const whatsappUrl = `https://wa.me/${
       CONTACT_INFO.whatsapp.number
     }?text=${encodeURIComponent(CONTACT_INFO.whatsapp.messages.reservation)}`;
     window.open(whatsappUrl, "_blank");
-  };
-
-  // TODO: Función para ver carta (deshabilitada temporalmente)
-  const handleViewMenu = () => {
-    // Falta implementar navegación a la sección de carta. Deshabilitado temporalmente.
   };
 
   return (
@@ -178,7 +178,7 @@ const Reservations = ({
                       <ActionButton
                         icon={MenuIcon}
                         label="Carta"
-                        onClick={handleViewMenu}
+                        onClick={() => navigateToMenu(router)}
                         ariaLabel="Ver carta del restaurante"
                       />
 
@@ -213,9 +213,7 @@ const Reservations = ({
             <ul className="eimar-list-bulleted eimar-body-small">
               {RESERVATIONS_CONTENT.policies.turnos.content.map(
                 (item, index) => (
-                  <li key={index}>
-                    {item}
-                  </li>
+                  <li key={index}>{item}</li>
                 )
               )}
             </ul>
@@ -229,9 +227,7 @@ const Reservations = ({
             <ul className="eimar-list-bulleted eimar-body-small">
               {RESERVATIONS_CONTENT.policies.general.content.map(
                 (item, index) => (
-                  <li key={index}>
-                    {item}
-                  </li>
+                  <li key={index}>{item}</li>
                 )
               )}
             </ul>
