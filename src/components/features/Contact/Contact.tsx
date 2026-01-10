@@ -33,45 +33,6 @@ const Contact = ({ className }: ContactProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const todaySchedule = getTodaySchedule();
 
-  // Imágenes del restaurante para el carrusel
-  const restaurantImages = [
-    {
-      src: "/images/restaurant/ambiente1.png",
-      alt: "Interior del restaurante Eimar",
-      title: "Ambiente acogedor y familiar",
-    },
-    {
-      src: "/images/restaurant/comida1.png",
-      alt: "Paella del restaurante Eimar",
-      title: "Especialidad de la casa: Paella",
-    },
-    {
-      src: "/images/restaurant/ambiente2.png",
-      alt: "Terraza del restaurante Eimar",
-      title: "Terraza exterior - Pet friendly",
-    },
-    {
-      src: "/images/restaurant/comida2.png",
-      alt: "Platos del menú del día",
-      title: "Platos del menú diario",
-    },
-    {
-      src: "/images/restaurant/comida3.png",
-      alt: "Especialidades de la casa",
-      title: "Nuestras especialidades",
-    },
-    {
-      src: "/images/restaurant/bebida1.png",
-      alt: "Bebidas y vinos del restaurante",
-      title: "Carta de bebidas",
-    },
-    {
-      src: "/images/restaurant/postre1.png",
-      alt: "Postres caseros",
-      title: "Postres de la casa",
-    },
-  ];
-
   // Evitar hidration mismatch - solo ejecutar en cliente
   useEffect(() => {
     setIsMounted(true);
@@ -356,23 +317,13 @@ const Contact = ({ className }: ContactProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Galería de imágenes con fondo normal */}
-      <div
-        id="galeria"
-        className="py-16 px-4"
-        style={{ backgroundColor: "var(--bg-primary)" }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="mt-0">
-            <ImageSlider images={restaurantImages} className="" />
-          </div>
-
-          {/* Sección de reseñas */}
-          <div className="mt-16">
-            <GoogleReviews />
-          </div>
+        {/* Sección de reseñas */}
+        <div
+          id="reviews"
+          className="py-12 px-4 mt-6.5"
+          style={{ backgroundColor: "var(--bg-primary)" }}
+        >
+          <GoogleReviews />
         </div>
       </div>
     </section>

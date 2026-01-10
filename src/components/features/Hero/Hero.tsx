@@ -67,7 +67,7 @@ const Hero = ({
           priority
           className="object-cover object-center"
           sizes="100vw"
-          quality={85}
+          quality={70}
         />
         
         {/* Overlay gradient para legibilidad del texto */}
@@ -116,24 +116,6 @@ const Hero = ({
             )}
 
             {/* Botones de acción - TODO: TEMPORALMENTE DESHABILITADOS */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              {/* 
-              <HeroButton variant="primary">
-                Ver Nuestra Carta
-              </HeroButton>
-              
-              <HeroButton variant="secondary">
-                Reservar Mesa
-              </HeroButton>
-              */}
-              
-              {/* TODO: Botón temporal mientras se desarrollan las otras secciones */}
-              <HeroButton variant="primary" onClick={() => {
-                scrollToSection('galeria');
-              }}>
-                Conoce más
-              </HeroButton>
-            </div>
           </div>
         </div>
       </div>
