@@ -12,6 +12,9 @@ export * from './contact';
 // Datos de navegación del sitio
 export * from './navigation';
 
+// Constantes para elementos SVG
+export * from './svg';
+
 // TODO: Añadir más constantes según sea necesario
 // export * from './menu';      // Constantes del menú
 // export * from './ui';        // Constantes de UI (breakpoints, etc.)

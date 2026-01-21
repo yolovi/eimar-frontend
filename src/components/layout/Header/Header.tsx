@@ -35,7 +35,7 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={handleLogoClick}
               >
-                <Logo size="md" className="text-primary" />
+                <Logo size="md" className="text-accent" />
               </Link>
             </div>
 
@@ -87,7 +87,7 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={handleLogoClick}
               >
-                <Logo size="md" className="text-primary" />
+                <Logo size="md" className="text-accent" />
               </Link>
             </div>
 

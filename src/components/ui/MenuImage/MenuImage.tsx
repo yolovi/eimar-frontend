@@ -16,6 +16,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { SVG_NAMESPACE } from '@/constants';
 
 interface MenuImageProps {
   src: string;
@@ -59,7 +60,7 @@ const createPlaceholderDataURL = (dishName: string, categoryName: string): strin
   const safeCategoryName = categoryName.substring(0, 15);
   
   const svg = `
-    <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+    <svg width="300" height="300" xmlns="${SVG_NAMESPACE}">
       <defs>
         <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f3f4f6" stroke-width="1"/>

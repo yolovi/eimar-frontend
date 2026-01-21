@@ -21,7 +21,7 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
     ? NAVIGATION_DATA.all 
     : NAVIGATION_DATA.all.filter(item => !item.isSubItem);
 
-  const linkBaseClasses = "font-accent transition-colors duration-200";
+  const linkBaseClasses = "font-accent text-lg transition-colors duration-200";
   const linkVariants = {
     desktop: "px-4 py-2 rounded-lg hover:bg-accent/10",
     mobile: "block py-4 hover:bg-accent/5 border-b border-accent/10 last:border-b-0 text-right",

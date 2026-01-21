@@ -28,15 +28,37 @@ GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
 
 /* Definir los tokens para Tailwind v4 */
 @theme {
-  /* Mapeamos directamente las fuentes para evitar dependencias circulares */
+  /* Fuentes definidas directamente para evitar dependencias circulares */
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --font-accent: "Playfair Display", ui-serif, Georgia, serif;
+
+  /* Colores base EIMAR */
+  --color-base: #fffafa;
+  --color-primary: #000000;
+  --color-secondary: #1f2937;
+  --color-accent: #485f50;
+  --color-gray-dark: #374151;
+  --color-gray-medium: #4b5563;
+  --color-gray-light: #9ca3af;
+  --color-danger: #dc2626;
+
+  /* Mapeo para clases de background */
+  --color-bg-primary: var(--color-base);
+  --color-bg-secondary: var(--color-primary);
+  --color-bg-tertiary: var(--color-gray-light);
+  --color-bg-accent: var(--color-accent);
+
+  /* Mapeo para clases de texto */
+  --color-text-primary: var(--color-secondary);
+  --color-text-secondary: var(--color-gray-medium);
+  --color-text-tertiary: var(--color-gray-light);
+  --color-text-inverse: var(--color-base);
+  --color-text-accent: var(--color-accent);
 }
 
 /* Design Tokens y demás imports */
 /* CSS Reset de Tailwind ya incluido */
-@import "./_tokens.css";
 @import "./_typography.css";
 @import "./_components.css";
 @import "./_utilities.css";
@@ -52,7 +74,9 @@ body {
   @apply antialiased;
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
-  color: var(--text-primary); /* SIN !important para permitir override en componentes */
+  color: var(
+    --text-primary
+  ); /* SIN !important para permitir override en componentes */
   /* Smooth transitions para cambios de tema */
   transition:
     background-color 0.2s ease,
@@ -86,8 +110,8 @@ section {
 } */
 
 /* Solo aplicar color por defecto si no tiene clase específica */
-p:not([class*="ds-"]), 
-span:not([class*="ds-"]), 
+p:not([class*="ds-"]),
+span:not([class*="ds-"]),
 div:not([class*="ds-"]) {
   color: var(--text-primary);
 }
@@ -134,7 +158,9 @@ textarea:focus {
   outline: none;
   border-color: var(--color-accent);
   border-width: 2px;
-  transition: border-color 0.2s ease, border-width 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    border-width 0.2s ease;
 }
 
 /* Eliminar outline de botones */

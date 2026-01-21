@@ -1,6 +1,8 @@
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { ButtonProps, ButtonVariant, ButtonSize } from "./Button.types";
+import { ButtonProps, ButtonVariant } from "./Button.types";
+import { BaseButtonSize } from "../shared";
+import { SVG_NAMESPACE } from "@/constants";
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: "bg-primary hover:bg-accent text-white hover:text-white font-medium",
@@ -12,7 +14,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
   destructive: "bg-red-400 hover:bg-red-700 text-white",
 };
 
-const buttonSizes: Record<ButtonSize, string> = {
+const buttonSizes: Record<BaseButtonSize, string> = {
   sm: "px-8 py-1.5 text-sm h-6",
   md: "px-10 py-2 text-base h-8",
   lg: "px-10 py-3 text-lg h-12",
@@ -60,7 +62,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading && (
           <svg
             className="animate-spin h-4 w-4 shrink-0"
-            xmlns="http://www.w3.org/2000/svg"
+            xmlns={SVG_NAMESPACE}
             fill="none"
             viewBox="0 0 24 24"
           >

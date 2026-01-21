@@ -31,13 +31,13 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
 
     const primaryClasses = cn(
       baseClasses,
-      "border-transparent hover:border-[var(--eimar-white-snow)]"
+      "border-transparent hover:border-base]"
     );
 
     const secondaryClasses = cn(
       baseClasses,
-      "border-[var(--eimar-gray-light)]",
-      "hover:bg-[var(--eimar-white-snow)] hover:border-transparent"
+      "border-[var(--color-bg-tertiary)]",
+      "hover:bg-base] hover:border-transparent"
     );
 
     const darkClasses = cn(
@@ -48,7 +48,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (variant === "secondary") {
-        e.currentTarget.style.color = "var(--eimar-green)";
+        e.currentTarget.style.color = "var(--color-accent)";
       } else if (variant === "dark") {
         e.currentTarget.style.color = "white";
       }
@@ -57,7 +57,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
 
     const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (variant === "secondary") {
-        e.currentTarget.style.color = "var(--eimar-white-snow)";
+        e.currentTarget.style.color = "var(--color-base)";
       } else if (variant === "dark") {
         e.currentTarget.style.color = "rgb(75, 85, 99)"; // gray-600
       }
@@ -74,8 +74,8 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
             className
           )}
           style={{
-            backgroundColor: "var(--eimar-green)",
-            color: "var(--eimar-white-snow)"
+            backgroundColor: "var(--color-accent)",
+            color: "var(--color-base)"
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -117,7 +117,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
           className
         )}
         style={{
-          color: "var(--eimar-white-snow)",
+          color: "var(--color-base)",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

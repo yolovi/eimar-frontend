@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonWithIconsProps } from "../shared";
 
 export type ButtonVariant =
   | "primary"
@@ -13,15 +13,7 @@ const baseClasses = '... disabled:pointer-events-none disabled:opacity-50';
 Tailwind aplica automáticamente: disabled:opacity-50 disabled:pointer-events-none
 */
 
-export type ButtonSize = "sm" | "md" | "lg" | "xl";
-
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonWithIconsProps {
   variant?: ButtonVariant;
-  size?: ButtonSize;
-  children: ReactNode;
-  isLoading?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  fullWidth?: boolean;
   asChild?: boolean;
 }

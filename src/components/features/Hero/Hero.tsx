@@ -112,8 +112,7 @@ const Hero = ({
       >
         <div className="animate-bounce opacity-70 hover:opacity-100 transition-opacity duration-300">
           <svg
-            className="w-6 h-6 text-inverse"
-            style={{ color: "var(--text-inverse)" }}
+            className="w-6 h-6 text-text-inverse"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
