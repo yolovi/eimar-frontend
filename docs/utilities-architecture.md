@@ -8,32 +8,32 @@ Este documento explica cómo están organizadas las funciones de utilidad en el 
 **Propósito**: Funciones reutilizables que pueden usarse en cualquier parte de la aplicación.
 
 **Categorías**:
-- 🎨 **Estilos**: `cn()` para combinación de clases CSS
-- 💰 **Formateo**: `formatCurrency()`, `formatDate()`, `formatTime()`, `formatTimeRange()`
-- 🔗 **Enlaces**: `createPhoneLink()`, `createWhatsAppLink()`, `createEmailLink()`
-- 📅 **Fechas**: `getCurrentDay()`, `isValidTime()`
+- **Estilos**: `cn()` para combinación de clases CSS
+- **Formateo**: `formatCurrency()`, `formatDate()`, `formatTime()`, `formatTimeRange()`
+- **Enlaces**: `createPhoneLink()`, `createWhatsAppLink()`, `createEmailLink()`
+- **Fechas**: `getCurrentDay()`, `isValidTime()`
 
 ### `/src/constants/contact.ts` - Utilidades de Dominio
 **Propósito**: Datos específicos del restaurante y funciones que operan sobre esos datos.
 
 **Contiene**:
-- 📊 **Datos**: CONTACT_INFO con toda la información del restaurante
-- 🏢 **Dominio**: `getFormattedSchedule()`, `getTodaySchedule()` (específicas del negocio)
-- 🎯 **Tipos**: ContactPhone, ScheduleDay, etc.
+- **Datos**: CONTACT_INFO con toda la información del restaurante
+- **Dominio**: `getFormattedSchedule()`, `getTodaySchedule()` (específicas del negocio)
+- **Tipos**: ContactPhone, ScheduleDay, etc.
 
 ## 🔄 Principio de Separación
 
-### ✅ **En `/lib/utils.ts`** (Genérico):
+### **En `/lib/utils.ts`** (Genérico):
 ```typescript
-// ✅ Genérica - puede formatear cualquier rango de tiempo
+// Genérica - puede formatear cualquier rango de tiempo
 export function formatTimeRange(open: string, close: string, isClosed: boolean) {
   return isClosed ? "Cerrado" : `${open} - ${close}`;
 }
 ```
 
-### ✅ **En `/constants/contact.ts`** (Específico del dominio):
+### **En `/constants/contact.ts`** (Específico del dominio):
 ```typescript
-// ✅ Específica del restaurante - usa la genérica pero con datos del negocio
+// Específica del restaurante - usa la genérica pero con datos del negocio
 export const getFormattedSchedule = (day: ScheduleDay) => {
   const schedule = CONTACT_INFO.schedule[day];
   return formatTimeRange(schedule.open, schedule.close, schedule.isClosed);
@@ -85,7 +85,6 @@ expect(getFormattedSchedule('monday')).toBe("12:00 - 16:00");
 
 ### ¿Es genérica o específica del dominio?
 
-**Pregúntate**:
 - ¿Puede usarse fuera del contexto del restaurante? → `utils.ts`
 - ¿Depende de datos específicos de EIMAR? → `contact.ts`
 - ¿Maneja lógica de negocio? → `contact.ts`

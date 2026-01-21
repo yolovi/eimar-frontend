@@ -1,17 +1,17 @@
 /**
  * HERO SECTION - EIMAR
  * ====================
- * 
+ *
  * Hero section para la página de inicio con imagen de fondo optimizada,
  * texto superpuesto y diseño responsivo.
- * 
+ *
  * CARACTERÍSTICAS:
  * - Next.js Image optimizado con priority loading
  * - Overlay gradient para mejorar legibilidad del texto
  * - Responsive design con diferentes layouts mobile/desktop
  * - Variables CSS del sistema EIMAR
  * - Accesibilidad completa
- * 
+ *
  * USO:
  * import Hero from '@/components/features/Hero/Hero';
  * <Hero />
@@ -41,11 +41,11 @@ const Hero = ({
 }: HeroProps) => {
   // Definir alturas responsivas
   const heightClasses = {
-    sm: "h-[60vh] min-h-[400px]",
-    md: "h-[70vh] min-h-[500px]",
-    lg: "h-[80vh] min-h-[600px]",
-    xl: "h-[90vh] min-h-[700px]",
-    full: "h-screen",
+    sm: "ds-height-sm",
+    md: "ds-height-md",
+    lg: "ds-height-lg",
+    xl: "ds-height-xl",
+    full: "ds-height-full",
   };
 
   return (
@@ -53,7 +53,7 @@ const Hero = ({
       className={cn(
         "relative w-full overflow-hidden",
         heightClasses[height],
-        className
+        className,
       )}
       aria-label="Hero section"
     >
@@ -68,13 +68,13 @@ const Hero = ({
           sizes="100vw"
           quality={70}
         />
-        
+
         {/* Overlay gradient para legibilidad del texto */}
         <div
           className="absolute inset-0 bg-linear-to-b from-black/30 via-black/40 to-black/60"
           aria-hidden="true"
         />
-        
+
         {/* Overlay adicional para móvil */}
         <div
           className="absolute inset-0 bg-black/15 md:bg-transparent"
@@ -86,30 +86,14 @@ const Hero = ({
       <div className="relative h-full flex items-center justify-center z-10">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            
             {/* Título principal */}
-            <h1
-              className={cn(
-                "text-3xl md:text-4xl lg:text-5xl xl:text-6xl",
-                "font-display font-bold leading-tight",
-                "drop-shadow-2xl mb-4 md:mb-6"
-              )}
-              style={{ color: "var(--eimar-white-snow)" }}
-            >
+            <h1 className="ds-hero-title mb-4 md:mb-6 drop-shadow-2xl">
               {title}
             </h1>
 
             {/* Subtítulo */}
             {subtitle && (
-              <p
-                className={cn(
-                  "text-lg md:text-xl lg:text-2xl",
-                  "font-accent font-medium leading-relaxed",
-                  "drop-shadow-xl max-w-2xl mx-auto",
-                  "mb-8 md:mb-10"
-                )}
-                style={{ color: "var(--eimar-white-snow)" }}
-              >
+              <p className="ds-hero-subtitle  drop-shadow-xl max-w-2xl mx-auto mb-8 md:mb-10">
                 {subtitle}
               </p>
             )}
@@ -121,15 +105,15 @@ const Hero = ({
       <button
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-full p-2"
         onClick={() => {
-          scrollToSection('nosotros');
+          scrollToSection("nosotros");
         }}
         aria-label="Desplazarse a la sección Acerca de nosotros"
         title="Ver más información"
       >
         <div className="animate-bounce opacity-70 hover:opacity-100 transition-opacity duration-300">
           <svg
-            className="w-6 h-6"
-            style={{ color: "var(--eimar-white-snow)" }}
+            className="w-6 h-6 text-inverse"
+            style={{ color: "var(--text-inverse)" }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

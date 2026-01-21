@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/*
+GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
+* Orden para evitar errores de "unknown utility" en Tailwind v4:
+
+1. @import "tailwindcss"; (Obligatorio primero).
+2. @theme { ... } (Donde se mapean las fuentes de Next.js y tus colores).
+3. @import de archivos locales (_tokens.css, _typography.css, etc.).
+
+* ESTRUCTURA DE STYLES:
+1. CSS Reset de Tailwind ya incluido 
+2. Design Tokens 
+3. Tipografía base 
+4. Componentes del sistema EIMAR 
+5. Utilidades específicas
+6. Estados y interacciones
+
+* RESPONSABILIDADES:
+  - globals.css (este archivo): Design tokens, variables semánticas, estilos base
+  - layout.tsx: Carga optimizada de fuentes con next/font + inyección de variables
+ 
+ * FLUJO DE INTEGRACIÓN FONTS:
+  1. layout.tsx carga fuentes → genera --font-geist-sans, --font-geist-mono, --font-playfair
+  2. globals.css consume esas variables → define tipografía semántica
+  3. Componentes usan clases Tailwind → font-sans, font-mono, font-accent
+*/
+
+/* Definir los tokens para Tailwind v4 */
+@theme {
+  /* Mapeamos directamente las fuentes para evitar dependencias circulares */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-accent: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+/* Design Tokens y demás imports */
+/* CSS Reset de Tailwind ya incluido */
+@import "./_tokens.css";
+@import "./_typography.css";
+@import "./_components.css";
+@import "./_utilities.css";
+
+/* Estilos globales */
+html {
+  @apply antialiased;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  @apply antialiased;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary); /* SIN !important para permitir override en componentes */
+  /* Smooth transitions para cambios de tema */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* CSS Reset básico para consistencia entre navegadores */
+* {
+  box-sizing: border-box;
+}
+
+/* Herencia de colores específica - solo para elementos que realmente la necesitan */
+button,
+input,
+select,
+textarea {
+  color: inherit;
+}
+
+/* Elementos de contenido principales */
+main,
+article,
+section {
+  background-color: var(--bg-primary);
+}
+
+/* Tipografía base - valores por defecto que pueden ser sobrescritos */
+/* Reducida especificidad para permitir override por clases de design system */
+/* h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+} */
+
+/* Solo aplicar color por defecto si no tiene clase específica */
+p:not([class*="ds-"]), 
+span:not([class*="ds-"]), 
+div:not([class*="ds-"]) {
+  color: var(--text-primary);
+}
+
+/* Enlaces con estado hover */
+a {
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--text-primary);
+}
+
+/* Botones con cursor pointer por defecto */
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}
+
+/* Asegurar consistencia en elementos de Next.js - aquí sí usar !important porque son estilos de framework */
+html,
+body,
+#__next,
+#root {
+  background-color: var(--bg-primary);
+}
+
+/* Elementos específicos de Next.js - páginas de error */
+div[data-nextjs-container],
+div[data-nextjs-dialog],
+div[data-nextjs-dialog-overlay] {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ===== FOCUS STATES ACCESIBLES ===== */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  border-width: 2px;
+  transition: border-color 0.2s ease, border-width 0.2s ease;
+}
+
+/* Eliminar outline de botones */
+button:focus,
+[role="button"]:focus,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Selección de texto */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--text-inverse);
+}

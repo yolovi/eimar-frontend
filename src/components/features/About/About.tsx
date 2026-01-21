@@ -80,24 +80,22 @@ const About = ({ className }: AboutProps) => {
             <div className="order-1 space-y-6">
               {/* Título principal */}
               <div className="space-y-4">
-                <h2 className="eimar-section-title">{ABOUT_CONTENT.title}</h2>
+                <h2 className="ds-section-title">{ABOUT_CONTENT.title}</h2>
 
-                <p className="eimar-subtitle">{ABOUT_CONTENT.subtitle}</p>
+                <p className="ds-subtitle">{ABOUT_CONTENT.subtitle}</p>
               </div>
 
               {/* Párrafo principal */}
               <div className="space-y-4">
-                <p className="eimar-body-large">
+                <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.opening}{" "}
                   <span
-                    className="font-semibold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
+                    className="font-semibold"                  >
                     {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
                 </p>
 
-                <p className="eimar-body-large">
+                <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.space}{" "}
                   <span
                     className="font-semibold"
@@ -109,17 +107,17 @@ const About = ({ className }: AboutProps) => {
                   {ABOUT_CONTENT.paragraphs.meetingPoint}
                 </p>
 
-                <p className="eimar-body-large">
+                <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.identity}
                 </p>
 
                 {/* Frase destacada */}
-                <blockquote className="eimar-quote my-6">
+                <blockquote className="ds-quote my-6">
                   {ABOUT_CONTENT.quote}
                 </blockquote>
 
                 {/* Bienvenida final */}
-                <p className="eimar-body-large font-medium">
+                <p className="ds-body-xl font-medium">
                   {ABOUT_CONTENT.welcome}{" "}
                   <span
                     className="font-display font-bold text-xl"
@@ -139,9 +137,9 @@ const About = ({ className }: AboutProps) => {
           <div className="grid lg:grid-cols-2 gap-12 items-start mb-4">
             {/* Título principal */}
             <div className="space-y-4">
-              <h2 className="eimar-section-title">{ABOUT_CONTENT.title}</h2>
+              <h2 className="ds-section-title">{ABOUT_CONTENT.title}</h2>
 
-              <p className="eimar-subtitle">{ABOUT_CONTENT.subtitle}</p>
+              <p className="ds-subtitle">{ABOUT_CONTENT.subtitle}</p>
               {/* Imagen del restaurante izquierda*/}
               <div>
                 <div className="relative h-[400] rounded-lg overflow-hidden shadow-xl">
@@ -159,7 +157,7 @@ const About = ({ className }: AboutProps) => {
 
             <div>
               <div className="space-y-4 mt-48">
-                <p className="eimar-body-large">
+                <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.opening}{" "}
                   <span
                     className="font-semibold"
@@ -168,7 +166,7 @@ const About = ({ className }: AboutProps) => {
                     {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
                 </p>
-                <p className="eimar-body-large">
+                <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.space}{" "}
                   <span
                     className="font-semibold"
@@ -195,7 +193,7 @@ const About = ({ className }: AboutProps) => {
 
           {/* Sección inferior - Contenido en columnas */}
           <div className="space-y-4">
-            <p className="eimar-body-large">
+            <p className="ds-body-large">
               {ABOUT_CONTENT.paragraphs.meetingPoint}{" "}
               {ABOUT_CONTENT.paragraphs.identity}
             </p>
@@ -203,11 +201,11 @@ const About = ({ className }: AboutProps) => {
 
           {/* Frase destacada y bienvenida final */}
           <div className="mt-12 space-y-6">
-            <blockquote className="eimar-quote">
+            <blockquote className="ds-quote">
               {ABOUT_CONTENT.quote}
             </blockquote>
 
-            <p className="eimar-body-large font-medium">
+            <p className="ds-body-large font-medium">
               {ABOUT_CONTENT.welcome}{" "}
               <span
                 className="font-display font-bold text-xl"

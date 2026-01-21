@@ -108,16 +108,10 @@ const Contact = ({ className }: ContactProps) => {
             <div className="order-1 lg:order-2 space-y-8 text-center lg:text-left">
               {/* Nombre del restaurante */}
               <div>
-                <h3
-                  className="text-2xl md:text-3xl font-display font-bold tracking-wide"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <h3 className="eimar-section-title tracking-wide">
                   RESTAURANTE EIMAR
                 </h3>
-                <p
-                  className="text-lg font-accent max-w-2xl mx-auto"
-                  style={{ color: "var(--text-secondary)" }}
-                >
+                <p className="eimar-body-large max-w-2xl mx-auto">
                   Visítanos en el corazón de Paiporta y descubre la auténtica
                   experiencia gastronómica
                 </p>

@@ -1,29 +1,36 @@
+/*
+ * ARCHIVO: layout.tsx
+ * ====================
+ * Define la estructura global del layout de la aplicación Next.js.
+ * Aquí se configuran las fuentes globales usando next/font,
+ * y se aplican las variables CSS generadas al <body>.
+ * También se definen los metadatos globales para SEO.
+ *
+ * Su función no es estilizar, sino estructurar y configurar la app.
+ */
+
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Playfair_Display,
-} from "next/font/google";
-import "./globals.css";
-import { Header } from '@/components/layout';
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import "../styles/globals.css";
+import { Header } from "@/components/layout";
 
 /*
  * CONFIGURACIÓN DE FUENTES CON NEXT/FONT
  * ======================================
- * 
+ *
  * ¿Por qué usar next/font en lugar de definir fuentes en globals.css?
- * 
+ *
  * 1. OPTIMIZACIONES AUTOMÁTICAS:
  *    - Preload automático de fuentes críticas
  *    - Subsetting (solo los caracteres que necesitas)
  *    - Font display: swap automático (evita FOIT/FOUT)
  *    - Compresión y caching optimizado
- * 
+ *
  * 2. INTEGRACIÓN CON VARIABLES CSS:
  *    - next/font genera variables CSS (--font-geist-sans, etc.)
  *    - Estas variables se aplican al DOM via className
  *    - globals.css puede entonces usar var(--font-geist-sans)
- * 
+ *
  * 3. FLUJO DE INTEGRACIÓN:
  *    layout.tsx (aquí) → define y carga fuentes → genera variables CSS
  *    globals.css → consume las variables → aplica tipografía global
@@ -51,17 +58,18 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: {
     default: "Restaurante Eimar Paiporta - Comida Mediterránea Auténtica",
-    template: "%s | Restaurante Eimar Paiporta"
+    template: "%s | Restaurante Eimar Paiporta",
   },
-  description: "Restaurante Eimar en Paiporta. Auténtica comida mediterránea con ingredientes frescos. Reservas por WhatsApp, eventos familiares y pedidos para llevar. ¡Ven a disfrutar!",
+  description:
+    "Restaurante Eimar en Paiporta. Auténtica comida mediterránea con ingredientes frescos. Reservas por WhatsApp, eventos familiares y pedidos para llevar. ¡Ven a disfrutar!",
   keywords: [
     "restaurante Paiporta",
-    "comida mediterránea Valencia", 
+    "comida mediterránea Valencia",
     "restaurante familiar Valencia",
     "reservas restaurante",
     "pedidos para llevar Paiporta",
     "eventos restaurante Valencia",
-    "Eimar Paiporta"
+    "Eimar Paiporta",
   ],
   authors: [{ name: "Restaurante Eimar Paiporta" }],
   creator: "Restaurante Eimar Paiporta",
@@ -71,7 +79,8 @@ export const metadata: Metadata = {
     locale: "es_ES",
     siteName: "Restaurante Eimar Paiporta",
     title: "Restaurante Eimar Paiporta - Comida Mediterránea Auténtica",
-    description: "Auténtica comida mediterránea en el corazón de Paiporta. Reservas fáciles por WhatsApp y ambiente familiar.",
+    description:
+      "Auténtica comida mediterránea en el corazón de Paiporta. Reservas fáciles por WhatsApp y ambiente familiar.",
   },
   twitter: {
     card: "summary_large_image",
@@ -91,7 +100,7 @@ export const metadata: Metadata = {
   },
   verification: {
     // google: "tu-código-de-google-search-console", // Agregar cuando configures Search Console
-  }
+  },
 };
 
 export default function RootLayout({
@@ -104,16 +113,7 @@ export default function RootLayout({
       {/* 
         APLICACIÓN DE VARIABLES DE FUENTE AL DOM
         ========================================
-        
         Las clases generadas por next/font (.variable) se aplican aquí al <body>:
-        - ${geistSans.variable}     → inyecta --font-geist-sans: "Geist", system-ui...
-        - ${geistMono.variable}     → inyecta --font-geist-mono: "Geist Mono", monospace...
-        - ${playfairDisplay.variable} → inyecta --font-playfair: "Playfair Display", serif...
-        
-        Una vez aplicadas estas clases, globals.css puede usar:
-        - var(--font-geist-sans) para tipografía base
-        - var(--font-geist-mono) para código
-        - var(--font-playfair) para títulos elegantes
         
         IMPORTANTE: No muevas estas variables a globals.css porque perderías
         las optimizaciones de next/font (preload, subsetting, etc.)
@@ -123,9 +123,7 @@ export default function RootLayout({
       >
         <Header />
         {/* Header contiene el Navbar para que esté presente en todas las páginas */}
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
         {/* <Footer /> - Cuando esté creado */}
       </body>
     </html>

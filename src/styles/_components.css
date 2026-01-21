@@ -1,0 +1,73 @@
+/*COMPONENTS: patrones de estilo para componentes reutilizables*/
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    background-color: var(--color-accent);
+    color: var(--color-base);
+    transition: background-color 0.2s ease;
+  }
+
+  .btn:hover {
+    background-color: color-mix(in srgb, var(--color-accent), black 15%);
+  }
+
+  .ds-card {
+    @apply bg-white p-4 rounded-lg shadow-md;
+  }
+
+  .ds-badge {
+    @apply inline-block px-2 py-1 text-xs rounded-md;
+    background-color: var(--bg-tertiary);
+    color: var(--text-tertiary);
+  }
+
+  /* ===== SISTEMA DE LISTAS EIMAR ===== */
+  .ds-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .ds-list-bulleted {
+    list-style: disc;
+    margin-left: 1.25rem;
+    color: var(--text-secondary);
+  }
+
+  .ds-list-bulleted li {
+    margin-bottom: 0.5rem;
+  }
+
+  .ds-list-bulleted li::marker {
+    color: var(--color-accent);
+  }
+
+  /* ===== SISTEMA DE ALTURAS RESPONSIVAS ===== */
+  .ds-height-sm {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .ds-height-md {
+    height: 70vh;
+    min-height: 500px;
+  }
+
+  .ds-height-lg {
+    height: 80vh;
+    min-height: 600px;
+  }
+
+  .ds-height-xl {
+    height: 90vh;
+    min-height: 700px;
+  }
+
+  .ds-height-full {
+    height: 100vh;
+  }
+}

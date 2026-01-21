@@ -181,16 +181,16 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
             <div className="p-6 space-y-4">
               {/* Título y precio */}
               <div className="flex justify-between items-start gap-4">
-                <h3 className="text-xl font-bold text-gray-900 flex-1">
+                <h3 className="eimar-h3 flex-1">
                   {item.name}
                 </h3>
-                <span className="text-2xl font-bold text-(--eimar-green) shrink-0">
+                <span className="eimar-h2 shrink-0" style={{ color: "var(--color-accent)" }}>
                   {item.price.toFixed(2)}€
                 </span>
               </div>
               
               {/* Descripción */}
-              <p className="text-gray-700 leading-relaxed">
+              <p className="eimar-body-large">
                 {item.description}
               </p>
               
@@ -211,8 +211,8 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
               {/* Alérgenos */}
               {item.allergens && item.allergens.length > 0 && (
                 <div className="pt-2 border-t border-gray-100">
-                  <div className="text-sm text-gray-600">
-                    <span className="font-medium text-gray-900">Alérgenos:</span>
+                  <div className="eimar-body-small">
+                    <span className="eimar-label">Alérgenos:</span>
                     <span className="ml-1">{item.allergens.join(', ')}</span>
                   </div>
                 </div>
@@ -255,28 +255,28 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
       <div className="p-3 flex flex-col grow">
         {/* Layout para móvil (2 columnas) - Título solo */}
         <div className="md:hidden mb-2">
-          <h3 className="font-semibold text-(--text-primary) group-hover:text-(--eimar-green) transition-colors line-clamp-2 min-h-10">
+          <h3 className="eimar-label group-hover:text-(--eimar-green) transition-colors line-clamp-2 min-h-10">
             {item.name}
           </h3>
         </div>
         
         {/* Layout para tablet/desktop (3-4 columnas) - Título y precio en línea */}
         <div className="hidden md:flex justify-between items-start mb-2 min-h-10">
-          <h3 className="font-semibold text-(--text-primary) group-hover:text-(--eimar-green) transition-colors line-clamp-2 flex-1">
+          <h3 className="eimar-label group-hover:text-(--eimar-green) transition-colors line-clamp-2 flex-1">
             {item.name}
           </h3>
-          <span className="text-lg font-bold text-(--eimar-green) ml-2 shrink-0">
+          <span className="eimar-label ml-2 shrink-0" style={{ color: "var(--color-accent)" }}>
             {item.price.toFixed(2)}€
           </span>
         </div>
         
-        <p className="text-gray-600 text-xs leading-relaxed grow line-clamp-3 mb-2 min-h-12">
+        <p className="eimar-body-small leading-relaxed grow line-clamp-3 mb-2 min-h-12">
           {item.description}
         </p>
         
         {/* Precio para móvil - Debajo de la descripción */}
         <div className="md:hidden mb-2">
-          <span className="text-lg font-bold text-(--eimar-green)">
+          <span className="eimar-label" style={{ color: "var(--color-accent)" }}>
             {item.price.toFixed(2)}€
           </span>
         </div>
@@ -300,15 +300,15 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
         {/* Información de alérgenos */}
         <div className="mt-auto min-h-4">
           {item.allergens && item.allergens.length > 0 && (
-            <div className="text-xs text-gray-500">
-              <span className="font-medium">Alérgenos:</span> {item.allergens.join(', ')}
+            <div className="eimar-body-small">
+              <span className="eimar-label">Alérgenos:</span> {item.allergens.join(', ')}
             </div>
           )}
         </div>
         
         {/* Indicador sutil de que se puede expandir */}
         <div className="mt-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <span className="text-xs text-(--eimar-green) font-medium">
+          <span className="eimar-body-small" style={{ color: "var(--color-accent)" }}>
             Ver detalles
           </span>
         </div>
@@ -338,10 +338,10 @@ function MenuCategorySection({ category, isActive, expandedCard, onCardClick }: 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabecera de la categoría */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">
+          <h2 className="eimar-section-title mb-3">
             {category.name}
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="eimar-body-large max-w-2xl mx-auto">
             {category.description}
           </p>
         </div>
@@ -517,10 +517,10 @@ const Menu = () => {
       {/* Header de la página */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="eimar-h1 mb-4">
             Nuestra Carta
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="eimar-body-large max-w-3xl mx-auto">
             Descubre nuestra selección de platos elaborados con ingredientes frescos y de temporada. 
             Cada plato está cuidadosamente preparado para ofrecerte una experiencia gastronómica única.
           </p>

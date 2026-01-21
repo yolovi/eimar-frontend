@@ -72,10 +72,10 @@ export default function MenuIntro() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Encabezado de la sección */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="eimar-section-title mb-4">
             Nuestra Carta
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="eimar-body-large max-w-3xl mx-auto mb-8">
             Descubre nuestra amplia selección de platos elaborados con
             ingredientes frescos y de temporada. Desde entrantes creativos hasta
             postres irresistibles, cada plato cuenta una historia de sabor.
@@ -87,38 +87,38 @@ export default function MenuIntro() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
             {/* Contenido textual - 2 columnas */}
             <div className="lg:col-span-2">
-              <h3 className="text-2xl font-bold mb-4">Platos Destacados</h3>
+              <h3 className="eimar-h3 mb-4" style={{ color: "var(--text-inverse)" }}>Platos Destacados</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="font-semibold">Aguacate limeño</h4>
-                    <p className="text-sm opacity-90">
+                    <h4 className="eimar-label" style={{ color: "var(--text-inverse)" }}>Aguacate limeño</h4>
+                    <p className="eimar-body-small opacity-90" style={{ color: "var(--text-inverse)" }}>
                       Aguacate fresco con toques cítricos
                     </p>
                   </div>
-                  <span className="font-bold">6.90€</span>
+                  <span className="eimar-label" style={{ color: "var(--text-inverse)" }}>6.90€</span>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="font-semibold">Sandwich coreano de pollo</h4>
-                    <p className="text-sm opacity-90">
+                    <h4 className="eimar-label" style={{ color: "var(--text-inverse)" }}>Sandwich coreano de pollo</h4>
+                    <p className="eimar-body-small opacity-90" style={{ color: "var(--text-inverse)" }}>
                       Fusión asiática con sabor único
                     </p>
                   </div>
-                  <span className="font-bold">8.50€</span>
+                  <span className="eimar-label" style={{ color: "var(--text-inverse)" }}>8.50€</span>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="font-semibold">
+                    <h4 className="eimar-label" style={{ color: "var(--text-inverse)" }}>
                       Burrata con tomates frescos
                     </h4>
-                    <p className="text-sm opacity-90">
+                    <p className="eimar-body-small opacity-90" style={{ color: "var(--text-inverse)" }}>
                       Cremosidad italiana en su máxima expresión
                     </p>
                   </div>
-                  <span className="font-bold">14.50€</span>
+                  <span className="eimar-label" style={{ color: "var(--text-inverse)" }}>14.50€</span>
                 </div>
                 {/* Call to Action */}
                 <div className="text-center">

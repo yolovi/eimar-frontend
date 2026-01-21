@@ -7,12 +7,7 @@ import { MenuIntro } from "@/components/features/Menu";
 const Home = () => {
   return (
     <>
-      <Hero
-        title="Donde el sabor y la esencia se encuentran."
-        subtitle="Descubre la auténtica experiencia gastronómica en el corazón de Paiporta"
-        height="md"
-      />
-
+      <Hero height="md" />
       <About />
 
       {/* Sección introductoria del menú */}

@@ -81,11 +81,11 @@ const Reservations = ({
 
   // Mapeo a clases globales de altura responsiva
   const heightClasses = {
-    sm: "eimar-height-sm",
-    md: "eimar-height-md",
-    lg: "eimar-height-lg",
-    xl: "eimar-height-xl",
-    full: "eimar-height-full",
+    sm: "ds-height-sm",
+    md: "ds-height-md",
+    lg: "ds-height-lg",
+    xl: "ds-height-xl",
+    full: "ds-height-full",
   };
 
   const router = useRouter();
