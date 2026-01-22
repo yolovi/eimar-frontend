@@ -42,7 +42,7 @@ export interface ReservationFormProps {
 // Función helper para obtener fecha actual en formato YYYY-MM-DD
 const getTodayDate = (): string => {
   const today = new Date();
-  return today.toISOString().split('T')[0];
+  return today.toISOString().split("T")[0];
 };
 
 const ReservationForm = ({
@@ -52,6 +52,21 @@ const ReservationForm = ({
   showOrderSection = true,
   className = "",
 }: ReservationFormProps) => {
+  // Constantes de estilos para evitar repetición
+  const inputBaseStyles =
+    "w-full px-4 py-3 border rounded-lg transition-colors";
+  const inputNormalStyles = "border-gray-200";
+  const inputErrorStyles = "border-red-300 focus:border-red-500";
+  const errorMessageStyles = "ds-error mt-1";
+
+  // Función helper para estilos de input según estado de error
+  const getInputStyles = (hasError: boolean, extraClasses = "") => {
+    return cn(
+      inputBaseStyles,
+      hasError ? inputErrorStyles : inputNormalStyles,
+      extraClasses,
+    );
+  };
   const [formData, setFormData] = useState<ReservationFormData>({
     name: "",
     phone: "",
@@ -94,7 +109,7 @@ const ReservationForm = ({
   // Manejar cambios en los inputs
   const handleInputChange = (
     field: keyof ReservationFormData,
-    value: string
+    value: string,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
 
@@ -144,22 +159,18 @@ const ReservationForm = ({
   };
 
   return (
-    <div className={cn(
-      "bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl",
-      className
-    )}>
+    <div
+      className={cn(
+        "bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl",
+        className,
+      )}
+    >
       {/* Header del formulario */}
       <div className="mb-4">
-        <h2
-          className="font-accent mb-4"
-          style={{
-            color: "var(--color-accent)",
-            fontSize: "2rem",
-          }}
-        >
+        <h2 className="ds-h3 mb-2" style={{ color: "var(--color-accent)" }}>
           {title}
         </h2>
-        <p className="eimar-body-small">{subtitle}</p>
+        <p className="ds-body-base">{subtitle}</p>
       </div>
 
       {/* Formulario */}
@@ -172,18 +183,13 @@ const ReservationForm = ({
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
-              className={cn(
-                "w-full px-4 py-3 border rounded-lg transition-colors",
-                errors.name
-                  ? "border-red-300 focus:border-red-500"
-                  : "border-gray-200"
-              )}
+              className={getInputStyles(!!errors.name)}
               placeholder="Tu nombre"
               aria-invalid={!!errors.name}
               aria-describedby={errors.name ? "name-error" : undefined}
             />
             {errors.name && (
-              <p id="name-error" className="eimar-error mt-1">
+              <p id="name-error" className={errorMessageStyles}>
                 {errors.name}
               </p>
             )}
@@ -195,18 +201,13 @@ const ReservationForm = ({
               type="tel"
               value={formData.phone}
               onChange={(e) => handleInputChange("phone", e.target.value)}
-              className={cn(
-                "w-full px-4 py-3 border rounded-lg transition-colors",
-                errors.phone
-                  ? "border-red-300 focus:border-red-500"
-                  : "border-gray-200"
-              )}
+              className={getInputStyles(!!errors.phone)}
               placeholder="Tu teléfono"
               aria-invalid={!!errors.phone}
               aria-describedby={errors.phone ? "phone-error" : undefined}
             />
             {errors.phone && (
-              <p id="phone-error" className="eimar-error mt-1">
+              <p id="phone-error" className={errorMessageStyles}>
                 {errors.phone}
               </p>
             )}
@@ -221,18 +222,13 @@ const ReservationForm = ({
               type="date"
               value={formData.date}
               onChange={(e) => handleInputChange("date", e.target.value)}
-              className={cn(
-                "w-full px-4 py-3 border rounded-lg transition-colors",
-                errors.date
-                  ? "border-red-300 focus:border-red-500"
-                  : "border-gray-200"
-              )}
+              className={getInputStyles(!!errors.date)}
               min={new Date().toISOString().split("T")[0]}
               aria-invalid={!!errors.date}
               aria-describedby={errors.date ? "date-error" : undefined}
             />
             {errors.date && (
-              <p id="date-error" className="eimar-error mt-1">
+              <p id="date-error" className={errorMessageStyles}>
                 {errors.date}
               </p>
             )}
@@ -244,19 +240,16 @@ const ReservationForm = ({
               type="time"
               value={formData.time}
               onChange={(e) => handleInputChange("time", e.target.value)}
-              className={cn(
-                "w-full px-4 py-3 border rounded-lg transition-colors cursor-pointer",
-                "hover:border-gray-300",
-                errors.time
-                  ? "border-red-300 focus:border-red-500"
-                  : "border-gray-200"
+              className={getInputStyles(
+                !!errors.time,
+                "cursor-pointer hover:border-gray-300",
               )}
               placeholder="12:00"
               aria-invalid={!!errors.time}
               aria-describedby={errors.time ? "time-error" : undefined}
             />
             {errors.time && (
-              <p id="time-error" className="eimar-error mt-1">
+              <p id="time-error" className={errorMessageStyles}>
                 {errors.time}
               </p>
             )}
@@ -269,12 +262,7 @@ const ReservationForm = ({
             id="reservation-people"
             value={formData.people}
             onChange={(e) => handleInputChange("people", e.target.value)}
-            className={cn(
-              "w-full px-4 py-3 border rounded-lg transition-colors",
-              errors.people
-                ? "border-red-300 focus:border-red-500"
-                : "border-gray-200"
-            )}
+            className={getInputStyles(!!errors.people)}
             aria-invalid={!!errors.people}
             aria-describedby={errors.people ? "people-error" : undefined}
           >
@@ -287,7 +275,7 @@ const ReservationForm = ({
             <option value="6+">6 o más personas</option>
           </select>
           {errors.people && (
-            <p id="people-error" className="eimar-error mt-1">
+            <p id="people-error" className={errorMessageStyles}>
               {errors.people}
             </p>
           )}

@@ -31,109 +31,106 @@ _typography.css ahora funcionará perfectamente porque Tailwind ya sabrá qué e
   .ds-h3 {
     @apply font-accent text-text-primary font-semibold leading-[1.3] text-2xl md:text-3xl lg:text-4xl;
   }
-  }
+}
 
-  .ds-h4 {
-    @apply font-accent text-text-primary font-semibold leading-[1.4] text-xl md:text-2xl lg:text-3xl;
-  }
+.ds-h4 {
+  @apply font-accent text-text-primary font-semibold leading-[1.4] text-xl md:text-2xl lg:text-3xl;
+}
 
-  .ds-h5 {
-    @apply font-accent text-text-primary font-semibold leading-[1.4] text-lg md:text-xl lg:text-2xl;
-  }
+.ds-h5 {
+  @apply font-accent text-text-primary font-semibold leading-[1.4] text-lg md:text-xl lg:text-2xl;
+}
 
-  .ds-h6 {
-    @apply font-accent text-text-primary font-semibold leading-[1.4] md:text-lg lg:text-xl;
-  }
+.ds-h6 {
+  @apply font-accent text-text-primary font-semibold leading-[1.4] md:text-lg lg:text-xl;
+}
 
-  /*
+/*
   ==========================================================
   BODY TEXT
   ==========================================================
   */
 
-  .ds-body-xl {
-    @apply font-sans text-text-secondary font-normal leading-[1.6] text-xl;
-  }
+.ds-body-xl {
+  @apply font-sans text-text-secondary font-normal leading-[1.6] text-xl;
+}
 
-  .ds-body-base {
-    @apply font-sans text-text-secondary font-normal leading-[1.6];
-  }
+.ds-body-base {
+  @apply font-sans text-text-secondary font-normal leading-[1.6];
+}
 
-  .ds-body-sm {
-    @apply font-sans text-text-secondary font-normal leading-normal text-sm; /* color: var(--text-light);*/
-    /* color: var(--text-light); */
-  }
+.ds-body-sm {
+  @apply font-sans text-text-secondary font-normal leading-normal text-sm;
+}
 
-  .ds-body-xs {
-    @apply font-sans text-text-secondary font-normal leading-normal text-xs;
-    /* color: var(--text-light); */
-  }
+.ds-body-xs {
+  @apply font-sans text-text-secondary font-normal leading-normal text-xs;
+}
 
-  /*
+/*
   ==========================================================
   HERO / SPECIAL SECTIONS
   ==========================================================
   */
 
-  .ds-hero-title {
-    @apply font-sans  text-text-inverse font-bold leading-[1.1] text-4xl md:text-5xl lg:text-6xl;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  }
+.ds-hero-title {
+  @apply font-sans  text-text-inverse font-bold leading-[1.1] text-4xl md:text-5xl lg:text-6xl;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
 
-  .ds-hero-subtitle {
-    @apply font-accent text-text-inverse font-medium leading-normal text-xl md:text-2xl lg:text-3xl;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-  }
+.ds-hero-subtitle {
+  @apply font-accent text-text-inverse font-medium leading-normal text-xl md:text-2xl lg:text-3xl;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
 
-  .ds-section-title {
-    @apply font-sans  text-text-primary font-bold leading-[1.2] text-3xl md:text-4xl lg:text-5xl;
-  }
+.ds-section-title {
+  @apply font-sans  text-text-primary font-bold leading-[1.2] text-3xl md:text-4xl lg:text-5xl;
+}
 
-  .ds-subtitle {
-    @apply font-accent text-text-accent font-medium leading-[1.4] text-2xl md:text-3xl lg:text-4xl;
-  }
+.ds-subtitle {
+  @apply font-accent text-text-accent font-medium leading-[1.4] text-2xl md:text-3xl lg:text-4xl;
+}
 
-  /*
+/*
   ==========================================================
   MENU / CARTA
   ==========================================================
   */
 
-  .ds-menu-title {
-    @apply font-accent text-text-primary text-2xl font-semibold;
-  }
+.ds-menu-title {
+  @apply font-accent text-text-primary text-2xl font-semibold;
+}
 
-  .ds-menu-description {
-    @apply font-sans text-text-secondary text-sm leading-normal;
-  }
+.ds-menu-description {
+  @apply font-sans text-text-secondary text-sm leading-normal;
+}
 
-  .ds-menu-price {
-    @apply font-sans text-text-primary font-semibold text-lg;
-  }
+.ds-menu-price {
+  @apply font-sans text-text-primary font-semibold text-lg;
+}
 
-  /*
+/*
   ==========================================================
   BADGES / LABELS / QUOTES 
   ==========================================================
   */
 
-  .ds-badge {
-    @apply font-sans text-text-primary text-xs font-medium bg-bg-tertiary inline-block px-2 py-1 rounded;
-    /* background-color: var(--bg-tertiary); */
-  }
+.ds-badge {
+  @apply font-sans text-text-primary text-xs font-medium bg-bg-tertiary inline-block px-2 py-1 rounded;
+  /* background-color: var(--bg-tertiary); */
+}
 
-  .ds-label {
-    @apply font-sans text-text-primary font-medium text-sm;
-    /* color: var(--text-primary); */
-  }
+.ds-label {
+  @apply font-sans text-text-primary font-medium text-sm;
+  /* color: var(--text-primary); */
+}
 
-  .ds-error {
-    @apply font-sans text-danger font-normal text-sm;
-    /* color: #dc2626; */
-  }
+.ds-error {
+  @apply font-sans text-danger font-normal text-sm;
+  /* color: #dc2626; */
+}
 
-  .ds-quote {
-    @apply font-accent text-text-accent font-semibold leading-[1.4] text-2xl md:text-3xl lg:text-4xl italic border-l-accent border-l-4 pl-4;
-    /* border-left-color: var(--color-accent); */
-  }
-
+.ds-quote {
+  @apply font-accent text-text-accent font-semibold leading-[1.4] text-2xl md:text-3xl lg:text-4xl italic border-l-accent border-l-4 pl-4;
+  /* border-left-color: var(--color-accent); */
+}

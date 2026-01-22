@@ -45,13 +45,13 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
   }, []);
 
   return (
-    <div className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm py-4">
+    <div className="sticky top-0 z-30 bg-bg-primary border-b border-gray-100 shadow-sm py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
           {/* Indicador izquierdo */}
           {hasOverflow && canScrollLeft && (
             <div className="absolute left-0 top-0 bottom-1 w-8 bg-linear-to-r from-white to-transparent z-10 pointer-events-none flex items-center">
-              <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
+              <div className="w-4 h-4 rounded-full bg-text-tertiary opacity-60 flex items-center justify-center">
                 <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
                 </svg>
@@ -62,7 +62,7 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
           {/* Indicador derecho */}
           {hasOverflow && canScrollRight && (
             <div className="absolute right-0 top-0 bottom-1 w-8 bg-linear-to-l from-white to-transparent z-10 pointer-events-none flex items-center justify-end">
-              <div className="w-4 h-4 rounded-full bg-gray-400 opacity-60 flex items-center justify-center">
+              <div className="w-4 h-4 rounded-full bg-text-tertiary opacity-60 flex items-center justify-center">
                 <svg className="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
                 </svg>
@@ -92,8 +92,8 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
                       : 'flex-1 min-w-0'
                     }
                     ${isActive 
-                      ? 'bg-(--eimar-green) text-white! shadow-md' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
+                      ? 'bg-(--color-accent) text-text-inverse! shadow-md' 
+                      : 'bg-bg-tertiary text-secondary hover:bg-bg-secondary hover:text-text-primary'
                     }
                   `}
                 >
@@ -181,16 +181,16 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
             <div className="p-6 space-y-4">
               {/* Título y precio */}
               <div className="flex justify-between items-start gap-4">
-                <h3 className="eimar-h3 flex-1">
+                <h3 className="ds-h3 flex-1">
                   {item.name}
                 </h3>
-                <span className="eimar-h2 shrink-0" style={{ color: "var(--color-accent)" }}>
+                <span className="ds-h2 shrink-0" style={{ color: "var(--color-accent)" }}>
                   {item.price.toFixed(2)}€
                 </span>
               </div>
               
               {/* Descripción */}
-              <p className="eimar-body-large">
+              <p className="ds-body-xl">
                 {item.description}
               </p>
               
@@ -211,8 +211,8 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
               {/* Alérgenos */}
               {item.allergens && item.allergens.length > 0 && (
                 <div className="pt-2 border-t border-gray-100">
-                  <div className="eimar-body-small">
-                    <span className="eimar-label">Alérgenos:</span>
+                  <div className="ds-body-sm">
+                    <span className="ds-label">Alérgenos:</span>
                     <span className="ml-1">{item.allergens.join(', ')}</span>
                   </div>
                 </div>
@@ -255,28 +255,28 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
       <div className="p-3 flex flex-col grow">
         {/* Layout para móvil (2 columnas) - Título solo */}
         <div className="md:hidden mb-2">
-          <h3 className="eimar-label group-hover:text-(--eimar-green) transition-colors line-clamp-2 min-h-10">
+          <h3 className="ds-label group-hover:text-(--color-accent) transition-colors line-clamp-2 min-h-10">
             {item.name}
           </h3>
         </div>
         
         {/* Layout para tablet/desktop (3-4 columnas) - Título y precio en línea */}
         <div className="hidden md:flex justify-between items-start mb-2 min-h-10">
-          <h3 className="eimar-label group-hover:text-(--eimar-green) transition-colors line-clamp-2 flex-1">
+          <h3 className="ds-label group-hover:text-(--color-accent) transition-colors line-clamp-2 flex-1">
             {item.name}
           </h3>
-          <span className="eimar-label ml-2 shrink-0" style={{ color: "var(--color-accent)" }}>
+          <span className="ds-label ml-2 shrink-0" style={{ color: "var(--color-accent)" }}>
             {item.price.toFixed(2)}€
           </span>
         </div>
         
-        <p className="eimar-body-small leading-relaxed grow line-clamp-3 mb-2 min-h-12">
+        <p className="ds-body-sm leading-relaxed grow line-clamp-3 mb-2 min-h-12">
           {item.description}
         </p>
         
         {/* Precio para móvil - Debajo de la descripción */}
         <div className="md:hidden mb-2">
-          <span className="eimar-label" style={{ color: "var(--color-accent)" }}>
+          <span className="ds-label" style={{ color: "var(--color-accent)" }}>
             {item.price.toFixed(2)}€
           </span>
         </div>
@@ -300,15 +300,15 @@ function MenuItemCard({ item, category, isExpanded, onCardClick }: MenuItemCardP
         {/* Información de alérgenos */}
         <div className="mt-auto min-h-4">
           {item.allergens && item.allergens.length > 0 && (
-            <div className="eimar-body-small">
-              <span className="eimar-label">Alérgenos:</span> {item.allergens.join(', ')}
+            <div className="ds-body-sm">
+              <span className="ds-label">Alérgenos:</span> {item.allergens.join(', ')}
             </div>
           )}
         </div>
         
         {/* Indicador sutil de que se puede expandir */}
         <div className="mt-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <span className="eimar-body-small" style={{ color: "var(--color-accent)" }}>
+          <span className="ds-body-sm" style={{ color: "var(--color-accent)" }}>
             Ver detalles
           </span>
         </div>
@@ -338,10 +338,10 @@ function MenuCategorySection({ category, isActive, expandedCard, onCardClick }: 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabecera de la categoría */}
         <div className="text-center mb-8">
-          <h2 className="eimar-section-title mb-3">
+          <h2 className="ds-section-title mb-3">
             {category.name}
           </h2>
-          <p className="eimar-body-large max-w-2xl mx-auto">
+          <p className="ds-body-large max-w-2xl mx-auto">
             {category.description}
           </p>
         </div>
@@ -517,10 +517,10 @@ const Menu = () => {
       {/* Header de la página */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <h1 className="eimar-h1 mb-4">
+          <h1 className="ds-h1 mb-4">
             Nuestra Carta
           </h1>
-          <p className="eimar-body-large max-w-3xl mx-auto">
+          <p className="ds-body-xl max-w-3xl mx-auto">
             Descubre nuestra selección de platos elaborados con ingredientes frescos y de temporada. 
             Cada plato está cuidadosamente preparado para ofrecerte una experiencia gastronómica única.
           </p>
@@ -552,9 +552,9 @@ const Menu = () => {
         <button
           onClick={scrollToTop}
           className={`
-            fixed bottom-6 right-6 z-50 w-12 h-12 bg-(--eimar-green) text-white 
+            fixed bottom-6 right-6 z-50 w-12 h-12 bg-(--color-accent) text-text-inverse 
             rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300
-            hover:scale-110 hover:bg-(--eimar-green)/90 flex items-center justify-center
+            hover:scale-110 hover:bg-(--color-accent)/90 flex items-center justify-center
           `}
           aria-label="Volver arriba"
         >

@@ -17,20 +17,17 @@ interface OrderSectionProps {
 
 const OrderSection = ({ className = "" }: OrderSectionProps) => {
   return (
-    <div className={`mt-8 pt-8 border-t border-gray-200 ${className}`}>
+    <div className={`mt-4 pt-8 border-t border-gray-200 ${className}`}>
       <h2
-        className="font-accent"
-        style={{
-          color: "var(--color-accent)",
-          fontSize: "2rem",
-        }}
+        className="ds-h3 mb-2"
+        style={{color: "var(--color-accent)"}}
       >
-        Haz tu pedido{" "}
+        Haz tu pedido
       </h2>
-      <p className="eimar-body mb-2 font-medium">
+      <p className="ds-body-xl mb-4 font-bold ">
         y recógelo en nuestro restaurante
       </p>
-      <p className="eimar-body-small mb-4">
+      <p className="ds-body-sm mb-4">
         Disfruta de nuestros platos en casa. Llama o envía un WhatsApp para
         realizar tu pedido y te avisaremos cuando esté listo para recoger.
       </p>

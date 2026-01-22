@@ -67,7 +67,12 @@ const ActionButton = ({
           {icon}
         </div>
       </div>
-      <span className="eimar-body-small font-medium">{label}</span>
+      <span
+        className="ds-body-sm font-medium"
+        style={{ color: "var(--color-base)", opacity: 0.8 }}
+      >
+        {label}
+      </span>
     </button>
   );
 };

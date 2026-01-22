@@ -58,28 +58,28 @@ export default function ReservationsPage() {
           
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="text-center">
-              <h3 className="eimar-h4 mb-3">
+              <h3 className="ds-h4 mb-3">
                 Comida Mediterránea Auténtica
               </h3>
-              <p className="eimar-body">
+              <p className="ds-body">
                 Ingredientes frescos y recetas tradicionales que respetan el sabor mediterráneo.
               </p>
             </div>
             
             <div className="text-center">
-              <h3 className="eimar-h4 mb-3">
+              <h3 className="ds-h4 mb-3">
                 Reservas Fáciles
               </h3>
-              <p className="eimar-body">
+              <p className="ds-body">
                 Reserva por WhatsApp, teléfono o visítanos directamente. Siempre te atenderemos.
               </p>
             </div>
             
             <div className="text-center">
-              <h3 className="eimar-h4 mb-3">
+              <h3 className="ds-h4 mb-3">
                 Ambiente Familiar
               </h3>
-              <p className="eimar-body">
+              <p className="ds-body">
                 En el corazón de Paiporta, un espacio acogedor perfecto para cualquier ocasión.
               </p>
             </div>

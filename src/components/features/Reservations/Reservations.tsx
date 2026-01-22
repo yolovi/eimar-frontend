@@ -156,18 +156,18 @@ const Reservations = ({
                 <div className="absolute inset-0 flex items-center justify-center z-50">
                   <div className="text-center px-8 relative z-50">
                     <h1
-                      className="eimar-h2 mb-4"
-                      style={{ color: "var(--text-inverse)" }}
+                      className="ds-h2 mb-4"
+                      style={{ color: "var(--color-base)" }}
                     >
                       Reservas y Pedidos
                     </h1>
-                    <p className="eimar-hero-subtitle mb-8">
+                    <p className="ds-hero-subtitle mb-8">
                       Disfruta de la experiencia Eimar
                       <br />
                       <span
                         className="font-medium"
                         style={{
-                          color: "var(--text-inverse)",
+                          color: "var(--color-base)",
                         }}
                       >
                         en casa o en nuestro local
@@ -207,10 +207,10 @@ const Reservations = ({
         <div className="grid lg:grid-cols-7 gap-8">
           {/* Turnos */}
           <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-3">
-            <h4 className="eimar-h6 mb-4">
+            <h4 className="ds-h6 mb-4">
               {RESERVATIONS_CONTENT.policies.turnos.title}
             </h4>
-            <ul className="eimar-list-bulleted eimar-body-small">
+            <ul className="ds-list-bulleted ds-body-sm">
               {RESERVATIONS_CONTENT.policies.turnos.content.map(
                 (item, index) => (
                   <li key={index}>{item}</li>
@@ -221,10 +221,10 @@ const Reservations = ({
 
           {/* Políticas */}
           <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-4">
-            <h4 className="eimar-h6 mb-4">
+            <h4 className="ds-h6 mb-4">
               {RESERVATIONS_CONTENT.policies.general.title}
             </h4>
-            <ul className="eimar-list-bulleted eimar-body-small">
+            <ul className="ds-list-bulleted ds-body-sm">
               {RESERVATIONS_CONTENT.policies.general.content.map(
                 (item, index) => (
                   <li key={index}>{item}</li>

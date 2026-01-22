@@ -89,10 +89,10 @@ body {
 }
 
 /* Herencia de colores específica - solo para elementos que realmente la necesitan */
-button,
-input,
-select,
-textarea {
+/* Excluir botones con clases de color específicas para evitar sobrescribir Tailwind */
+input:not([class*="text-"]):not([class*="bg-"]),
+select:not([class*="text-"]):not([class*="bg-"]),
+textarea:not([class*="text-"]):not([class*="bg-"]) {
   color: inherit;
 }
 
