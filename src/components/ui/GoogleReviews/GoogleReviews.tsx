@@ -116,7 +116,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
       <div className="text-center mb-8">
         <h3
           className="text-2xl md:text-3xl font-display font-bold mb-4"
-          style={{ color: "var(--text-primary)" }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           RESEÑAS DE CLIENTES
         </h3>
@@ -127,13 +127,13 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
           </div>
           <span
             className="text-2xl font-semibold"
-            style={{ color: "var(--text-primary)" }}
+            style={{ color: "var(--color-text-primary)" }}
           >
             {averageRating.toFixed(1)}
           </span>
         </div>
 
-        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
           Basado en {mockReviews.length} reseñas de Google
         </p>
       </div>
@@ -143,10 +143,10 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
         {mockReviews.map((review) => (
           <div
             key={review.id}
-            className="p-6 rounded-lg border shadow-sm transition-shadow duration-200 hover:shadow-md"
+            className="p-6 rounded-lg  shadow-sm transition-shadow duration-200 hover:shadow-md"
             style={{
-              backgroundColor: "var(--bg-primary)",
-              borderColor: "var(--eimar-gray-light)",
+              backgroundColor: "var(--color-ds-base)",
+              opacity: 0.8,
             }}
           >
             {/* Header de la reseña */}
@@ -155,7 +155,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
                 <div className="flex items-center gap-2 mb-1">
                   <h4
                     className="font-semibold text-sm"
-                    style={{ color: "var(--text-primary)" }}
+                    style={{ color: "var(--color-text-primary)" }}
                   >
                     {review.author}
                   </h4>
@@ -179,7 +179,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
                   </div>
                   <span
                     className="text-xs"
-                    style={{ color: "var(--text-light)" }}
+                    style={{ color: "var(--color-text-tertiary)" }}
                   >
                     {review.date}
                   </span>
@@ -190,7 +190,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
             {/* Texto de la reseña */}
             <p
               className="text-sm leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
+              style={{ color: "var(--color-text-secondary)" }}
             >
               "{review.text}"
             </p>
@@ -202,10 +202,10 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
       <div className="text-center mt-8">
         <button
           onClick={() => {
-            // TODO: revisar que --> En producción, esto abriría el perfil de Google del restaurante
+            // TODO: revisar que --> En producción, esto abriría el perfil de Google del restaurante --> ¿Es posible abrir directamente la sección de reseñas?
             window.open(
               "https://maps.google.com/?q=Restaurante+Eimar+Paiporta",
-              "_blank"
+              "_blank",
             );
           }}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-accent/10"
