@@ -38,11 +38,10 @@ const ABOUT_CONTENT = {
     space: "Un espacio acogedor que combina lo",
     spaceHighlight: "mediterráneo con un toque urbano y fresco.",
     experience:
-      "Aquí, la comida se saborea, pero también se vive: desde unas tapas con amigos mientras ves el partido, una burger original con sabor casero, hasta un almuerzo de los de siempre o una cena especial al aire libre en nuestra terraza, abierta todo el año.",
+      "Aquí, la comida se saborea, pero también se vive: desde unas tapas con amigos mientras ves el partido, una burger original con sabor casero, hasta un almuerzo de los de siempre o una cena especial al aire libre en nuestra terraza.",
 
-    meetingPoint: "Porque más que un restaurante, somos un punto de encuentro.",
-    identity:
-      "Hoy seguimos siendo los de siempre, pero con una nueva identidad centrada en que disfrutes no solo de la comida sino del ambiente.",
+    meetingPoint:
+      "Porque más que un restaurante, somos un punto de encuentro. Hoy seguimos siendo los de siempre, pero con una nueva identidad centrada en que disfrutes no solo de la comida sino del ambiente.",
   },
 
   quote: "Nos alegra verte llegar, y más aún verte volver.",
@@ -53,11 +52,7 @@ const ABOUT_CONTENT = {
 
 const About = ({ className }: AboutProps) => {
   return (
-    <section
-      id="nosotros"
-      className={cn("w-full py-12 px-4", className)}
-      style={{ backgroundColor: "var(--bg-primary)" }}
-    >
+    <section id="nosotros" className={cn("w-full py-12 px-4", className)}>
       <div className="max-w-7xl mx-auto">
         {/* Layout móvil/tablet - Grid normal */}
         <div className="lg:hidden">
@@ -81,7 +76,6 @@ const About = ({ className }: AboutProps) => {
               {/* Título principal */}
               <div className="space-y-4">
                 <h2 className="ds-section-title">{ABOUT_CONTENT.title}</h2>
-
                 <p className="ds-subtitle">{ABOUT_CONTENT.subtitle}</p>
               </div>
 
@@ -89,8 +83,7 @@ const About = ({ className }: AboutProps) => {
               <div className="space-y-4">
                 <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.opening}{" "}
-                  <span
-                    className="font-semibold"                  >
+                  <span className="font-semibold">
                     {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
                 </p>
@@ -105,10 +98,6 @@ const About = ({ className }: AboutProps) => {
                   </span>{" "}
                   {ABOUT_CONTENT.paragraphs.experience}{" "}
                   {ABOUT_CONTENT.paragraphs.meetingPoint}
-                </p>
-
-                <p className="ds-body-xl">
-                  {ABOUT_CONTENT.paragraphs.identity}
                 </p>
 
                 {/* Frase destacada */}
@@ -131,37 +120,39 @@ const About = ({ className }: AboutProps) => {
           </div>
         </div>
 
-        {/* Layout desktop - Título arriba con imagen, texto en columnas abajo */}
+        {/* Layout desktop - Título arriba, luego imagen y texto en columnas */}
         <div className="hidden lg:block">
-          {/* Sección superior - Título e imagen */}
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-4">
-            {/* Título principal */}
-            <div className="space-y-4">
-              <h2 className="ds-section-title">{ABOUT_CONTENT.title}</h2>
+          {/* Título y subtítulo separados - con ancho máximo de la columna izquierda */}
+          <div className="lg:max-w-[calc(50%-1.5rem)] mb-8">
+            <h2 className="ds-section-title">{ABOUT_CONTENT.title}</h2>
+            <p className="ds-subtitle mt-4">{ABOUT_CONTENT.subtitle}</p>
+          </div>
 
-              <p className="ds-subtitle">{ABOUT_CONTENT.subtitle}</p>
+          {/* Sección de contenido en columnas */}
+          <div className="grid lg:grid-cols-2 gap-12 items-stretch mb-4">
+            {/* Columna izquierda - Imagen */}
+            <div className="flex flex-col">
               {/* Imagen del restaurante izquierda*/}
-              <div>
-                <div className="relative h-[400] rounded-lg overflow-hidden shadow-xl">
-                  <Image
-                    src="/images/restaurant/ambiente1.png"
-                    alt="Interior del restaurante Eimar con ambiente acogedor"
-                    fill
-                    className="object-cover"
-                    sizes="50vw"
-                    priority
-                  />
-                </div>
+              <div className="relative flex-1 min-h-[400] rounded-lg overflow-hidden shadow-xl">
+                <Image
+                  src="/images/restaurant/ambiente1.png"
+                  alt="Interior del restaurante Eimar con ambiente acogedor"
+                  fill
+                  className="object-cover"
+                  sizes="50vw"
+                  priority
+                />
               </div>
             </div>
 
-            <div>
-              <div className="space-y-4 mt-48">
+            {/* Columna derecha - Texto e imagen */}
+            <div className="flex flex-col justify-between">
+              <div className="space-y-4">
                 <p className="ds-body-xl">
                   {ABOUT_CONTENT.paragraphs.opening}{" "}
                   <span
                     className="font-semibold"
-                    style={{ color: "var(--text-primary)" }}
+                    style={{ color: "var(--color-primary)" }}
                   >
                     {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
@@ -178,7 +169,7 @@ const About = ({ className }: AboutProps) => {
                 </p>
               </div>
               {/* Imagen del restaurante derecha*/}
-              <div className="relative h-[145] rounded-lg overflow-hidden shadow-xl mb-8 mt-8">
+              <div className="relative h-[145] rounded-lg overflow-hidden shadow-xl">
                 <Image
                   src="/images/restaurant/about-1.png"
                   alt="ensalada"
@@ -193,19 +184,16 @@ const About = ({ className }: AboutProps) => {
 
           {/* Sección inferior - Contenido en columnas */}
           <div className="space-y-4">
-            <p className="ds-body-large">
-              {ABOUT_CONTENT.paragraphs.meetingPoint}{" "}
-              {ABOUT_CONTENT.paragraphs.identity}
+            <p className="ds-body-xl">
+              {ABOUT_CONTENT.paragraphs.meetingPoint}
             </p>
           </div>
 
           {/* Frase destacada y bienvenida final */}
           <div className="mt-12 space-y-6">
-            <blockquote className="ds-quote">
-              {ABOUT_CONTENT.quote}
-            </blockquote>
+            <blockquote className="ds-quote">{ABOUT_CONTENT.quote}</blockquote>
 
-            <p className="ds-body-large font-medium">
+            <p className="ds-body-xl font-medium">
               {ABOUT_CONTENT.welcome}{" "}
               <span
                 className="font-display font-bold text-xl"

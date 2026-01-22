@@ -52,11 +52,11 @@ _typography.css ahora funcionará perfectamente porque Tailwind ya sabrá qué e
   */
 
   .ds-body-xl {
-    @apply font-sans text-text-primary font-normal leading-[1.6] text-xl;
+    @apply font-sans text-text-secondary font-normal leading-[1.6] text-xl;
   }
 
   .ds-body-base {
-    @apply font-sans text-text-primary font-normal leading-[1.6];
+    @apply font-sans text-text-secondary font-normal leading-[1.6];
   }
 
   .ds-body-sm {
@@ -86,7 +86,7 @@ _typography.css ahora funcionará perfectamente porque Tailwind ya sabrá qué e
   }
 
   .ds-section-title {
-    @apply font-sans  text-text-primary font-bold leading-[1.2] text-4xl md:text-5xl lg:text-6xl;
+    @apply font-sans  text-text-primary font-bold leading-[1.2] text-3xl md:text-4xl lg:text-5xl;
   }
 
   .ds-subtitle {
