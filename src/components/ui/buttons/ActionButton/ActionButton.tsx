@@ -55,8 +55,7 @@ const ActionButton = ({
       aria-label={ariaLabel || label}
       className={`
         flex flex-col items-center gap-2 
-        hover:text-accent transition-colors group 
-        relative z-50 drop-shadow-xl
+        hover:text-accent transition-colors group drop-shadow-xl
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}

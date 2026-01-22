@@ -123,8 +123,8 @@ const Reservations = ({
                 />
 
                 {/* Texto superpuesto */}
-                <div className="absolute inset-0 flex items-center justify-center z-50">
-                  <div className="text-center px-8 relative z-50">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center px-8">
                     <h1
                       className="ds-h2 mb-4"
                       style={{ color: "var(--color-ds-base)" }}
@@ -144,7 +144,7 @@ const Reservations = ({
                       </span>
                     </p>
                     {/* Botones de acción */}
-                    <div className="flex gap-6 justify-center relative z-50">
+                    <div className="flex gap-6 justify-center">
                       <ActionButton
                         icon={MenuIcon}
                         label="Carta"
