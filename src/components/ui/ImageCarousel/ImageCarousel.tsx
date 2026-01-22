@@ -228,7 +228,7 @@ const ImageCarousel = ({
               "flex gap-4",
               currentImagesPerView === 1
                 ? "overflow-x-auto scrollbar-hide" // Móvil: scroll horizontal
-                : "transition-transform duration-700 ease-out" // Desktop: transform animado
+                : "transition-transform duration-700 ease-out", // Desktop: transform animado
             )}
             style={{
               transform:
@@ -273,7 +273,7 @@ const ImageCarousel = ({
 
                         {/* Texto por encima del fondo */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-                          <p className="text-gray-300! text-sm">
+                          <p className="text-text-inverse/70! text-sm">
                             {image.title}
                           </p>
                         </div>
@@ -308,13 +308,13 @@ const ImageCarousel = ({
                   }}
                   className={cn(
                     "w-2 h-2 rounded-full transition-all duration-200",
-                    index === currentIndex ? "scale-125" : "hover:scale-110"
+                    index === currentIndex ? "scale-125" : "hover:scale-110",
                   )}
                   style={{
                     backgroundColor:
                       index === currentIndex
                         ? "var(--color-base)"
-                        : "var(--eimar-gray-light)",
+                        : "var(--color-accent)",
                   }}
                   aria-label={`Ir a imagen ${index + 1}`}
                 />
@@ -326,13 +326,13 @@ const ImageCarousel = ({
                   onClick={() => setCurrentIndex(index)}
                   className={cn(
                     "w-2 h-2 rounded-full transition-all duration-200",
-                    index === currentIndex ? "scale-125" : "hover:scale-110"
+                    index === currentIndex ? "scale-125" : "hover:scale-110",
                   )}
                   style={{
                     backgroundColor:
                       index === currentIndex
                         ? "var(--color-base)"
-                        : "var(--eimar-gray-light)",
+                        : "var(--color-accent)",
                   }}
                   aria-label={`Ir al grupo ${index + 1}`}
                 />

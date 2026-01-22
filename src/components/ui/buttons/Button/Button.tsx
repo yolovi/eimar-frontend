@@ -5,13 +5,13 @@ import { BaseButtonSize } from "../shared";
 import { SVG_NAMESPACE } from "@/constants";
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: "bg-primary hover:bg-accent text-white hover:text-white font-medium",
-  secondary: "bg-accent/20 hover:bg-accent text-primary hover:text-white",
+  primary: "bg-secondary hover:bg-bg-accent text-text-inverse hover:text-text-inverse font-medium",
+  secondary: "bg-bg-accent/20 hover:bg-bg-accent text-text-primary hover:text-text-inverse",
   outline:
-    "bg-transparent border-2 text-primary hover:bg-primary hover:text-white",
+    "bg-transparent border-2 border-text-primary text-text-primary hover:bg-bg-secondary hover:text-text-inverse hover:border-bg-secondary",
   ghost:
-    "bg-transparent text-primary hover:bg-accent/20 hover:text-accent border-transparent",
-  destructive: "bg-red-400 hover:bg-red-700 text-white",
+    "bg-transparent text-text-primary hover:bg-bg-accent/20 hover:text-text-accent border-transparent",
+  destructive: "bg-red-400 hover:bg-red-700 text-text-inverse",
 };
 
 const buttonSizes: Record<BaseButtonSize, string> = {
