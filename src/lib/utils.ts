@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// Re-export contact actions for convenience
+export * from "./contact-actions";
+
 /**
 ========================================
 📝 PLANTILLA PARA NUEVAS UTILIDADES

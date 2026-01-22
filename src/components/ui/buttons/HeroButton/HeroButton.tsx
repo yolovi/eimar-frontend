@@ -1,11 +1,13 @@
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { HeroButtonProps, HeroButtonSize } from "./HeroButton.types";
+import { HeroButtonProps } from "./HeroButton.types";
+import { BaseButtonSize } from "../shared";
 
-const heroButtonSizes: Record<HeroButtonSize, string> = {
+const heroButtonSizes: Record<BaseButtonSize, string> = {
   sm: "w-48 px-6 py-2 text-sm",
-  md: "w-56 px-8 py-3 text-base", 
+  md: "w-56 px-8 py-3 text-base",
   lg: "w-64 px-10 py-4 text-lg",
+  xl: "w-72 px-12 py-5 text-xl",
 };
 
 const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
@@ -19,31 +21,31 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
       onMouseLeave,
       ...props
     },
-    ref
+    ref,
   ) => {
     const baseClasses = cn(
       "group rounded-lg font-semibold cursor-pointer",
       "transition-all duration-300 backdrop-blur-sm",
       "border-2",
       "hover:scale-105 hover:shadow-xl",
-      "focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0"
+      "focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0",
     );
 
     const primaryClasses = cn(
       baseClasses,
-      "border-transparent hover:border-base]"
+      "border-transparent hover:border-base]",
     );
 
     const secondaryClasses = cn(
       baseClasses,
       "border-[var(--color-bg-tertiary)]",
-      "hover:bg-base] hover:border-transparent"
+      "hover:bg-ds-base] hover:border-transparent",
     );
 
     const darkClasses = cn(
       baseClasses,
       "border-gray-600",
-      "hover:bg-gray-700 hover:border-transparent"
+      "hover:bg-gray-700 hover:border-transparent",
     );
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,7 +59,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
 
     const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (variant === "secondary") {
-        e.currentTarget.style.color = "var(--color-base)";
+        e.currentTarget.style.color = "var(--color-ds-base)";
       } else if (variant === "dark") {
         e.currentTarget.style.color = "rgb(75, 85, 99)"; // gray-600
       }
@@ -68,14 +70,10 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
       return (
         <button
           ref={ref}
-          className={cn(
-            primaryClasses,
-            heroButtonSizes[size],
-            className
-          )}
+          className={cn(primaryClasses, heroButtonSizes[size], className)}
           style={{
             backgroundColor: "var(--color-accent)",
-            color: "var(--color-base)"
+            color: "var(--color-ds-base)",
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -90,11 +88,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
       return (
         <button
           ref={ref}
-          className={cn(
-            darkClasses,
-            heroButtonSizes[size],
-            className
-          )}
+          className={cn(darkClasses, heroButtonSizes[size], className)}
           style={{
             color: "rgb(75, 85, 99)", // gray-600
           }}
@@ -111,13 +105,9 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
     return (
       <button
         ref={ref}
-        className={cn(
-          secondaryClasses,
-          heroButtonSizes[size],
-          className
-        )}
+        className={cn(secondaryClasses, heroButtonSizes[size], className)}
         style={{
-          color: "var(--color-base)",
+          color: "var(--color-ds-base)",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -126,7 +116,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 HeroButton.displayName = "HeroButton";

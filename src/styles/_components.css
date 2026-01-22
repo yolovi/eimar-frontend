@@ -8,7 +8,7 @@
     border-radius: 0.5rem;
     font-weight: 500;
     background-color: var(--color-accent);
-    color: var(--color-base);
+    color: var(--color-ds-base);
     transition: background-color 0.2s ease;
   }
 

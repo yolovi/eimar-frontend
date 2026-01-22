@@ -313,7 +313,7 @@ const ImageCarousel = ({
                   style={{
                     backgroundColor:
                       index === currentIndex
-                        ? "var(--color-base)"
+                        ? "var(--color-ds-base)"
                         : "var(--color-accent)",
                   }}
                   aria-label={`Ir a imagen ${index + 1}`}
@@ -331,7 +331,7 @@ const ImageCarousel = ({
                   style={{
                     backgroundColor:
                       index === currentIndex
-                        ? "var(--color-base)"
+                        ? "var(--color-ds-base)"
                         : "var(--color-accent)",
                   }}
                   aria-label={`Ir al grupo ${index + 1}`}

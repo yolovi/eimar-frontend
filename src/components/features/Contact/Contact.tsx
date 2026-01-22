@@ -19,70 +19,152 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { HeroButton, ImageSlider, GoogleReviews } from "@/components/ui";
+import { HeroButton, GoogleReviews } from "@/components/ui";
 import { CONTACT_INFO, getTodaySchedule } from "@/constants/contact";
+import { useContactActions } from "@/hooks";
 
 interface ContactProps {
   className?: string;
 }
 
 const Contact = ({ className }: ContactProps) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const todaySchedule = getTodaySchedule();
+  
+  // Usar hook centralizado para todas las acciones de contacto
+  const {
+    isMounted,
+    isMobile,
+    handlePhoneAction,
+    handleReservation,
+    handleQuickContact,
+    getActionTitle,
+  } = useContactActions();
 
-  // Evitar hidration mismatch - solo ejecutar en cliente
-  useEffect(() => {
-    setIsMounted(true);
+  // Datos de contacto estructurados
+  const contactItems = [
+    {
+      id: 'location',
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+        />
+      ),
+      title: "Cómo llegar",
+      content: (
+        <>
+          <p className="mb-3" style={{ color: "var(--color-text-secondary)" }}>
+            {CONTACT_INFO.address.full}
+          </p>
+          <button
+            onClick={() => window.open(CONTACT_INFO.coordinates.googleMapsLink, "_blank")}
+            className="text-sm font-medium hover:underline transition-all duration-200"
+            style={{ color: "var(--color-accent)" }}
+          >
+            Abrir en Google Maps →
+          </button>
+        </>
+      ),
+    },
+    {
+      id: 'phone',
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+        />
+      ),
+      title: "Teléfono",
+      content: (
+        <button
+          onClick={() => handlePhoneAction()}
+          className="text-lg font-medium hover:underline transition-all duration-200"
+          style={{ color: "var(--color-accent)" }}
+          title={getActionTitle("phone")}
+        >
+          {CONTACT_INFO.phone.primary.display}
+        </button>
+      ),
+    },
+    {
+      id: 'schedule',
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      ),
+      title: "Horario",
+      content: (
+        <>
+          <p className="mb-1" style={{ color: "var(--color-text-secondary)" }}>
+            De martes a domingo: {todaySchedule.formatted}
+          </p>
+          <p className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+            Lunes cerrado
+          </p>
+        </>
+      ),
+    },
+    {
+      id: 'pets',
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        />
+      ),
+      title: "Mascotas",
+      content: (
+        <p style={{ color: "var(--color-text-secondary)" }}>
+          Bienvenidas en terraza
+        </p>
+      ),
+    },
+  ];
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Función para manejar el click del teléfono
-  const handlePhoneClick = () => {
-    if (!isMounted) return; // Esperar a que esté montado
-
-    if (isMobile) {
-      // En móvil: abrir marcador telefónico
-      window.open(CONTACT_INFO.phone.primary.link, "_self");
-    } else {
-      // En desktop: abrir WhatsApp Web
-      const whatsappUrl = `https://wa.me/${
-        CONTACT_INFO.whatsapp.number
-      }?text=${encodeURIComponent(CONTACT_INFO.whatsapp.messages.info)}`;
-      window.open(whatsappUrl, "_blank");
-    }
-  };
-
-  // Función para manejar reservas
-  const handleReservation = () => {
-    const whatsappUrl = `https://wa.me/${
-      CONTACT_INFO.whatsapp.number
-    }?text=${encodeURIComponent(CONTACT_INFO.whatsapp.messages.reservation)}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  // Función helper para renderizar cada elemento de contacto
+  const renderContactItem = (item: typeof contactItems[0]) => (
+    <div key={item.id} className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+      <div className="flex items-center gap-2 lg:w-32 lg:min-w-32">
+        <svg
+          className="w-5 h-5"
+          style={{ color: "var(--color-accent)" }}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {item.icon}
+        </svg>
+        <h4 className="ds-h6-sans">{item.title}</h4>
+      </div>
+      <div className="flex-1 text-center lg:text-left">
+        {item.content}
+      </div>
+    </div>
+  );
 
   return (
     <section
       id="contacto"
       className={cn("w-full", className)}
-      style={{ backgroundColor: "var(--bg-primary)" }}
+      style={{ backgroundColor: "var(--color-ds-base)" }}
     >
       {/* Sección del mapa e información con fondo gris */}
       <div
         className="w-full py-16"
         style={{
           backgroundColor:
-            "color-mix(in srgb, var(--bg-accent) 10%, transparent)",
+            "color-mix(in srgb, var(--color-accent) 10%, transparent)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4">
@@ -108,10 +190,10 @@ const Contact = ({ className }: ContactProps) => {
             <div className="order-1 lg:order-2 space-y-8 text-center lg:text-left">
               {/* Nombre del restaurante */}
               <div>
-                <h3 className="eimar-section-title tracking-wide">
+                <h3 className="ds-section-title tracking-wide">
                   RESTAURANTE EIMAR
                 </h3>
-                <p className="eimar-body-large max-w-2xl mx-auto">
+                <p className="ds-body-xl max-w-2xl mx-auto">
                   Visítanos en el corazón de Paiporta y descubre la auténtica
                   experiencia gastronómica
                 </p>
@@ -119,170 +201,7 @@ const Contact = ({ className }: ContactProps) => {
 
               {/* Información de contacto */}
               <div className="space-y-6">
-                {/* Cómo llegar */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
-                  <div className="flex items-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: "var(--color-accent)" }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                    <h4
-                      className="font-semibold"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      Cómo llegar
-                    </h4>
-                  </div>
-                  <div className="flex-1 text-center lg:text-left">
-                    <p
-                      className="mb-3"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {CONTACT_INFO.address.full}
-                    </p>
-                    <button
-                      onClick={() =>
-                        window.open(
-                          CONTACT_INFO.coordinates.googleMapsLink,
-                          "_blank"
-                        )
-                      }
-                      className="text-sm font-medium hover:underline transition-all duration-200"
-                      style={{ color: "var(--color-accent)" }}
-                    >
-                      Abrir en Google Maps →
-                    </button>
-                  </div>
-                </div>
-
-                {/* Teléfono */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
-                  <div className="flex items-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: "var(--color-accent)" }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                    <h4
-                      className="font-semibold"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      Teléfono
-                    </h4>
-                  </div>
-                  <div className="flex-1 text-center lg:text-left">
-                    <button
-                      onClick={handlePhoneClick}
-                      className="text-lg font-medium hover:underline transition-all duration-200"
-                      style={{ color: "var(--color-accent)" }}
-                      title={
-                        isMounted
-                          ? isMobile
-                            ? "Llamar ahora"
-                            : "Contactar por WhatsApp"
-                          : "Contactar"
-                      }
-                    >
-                      {CONTACT_INFO.phone.primary.display}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Horarios */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
-                  <div className="flex items-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: "var(--color-accent)" }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    <h4
-                      className="font-semibold"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      Horario
-                    </h4>
-                  </div>
-                  <div className="flex-1 text-center lg:text-left">
-                    <p
-                      className="mb-1"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      De martes a domingo: {todaySchedule.formatted}
-                    </p>
-                    <p
-                      className="text-sm"
-                      style={{ color: "var(--text-light)" }}
-                    >
-                      Lunes cerrado
-                    </p>
-                  </div>
-                </div>
-
-                {/* Mascotas */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
-                  <div className="flex items-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: "var(--color-accent)" }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                    <p
-                      className="font-semibold"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      Mascotas
-                    </p>
-                  </div>
-                  <div className="flex-1 text-center lg:text-left">
-                    <p style={{ color: "var(--text-secondary)" }}>
-                      Bienvenidas en terraza
-                    </p>
-                  </div>
-                </div>
+                {contactItems.map(renderContactItem)}
               </div>
 
               {/* Botón de reserva - TEMPORALMENTE DESHABILITADO */}
@@ -302,10 +221,10 @@ const Contact = ({ className }: ContactProps) => {
                 <HeroButton
                   variant="primary"
                   size="md"
-                  onClick={() => window.open(CONTACT_INFO.whatsapp.linkWithReservation, "_blank")}
+                  onClick={() => handleQuickContact()}
                   className="px-8"
                 >
-                Contactar
+                  Contactar
                 </HeroButton>
               </div>
             </div>

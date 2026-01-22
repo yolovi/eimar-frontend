@@ -129,7 +129,7 @@ const MobileMenuToggle = () => {
           <div
             ref={menuRef}
             className={cn(
-              "fixed right-0 bg-base/98 backdrop-blur-md shadow-2xl z-50 md:hidden",
+              "fixed right-0 bg-ds-base/98 backdrop-blur-md shadow-2xl z-50 md:hidden",
               "w-72 max-w-[85vw]", // Mayor ancho y mejor proporción
               "overflow-y-auto overscroll-contain" // Scroll interno si es necesario
             )}

@@ -34,7 +34,7 @@ GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
   --font-accent: "Playfair Display", ui-serif, Georgia, serif;
 
   /* Colores base EIMAR */
-  --color-base: #fffafa;
+  --color-ds-base: #fffafa;
   --color-primary: #000000;
   --color-secondary: #1f2937;
   --color-accent: #485f50;
@@ -44,7 +44,7 @@ GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
   --color-danger: #dc2626;
 
   /* Mapeo para clases de background */
-  --color-bg-primary: var(--color-base);
+  --color-bg-primary: var(--color-ds-base);
   --color-bg-secondary: var(--color-primary);
   --color-bg-tertiary: var(--color-gray-light);
   --color-bg-accent: var(--color-accent);
@@ -53,7 +53,7 @@ GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
   --color-text-primary: var(--color-secondary);
   --color-text-secondary: var(--color-gray-medium);
   --color-text-tertiary: var(--color-gray-light);
-  --color-text-inverse: var(--color-base);
+  --color-text-inverse: var(--color-ds-base);
   --color-text-accent: var(--color-accent);
 }
 

@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-base sticky top-0 z-50">
+    <header className="bg-ds-base sticky top-0 z-50">
       {/* Borde inferior gris sin llegar a los extremos */}
       <div className="relative">
         <div className="w-full px-4 py-3">

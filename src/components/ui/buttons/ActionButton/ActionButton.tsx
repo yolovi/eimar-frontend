@@ -62,14 +62,14 @@ const ActionButton = ({
       `}
       style={{ color: "var(--text-inverse)" }}
     >
-      <div className="w-12 h-12 bg-base/80 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-accent/80 transition-colors">
+      <div className="w-12 h-12 bg-ds-base/80 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-accent/80 transition-colors">
         <div className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current group-hover:[&>svg]:fill-white transition-colors">
           {icon}
         </div>
       </div>
       <span
         className="ds-body-sm font-medium"
-        style={{ color: "var(--color-base)", opacity: 0.8 }}
+        style={{ color: "var(--color-ds-base)", opacity: 0.8 }}
       >
         {label}
       </span>

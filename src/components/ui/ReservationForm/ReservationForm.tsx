@@ -21,7 +21,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button, OrderSection } from "@/components/ui";
-import { CONTACT_INFO } from "@/constants/contact";
+import { useContactActions } from "@/hooks";
 
 export interface ReservationFormData {
   name: string;
@@ -52,6 +52,8 @@ const ReservationForm = ({
   showOrderSection = true,
   className = "",
 }: ReservationFormProps) => {
+  // Hook para manejar acciones de contacto centralizadamente
+  const { handleReservation } = useContactActions();
   // Constantes de estilos para evitar repetición
   const inputBaseStyles =
     "w-full px-4 py-3 border rounded-lg transition-colors";
@@ -131,31 +133,12 @@ const ReservationForm = ({
       if (onSubmit) {
         onSubmit(formData);
       } else {
-        // Envío por defecto via WhatsApp
-        await handleWhatsAppSubmission();
+        // Envío por defecto usando hook centralizado
+        handleReservation(formData);
       }
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  // Enviar reserva por WhatsApp
-  const handleWhatsAppSubmission = async () => {
-    const message = `Hola! Me gustaría hacer una reserva:
-
-🏷️ Nombre: ${formData.name}
-📞 Teléfono: ${formData.phone}
-📅 Fecha: ${formData.date}
-🕐 Hora: ${formData.time}
-👥 Personas: ${formData.people}
-
-¡Gracias!`;
-
-    const whatsappUrl = `https://wa.me/${
-      CONTACT_INFO.whatsapp.number
-    }?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappUrl, "_blank");
   };
 
   return (

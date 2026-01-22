@@ -53,7 +53,7 @@ const DesktopNavigation = () => {
             isCartaOpen ? "block" : "hidden"
           )}
         >
-          <div className="bg-base shadow-lg rounded-lg border border-accent/20 py-2">
+          <div className="bg-ds-base shadow-lg rounded-lg border border-accent/20 py-2">
             {cartaItems.map((item) => (
               <Link
                 key={item.href}

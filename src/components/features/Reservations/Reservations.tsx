@@ -20,7 +20,6 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
 import { cn, navigateToMenu } from "@/lib/utils";
 import {
   ReservationForm,
@@ -29,7 +28,7 @@ import {
   PhoneIcon,
   WhatsAppIcon,
 } from "@/components/ui";
-import { CONTACT_INFO } from "@/constants/contact";
+import { useContactActions } from "@/hooks";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -77,50 +76,21 @@ const Reservations = ({
   height = "lg",
   className,
 }: ReservationsProps) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Mapeo a clases globales de altura responsiva
-  const heightClasses = {
-    sm: "ds-height-sm",
-    md: "ds-height-md",
-    lg: "ds-height-lg",
-    xl: "ds-height-xl",
-    full: "ds-height-full",
-  };
+  // Hook centralizado para acciones de contacto
+  const { handleDirectCall, handleReservation } = useContactActions();
 
   const router = useRouter();
-
-  // Evitar hydration mismatch - solo ejecutar en cliente
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Función para manejar llamadas
-  const handlePhoneCall = () => {
-    if (!isMounted) return;
-    window.open(CONTACT_INFO.phone.primary.link, "_self");
-  };
-
-  // Función para WhatsApp reservas
-  const handleWhatsAppReservation = () => {
-    const router = useRouter();
-
-    const whatsappUrl = `https://wa.me/${
-      CONTACT_INFO.whatsapp.number
-    }?text=${encodeURIComponent(CONTACT_INFO.whatsapp.messages.reservation)}`;
-    window.open(whatsappUrl, "_blank");
-  };
 
   return (
     <section
       id="reservas-y-pedidos"
-      className={cn("w-full py-12 mb-8", heightClasses[height], className)}
+      className={cn("w-full py-12 mb-4", className)}
       style={{ backgroundColor: "var(--bg-primary)" }}
       aria-label="Reservation section"
     >
       <div className="max-w-7xl mx-auto px-4 space-y-16">
         {/* Contenido principal con dos columnas */}
-        <div className="relative z-10 h-full flex items-center">
+        <div className="relative">
           <div className="w-full">
             <div className="grid lg:grid-cols-7 gap-8">
               {/* Columna izquierda: Formulario de reserva */}
@@ -157,7 +127,7 @@ const Reservations = ({
                   <div className="text-center px-8 relative z-50">
                     <h1
                       className="ds-h2 mb-4"
-                      style={{ color: "var(--color-base)" }}
+                      style={{ color: "var(--color-ds-base)" }}
                     >
                       Reservas y Pedidos
                     </h1>
@@ -167,7 +137,7 @@ const Reservations = ({
                       <span
                         className="font-medium"
                         style={{
-                          color: "var(--color-base)",
+                          color: "var(--color-ds-base)",
                         }}
                       >
                         en casa o en nuestro local
@@ -185,14 +155,14 @@ const Reservations = ({
                       <ActionButton
                         icon={PhoneIcon}
                         label="Llamar"
-                        onClick={handlePhoneCall}
+                        onClick={() => handleDirectCall()}
                         ariaLabel="Llamar al restaurante"
                       />
 
                       <ActionButton
                         icon={WhatsAppIcon}
                         label="WhatsApp"
-                        onClick={handleWhatsAppReservation}
+                        onClick={() => handleReservation()}
                         ariaLabel="Contactar por WhatsApp"
                       />
                     </div>
@@ -207,28 +177,28 @@ const Reservations = ({
         <div className="grid lg:grid-cols-7 gap-8">
           {/* Turnos */}
           <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-3">
-            <h4 className="ds-h6 mb-4">
+            <h4 className="ds-body-xl mb-4">
               {RESERVATIONS_CONTENT.policies.turnos.title}
             </h4>
             <ul className="ds-list-bulleted ds-body-sm">
               {RESERVATIONS_CONTENT.policies.turnos.content.map(
                 (item, index) => (
                   <li key={index}>{item}</li>
-                )
+                ),
               )}
             </ul>
           </div>
 
           {/* Políticas */}
           <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-4">
-            <h4 className="ds-h6 mb-4">
+            <h4 className="ds-body-xl mb-4">
               {RESERVATIONS_CONTENT.policies.general.title}
             </h4>
             <ul className="ds-list-bulleted ds-body-sm">
               {RESERVATIONS_CONTENT.policies.general.content.map(
                 (item, index) => (
                   <li key={index}>{item}</li>
-                )
+                ),
               )}
             </ul>
           </div>

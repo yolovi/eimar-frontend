@@ -26,7 +26,7 @@ export default function Page() {
         <h3 className="font-bold mb-4">Debug de colores EIMAR:</h3>
         <div className="flex gap-4">
           <div className="w-16 h-16 bg-primary border" title="Primary (Negro)"></div>
-          <div className="w-16 h-16 bg-base border" title="Base (Blanco nieve)"></div>
+          <div className="w-16 h-16 bg-ds-base border" title="Base (Blanco nieve)"></div>
           <div className="w-16 h-16 bg-accent border" title="Accent (Verde)"></div>
           <div className="w-16 h-16 bg-red-600 border" title="Destructive (Rojo)"></div>
         </div>

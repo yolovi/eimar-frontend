@@ -79,7 +79,7 @@ export default function MenuIntro() {
   ];
 
   return (
-    <section className="py-8 bg-base">
+    <section className="py-8 bg-ds-base">
       <div className="max-w-7xl mx-auto px-4">
         {/* Encabezado de la sección */}
         <div className="text-center mb-12">

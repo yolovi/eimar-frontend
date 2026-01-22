@@ -45,6 +45,10 @@ _typography.css ahora funcionará perfectamente porque Tailwind ya sabrá qué e
   @apply font-accent text-text-primary font-semibold leading-[1.4] md:text-lg lg:text-xl;
 }
 
+.ds-h6-sans {
+  @apply font-sans text-text-primary/80 font-semibold leading-[1.4] md:text-sm lg:text-base;
+}
+
 /*
   ==========================================================
   BODY TEXT

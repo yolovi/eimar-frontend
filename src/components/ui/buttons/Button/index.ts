@@ -4,4 +4,5 @@
  * Allows: import { Button } from '@/components/ui/Button'
  */
 export { Button } from './Button';
-export type { ButtonProps, ButtonVariant, ButtonSize } from './Button.types';
+export type { ButtonProps, ButtonVariant } from './Button.types';
+export type { BaseButtonSize } from '../shared';
