@@ -26,3 +26,4 @@ export { default as ReservationForm } from "./ReservationForm";
 export type { ReservationFormData, ReservationFormProps } from "./ReservationForm";
 export { default as OrderSection } from "./OrderSection";
 export { default as Image } from "./Image";
+export { default as ScrollToTopButton } from "./ScrollToTopButton";

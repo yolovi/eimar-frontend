@@ -35,6 +35,7 @@ import {
   type ReservationData,
   type DeviceInfo,
 } from "@/lib/contact-actions";
+import { useIsMobile } from "./useDeviceDetection";
 
 export interface UseContactActionsReturn {
   // Estado del dispositivo
@@ -75,6 +76,9 @@ export function useContactActions(options?: {
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({ isMobile: false });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Hook para detectar mobile de forma reactiva
+  const isMobile = useIsMobile();
 
   // Efecto para detectar dispositivo y evitar hydration mismatch
   useEffect(() => {
@@ -196,7 +200,7 @@ export function useContactActions(options?: {
   return {
     // Estado del dispositivo
     isMounted,
-    isMobile: deviceInfo.isMobile,
+    isMobile, // Usar hook en lugar de deviceInfo.isMobile
     isTablet: deviceInfo.isTablet || false,
     deviceInfo,
 
@@ -225,20 +229,12 @@ export function useContactActions(options?: {
  */
 export function useSimpleContactActions() {
   const [isMounted, setIsMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  
+  // Hook para detectar mobile de forma reactiva
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setIsMounted(true);
-    const { isMobile: mobile } = getDeviceInfo();
-    setIsMobile(mobile);
-
-    const handleResize = () => {
-      const { isMobile: mobile } = getDeviceInfo();
-      setIsMobile(mobile);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handlePhoneAction = useCallback(() => {

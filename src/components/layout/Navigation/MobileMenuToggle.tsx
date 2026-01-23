@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Navigation from "./Navigation";
-import { HeroButton, Button, CloseButton, ContactButton } from "@/components/ui";
+import { HeroButton, CloseButton, ContactButton } from "@/components/ui";
 import { cn, handleSectionNavigation } from "@/lib/utils";
-import { CONTACT_INFO } from "@/constants/contact";
 
 const MobileMenuToggle = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

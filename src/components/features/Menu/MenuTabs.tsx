@@ -2,26 +2,34 @@
 
 import { useState, useEffect, useRef } from 'react';
 import type { MenuCategory } from '@/types';
+import { useIsMobile } from '@/hooks';
 
 interface MenuTabsProps {
   categories: MenuCategory[];
   activeCategory: string;
   onCategoryChange: (categoryId: string) => void;
+  isFixed?: boolean;
 }
 
 /**
  * NAVEGACIÓN FIJA DEL MENÚ (Badges/Botones)
  * =========================================
  * 
- * Navegación horizontal fija con estilo badge minimalista.
- * Se mantiene visible durante el scroll para fácil navegación.
+ * Navegación horizontal con comportamiento adaptativo:
+ * - DESKTOP: Se mantiene fija al hacer scroll para fácil navegación
+ * - MOBILE: Comportamiento normal para no ocupar espacio
  * Adapta su comportamiento según el espacio disponible.
  */
-function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProps) {
+function MenuTabs({ categories, activeCategory, onCategoryChange, isFixed = false }: MenuTabsProps) {
   const [hasOverflow, setHasOverflow] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  
+  // Hook para detectar mobile de forma reactiva
+  const isMobile = useIsMobile();
 
   // Verificar si hay overflow y posición del scroll
   const checkScroll = () => {
@@ -35,14 +43,41 @@ function MenuTabs({ categories, activeCategory, onCategoryChange }: MenuTabsProp
     }
   };
 
+  // Detectar scroll para posición fija en desktop
+  const handleScroll = () => {
+    if (tabsRef.current) {
+      const tabsTop = tabsRef.current.offsetTop;
+      setIsScrolled(window.scrollY > tabsTop);
+    }
+  };
+
   useEffect(() => {
     checkScroll();
+    
     window.addEventListener('resize', checkScroll);
-    return () => window.removeEventListener('resize', checkScroll);
-  }, []);
+    
+    // Solo agregar scroll listener en desktop
+    if (!isMobile) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    return () => {
+      window.removeEventListener('resize', checkScroll);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile]);
 
   return (
-    <div className="sticky top-0 z-30 bg-bg-primary border-b border-gray-100 shadow-sm py-4">
+    <div 
+      ref={tabsRef}
+      className={`
+        z-30 bg-bg-primary border-b border-gray-100 py-4
+        ${!isMobile && isScrolled 
+          ? 'fixed top-0 left-0 right-0 shadow-lg' 
+          : 'relative shadow-sm'
+        }
+      `}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
           {/* Indicador izquierdo */}

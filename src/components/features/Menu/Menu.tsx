@@ -5,6 +5,8 @@ import { MENU_DATA } from '@/data';
 import { Header } from '@/components/layout';
 import MenuTabs from './MenuTabs';
 import { MenuCategorySection } from './MenuCards';
+import { ScrollToTopButton } from '@/components/ui';
+import { useIsMobile } from '@/hooks';
 
 /**
  * COMPONENTE PRINCIPAL DEL MENÚ
@@ -16,12 +18,15 @@ import { MenuCategorySection } from './MenuCards';
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState<string>(MENU_DATA[0]?.id || 'entrantes');
   const [isScrolling, setIsScrolling] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [clickTimer, setClickTimer] = useState<NodeJS.Timeout | null>(null);
+  const [tabsFixed, setTabsFixed] = useState(false);
+  
+  // Hook para detectar mobile de forma reactiva
+  const isMobile = useIsMobile();
 
   // Cambiar categoría y hacer scroll suave
   const handleCategoryChange = (categoryId: string) => {
@@ -87,21 +92,10 @@ const Menu = () => {
     };
   }, [clickTimer]);
 
-  // Scroll to top function
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
-  // Detectar scroll para mostrar botón "ir arriba" y navbar en móvil
+  // Detectar scroll para mostrar navbar y tabs fijos
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // Mostrar/ocultar botón scroll to top
-      setShowScrollTop(currentScrollY > 400);
       
       // Detectar dirección del scroll
       if (currentScrollY > lastScrollY) {
@@ -111,26 +105,31 @@ const Menu = () => {
       }
       
       // En móvil, mostrar navbar cuando scrollean hacia arriba y están lejos del top
-      const isMobile = window.innerWidth < 768; // md breakpoint
       if (isMobile) {
         if (scrollDirection === 'up' && currentScrollY > 200) {
           setShowNavbar(true);
         } else if (scrollDirection === 'down' || currentScrollY < 100) {
           setShowNavbar(false);
         }
+        setTabsFixed(false); // Tabs nunca fijos en mobile
+      } else {
+        // En desktop, tabs se fijan después del header
+        const headerHeight = 200; // Aproximada altura del header
+        setTabsFixed(currentScrollY > headerHeight);
       }
       
       setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, scrollDirection]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY, scrollDirection, isMobile]);
 
   // Detectar hover en la zona superior para desktop
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const isMobile = window.innerWidth < 768;
       if (isMobile) return;
       
       // Mostrar navbar cuando el cursor esté en los primeros 60px de la pantalla
@@ -144,7 +143,7 @@ const Menu = () => {
 
     document.addEventListener('mousemove', handleMouseMove);
     return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="min-h-screen bg-gray-50" onClick={handleClickOutside}>
@@ -175,7 +174,13 @@ const Menu = () => {
         categories={MENU_DATA}
         activeCategory={activeCategory}
         onCategoryChange={handleCategoryChange}
+        isFixed={tabsFixed && !isMobile}
       />
+
+      {/* Espaciador para tabs fijos en desktop */}
+      {tabsFixed && !isMobile && (
+        <div className="h-16" /> // Altura aproximada de MenuTabs
+      )}
 
       {/* Contenido del menú */}
       <main>
@@ -191,21 +196,7 @@ const Menu = () => {
       </main>
 
       {/* Botón scroll to top */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className={`
-            fixed bottom-6 right-6 z-50 w-10 h-10 bg-bg-accent text-text-inverse 
-            rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300
-            hover:scale-110 hover:bg-bg-accent/90 flex items-center justify-center
-          `}
-          aria-label="Volver arriba"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
-        </button>
-      )}
+      <ScrollToTopButton />
 
       {/* Footer con información adicional */}
       <div className="bg-bg-primary border-t border-gray-200 mt-12">

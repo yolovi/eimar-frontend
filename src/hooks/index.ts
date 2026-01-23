@@ -15,3 +15,13 @@ export {
   useSimpleContactActions,
   type UseContactActionsReturn,
 } from "./useContactActions";
+
+// Device Detection Hooks
+export {
+  useIsMobile,
+  useBreakpoint,
+  useDeviceInfo,
+  isMobileDevice,
+  getTailwindBreakpoint,
+  getDeviceType,
+} from "./useDeviceDetection";
