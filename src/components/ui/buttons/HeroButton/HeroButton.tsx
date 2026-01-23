@@ -39,7 +39,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
     const secondaryClasses = cn(
       baseClasses,
       "border-[var(--color-bg-tertiary)]",
-      "hover:bg-ds-base] hover:border-transparent",
+      "hover:bg-[var(--color-bg-primary)] hover:border-transparent",
     );
 
     const darkClasses = cn(
@@ -50,18 +50,18 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (variant === "secondary") {
-        e.currentTarget.style.color = "var(--color-accent)";
+        e.currentTarget.style.color = "var(--color-text-accent)";
       } else if (variant === "dark") {
-        e.currentTarget.style.color = "white";
+        e.currentTarget.style.color = "var(--color-text-inverse)";
       }
       onMouseEnter?.(e);
     };
 
     const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (variant === "secondary") {
-        e.currentTarget.style.color = "var(--color-ds-base)";
+        e.currentTarget.style.color = "var(--color-text-inverse)";
       } else if (variant === "dark") {
-        e.currentTarget.style.color = "rgb(75, 85, 99)"; // gray-600
+        e.currentTarget.style.color = "var(--color-text-secondary)";
       }
       onMouseLeave?.(e);
     };
@@ -72,8 +72,8 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
           ref={ref}
           className={cn(primaryClasses, heroButtonSizes[size], className)}
           style={{
-            backgroundColor: "var(--color-accent)",
-            color: "var(--color-ds-base)",
+            backgroundColor: "var(--color-bg-accent)",
+            color: "var(--color-text-inverse)",
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -90,7 +90,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
           ref={ref}
           className={cn(darkClasses, heroButtonSizes[size], className)}
           style={{
-            color: "rgb(75, 85, 99)", // gray-600
+            color: "var(--color-text-secondary)",
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -107,7 +107,7 @@ const HeroButton = forwardRef<HTMLButtonElement, HeroButtonProps>(
         ref={ref}
         className={cn(secondaryClasses, heroButtonSizes[size], className)}
         style={{
-          color: "var(--color-ds-base)",
+          color: "var(--color-text-inverse)",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

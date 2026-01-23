@@ -33,28 +33,58 @@ GLOBALS.CSS - Entry point (punto de entrada de los estilos globales)
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --font-accent: "Playfair Display", ui-serif, Georgia, serif;
 
-  /* Colores base EIMAR */
-  --color-ds-base: #fffafa;
-  --color-primary: #000000;
-  --color-secondary: #1f2937;
-  --color-accent: #485f50;
-  --color-gray-dark: #374151;
-  --color-gray-medium: #4b5563;
-  --color-gray-light: #9ca3af;
-  --color-danger: #dc2626;
+  /* === TOKENS BASE (privados) === */
+  --eimar-cream: #fffafa;
+  --eimar-black: #000000;
+  --eimar-brand: #485f50;            /* Genérico - color principal de la marca */
+  --eimar-gray-dark: #1f2937; 
+  --eimar-gray-medium: #46505f;
+  --eimar-gray-light: #9ca3af;
+  --eimar-gray-superlight: #f3f4f6;
+  --eimar-red: #dc2626;
 
-  /* Mapeo para clases de background */
-  --color-bg-primary: var(--color-ds-base);
-  --color-bg-secondary: var(--color-primary);
-  --color-bg-tertiary: var(--color-gray-light);
-  --color-bg-accent: var(--color-accent);
+  /* === MAPEO PARA TAILWIND === */
+  /* Colores básicos para clases existentes */
+  --color-gray-dark: var(--eimar-gray-dark);
+  --color-gray-medium: var(--eimar-gray-medium);
+  --color-gray-light: var(--eimar-gray-light);
+  --color-gray-superlight: var(--eimar-gray-superlight);
+  --color-cream: var(--eimar-cream);
+  --color-black: var(--eimar-black);
+  --color-red: var(--eimar-red);
+  
+  /* Mapeo para escalas numéricas de Tailwind */
+  --color-gray-50: var(--eimar-gray-superlight);
+  --color-gray-100: var(--eimar-gray-superlight);
+  --color-gray-200: var(--eimar-gray-light);
+  --color-gray-300: var(--eimar-gray-light);
+  --color-gray-500: var(--eimar-gray-medium);
+  --color-gray-600: var(--eimar-gray-medium);
+  --color-gray-700: var(--eimar-gray-dark);
+  --color-gray-900: var(--eimar-gray-dark);
 
-  /* Mapeo para clases de texto */
-  --color-text-primary: var(--color-secondary);
-  --color-text-secondary: var(--color-gray-medium);
-  --color-text-tertiary: var(--color-gray-light);
-  --color-text-inverse: var(--color-ds-base);
-  --color-text-accent: var(--color-accent);
+  /* === TOKENS SEMÁNTICOS (públicos) === */
+  /* Backgrounds */
+  --color-bg-primary: var(--eimar-cream);
+  --color-bg-secondary: var(--eimar-black);
+  --color-bg-tertiary: var(--eimar-gray-light);
+  --color-bg-accent: var(--eimar-brand);        
+  --color-bg-surface: var(--eimar-cream);
+  --color-bg-muted: var(--eimar-gray-superlight);
+
+  /* Text colors */
+  --color-text-primary: var(--eimar-gray-dark);      /* Texto principal - máximo contraste */
+  --color-text-secondary: var(--eimar-gray-medium);  /* Texto secundario - contraste medio */
+  --color-text-muted: var(--eimar-gray-light);       /* Texto sutil - menor contraste */
+  --color-text-inverse: var(--eimar-cream);
+  --color-text-accent: var(--eimar-brand); 
+
+  /* Estados */
+  --color-danger: var(--eimar-red);
+  --color-success: var(--eimar-brand);     
+
+  /* Casos especiales */
+  --color-accent: var(--eimar-brand);       
 }
 
 /* Design Tokens y demás imports */
@@ -113,18 +143,18 @@ section {
 p:not([class*="ds-"]),
 span:not([class*="ds-"]),
 div:not([class*="ds-"]) {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 /* Enlaces con estado hover */
 a {
-  color: var(--color-accent);
+  color: var(--color-text-accent);
   transition: color 0.2s ease;
   cursor: pointer;
 }
 
 a:hover {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 /* Botones con cursor pointer por defecto */
@@ -140,15 +170,15 @@ html,
 body,
 #__next,
 #root {
-  background-color: var(--bg-primary);
+  background-color: var(--color-bg-primary);
 }
 
 /* Elementos específicos de Next.js - páginas de error */
 div[data-nextjs-container],
 div[data-nextjs-dialog],
 div[data-nextjs-dialog-overlay] {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 /* ===== FOCUS STATES ACCESIBLES ===== */
@@ -175,5 +205,5 @@ button:focus-visible,
 /* Selección de texto */
 ::selection {
   background-color: var(--color-accent);
-  color: var(--text-inverse);
+  color: var(--color-text-inverse);
 }

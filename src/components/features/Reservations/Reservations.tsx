@@ -85,7 +85,7 @@ const Reservations = ({
     <section
       id="reservas-y-pedidos"
       className={cn("w-full py-12 mb-4", className)}
-      style={{ backgroundColor: "var(--bg-primary)" }}
+      style={{ backgroundColor: "var(--color-bg-primary)" }}
       aria-label="Reservation section"
     >
       <div className="max-w-7xl mx-auto px-4 space-y-16">
@@ -118,7 +118,7 @@ const Reservations = ({
 
                 {/* Overlay adicional para móvil */}
                 <div
-                  className="absolute inset-0 bg-black/15 lg:bg-transparent"
+                  className="absolute inset-0 bg-bg-secondary/15 lg:bg-transparent"
                   aria-hidden="true"
                 />
 
@@ -127,17 +127,17 @@ const Reservations = ({
                   <div className="text-center px-8">
                     <h1
                       className="ds-h2 mb-4"
-                      style={{ color: "var(--color-ds-base)" }}
+                      style={{ color: "var(--color-text-inverse)" }}
                     >
                       Reservas y Pedidos
                     </h1>
-                    <p className="ds-hero-subtitle mb-8">
+                    <p className="ds-hero-subtitle mb-8" style={{ color: "var(--color-text-inverse)" }}>
                       Disfruta de la experiencia Eimar
                       <br />
                       <span
                         className="font-medium"
                         style={{
-                          color: "var(--color-ds-base)",
+                          color: "var(--color-text-inverse)",
                         }}
                       >
                         en casa o en nuestro local
@@ -176,7 +176,7 @@ const Reservations = ({
         {/* Sección de información adicional */}
         <div className="grid lg:grid-cols-7 gap-8">
           {/* Turnos */}
-          <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-3">
+          <div className="p-6 bg-bg-primary/50 rounded-xl border border-accent/20 lg:col-span-3">
             <h4 className="ds-body-xl mb-4">
               {RESERVATIONS_CONTENT.policies.turnos.title}
             </h4>
@@ -190,7 +190,7 @@ const Reservations = ({
           </div>
 
           {/* Políticas */}
-          <div className="p-6 bg-white/50 rounded-xl border border-accent/20 lg:col-span-4">
+          <div className="p-6 bg-bg-primary/50 rounded-xl border border-accent/20 lg:col-span-4">
             <h4 className="ds-body-xl mb-4">
               {RESERVATIONS_CONTENT.policies.general.title}
             </h4>

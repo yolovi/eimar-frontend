@@ -20,7 +20,7 @@ const OrderSection = ({ className = "" }: OrderSectionProps) => {
     <div className={`mt-4 pt-8 border-t border-gray-200 ${className}`}>
       <h2
         className="ds-h3 mb-2"
-        style={{color: "var(--color-accent)"}}
+        style={{color: "var(--color-text-accent)"}}
       >
         Haz tu pedido
       </h2>

@@ -26,7 +26,7 @@ const DesktopNavigation = () => {
         onMouseEnter={() => setIsCartaOpen(true)}
         onMouseLeave={handleCloseDropdown}
       >
-        <button className="font-accent text-lg px-4 py-2 rounded-lg hover:bg-accent/10 text-primary hover:text-accent transition-colors duration-200 flex items-center gap-1">
+        <button className="font-accent text-lg px-4 py-2 rounded-lg hover:bg-bg-accent/10 text-text-primary hover:text-accent transition-colors duration-200 flex items-center gap-1">
           {carta.main.label}
           <svg
             className={cn(
@@ -53,12 +53,12 @@ const DesktopNavigation = () => {
             isCartaOpen ? "block" : "hidden"
           )}
         >
-          <div className="bg-ds-base shadow-lg rounded-lg border border-accent/20 py-2">
+          <div className="bg-bg-primary shadow-lg rounded-lg border border-accent/20 py-2">
             {cartaItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block px-4 py-2 text-text-primary hover:bg-accent/10 hover:text-accent transition-colors duration-200 font-accent"
+                className="block px-4 py-2 text-text-primary hover:bg-bg-accent/10 hover:text-text-accent transition-colors duration-200 font-accent"
               >
                 {item.label}
               </Link>
@@ -72,7 +72,7 @@ const DesktopNavigation = () => {
         <Link
           key={item.href}
           href={item.href}
-          className="font-accent text-lg px-4 py-2 rounded-lg hover:bg-accent/10 text-text-primary hover:text-accent transition-colors duration-200"
+          className="font-accent text-lg px-4 py-2 rounded-lg hover:bg-bg-accent/10 text-text-primary hover:text-text-accent transition-colors duration-200"
           onClick={(e) => handleNavigationClick(e, item.href, pathname, router)}
         >
           {item.label}

@@ -55,20 +55,20 @@ const ActionButton = ({
       aria-label={ariaLabel || label}
       className={`
         flex flex-col items-center gap-2 
-        hover:text-accent transition-colors group drop-shadow-xl
+        hover:text-text-accent transition-colors group drop-shadow-xl
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      style={{ color: "var(--text-inverse)" }}
+      style={{ color: "var(--color-text-inverse)" }}
     >
-      <div className="w-12 h-12 bg-ds-base/80 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-accent/80 transition-colors">
+      <div className="w-12 h-12 bg-bg-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-bg-accent/80 transition-colors">
         <div className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current group-hover:[&>svg]:fill-white transition-colors">
           {icon}
         </div>
       </div>
       <span
         className="ds-body-sm font-medium"
-        style={{ color: "var(--color-ds-base)", opacity: 0.8 }}
+        style={{ color: "var(--color-text-inverse)", opacity: 0.8 }}
       >
         {label}
       </span>

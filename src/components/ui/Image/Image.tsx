@@ -1,6 +1,6 @@
 /**
- * COMPONENTE DE IMAGEN PARA EL MENÚ
- * =========================================
+ * COMPONENTE DE IMAGEN CON FALLBACK
+ * =================================
  * 
  * Maneja las imágenes faltantes sin generar errores en consola.
  * Proporciona múltiples niveles de fallback para desarrollo y producción.
@@ -11,6 +11,7 @@
  * - Previene errores 404 en consola
  * - Diseño consistente incluso sin imágenes
  * - Indicador visual de "imagen no disponible"
+ * - Componente genérico reutilizable en toda la aplicación
  */
 
 'use client';
@@ -18,12 +19,12 @@
 import { useState, useEffect } from 'react';
 import { SVG_NAMESPACE } from '@/constants';
 
-interface MenuImageProps {
+interface ImageProps {
   src: string;
   alt: string;
-  dishName: string;
-  categoryName: string;
   className?: string;
+  placeholderText?: string;
+  secondaryText?: string;
 }
 
 /**
@@ -54,10 +55,10 @@ const safeBase64Encode = (str: string): string => {
 /**
  * Genera un placeholder SVG en línea que nunca falla
  */
-const createPlaceholderDataURL = (dishName: string, categoryName: string): string => {
+const createPlaceholderDataURL = (primaryText: string, secondaryText?: string): string => {
   // Limpiar los nombres para evitar caracteres problemáticos
-  const safeDishName = dishName.substring(0, 20); // Limitar longitud
-  const safeCategoryName = categoryName.substring(0, 15);
+  const safePrimaryText = primaryText.substring(0, 20); // Limitar longitud
+  const safeSecondaryText = secondaryText ? secondaryText.substring(0, 15) : 'Sin imagen';
   
   const svg = `
     <svg width="300" height="300" xmlns="${SVG_NAMESPACE}">
@@ -73,10 +74,10 @@ const createPlaceholderDataURL = (dishName: string, categoryName: string): strin
       <rect x="120" y="155" width="60" height="3" rx="1.5" fill="#f1f5f9"/>
       <rect x="110" y="165" width="80" height="3" rx="1.5" fill="#f1f5f9"/>
       <text x="150" y="200" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="12" font-weight="500">
-        ${safeDishName}
+        ${safePrimaryText}
       </text>
       <text x="150" y="215" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">
-        ${safeCategoryName} - Sin imagen
+        ${safeSecondaryText}
       </text>
     </svg>
   `;
@@ -84,19 +85,19 @@ const createPlaceholderDataURL = (dishName: string, categoryName: string): strin
   return `data:image/svg+xml;base64,${safeBase64Encode(svg)}`;
 };
 
-const MenuImage: React.FC<MenuImageProps> = ({
+const Image: React.FC<ImageProps> = ({
   src,
   alt,
-  dishName,
-  categoryName,
-  className = ''
+  className = '',
+  placeholderText = 'Imagen',
+  secondaryText
 }) => {
   const [imageSrc, setImageSrc] = useState<string>(src);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
 
-  // Crear placeholder único para este plato
-  const placeholderSrc = createPlaceholderDataURL(dishName, categoryName);
+  // Crear placeholder único para esta imagen
+  const placeholderSrc = createPlaceholderDataURL(placeholderText, secondaryText);
 
   // Función para verificar si la imagen existe sin generar error en consola
   const checkImageExists = async (url: string): Promise<boolean> => {
@@ -122,7 +123,7 @@ const MenuImage: React.FC<MenuImageProps> = ({
 
       if (exists) {
         // La imagen existe, intentar cargarla
-        const img = new Image();
+        const img = new window.Image();
         
         img.onload = () => {
           if (!isCancelled) {
@@ -190,4 +191,4 @@ const MenuImage: React.FC<MenuImageProps> = ({
   );
 };
 
-export default MenuImage;
+export default Image;

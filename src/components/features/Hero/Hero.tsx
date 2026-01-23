@@ -77,7 +77,7 @@ const Hero = ({
 
         {/* Overlay adicional para móvil */}
         <div
-          className="absolute inset-0 bg-black/15 md:bg-transparent"
+          className="absolute inset-0 bg-bg-secondary/15 md:bg-transparent"
           aria-hidden="true"
         />
       </div>

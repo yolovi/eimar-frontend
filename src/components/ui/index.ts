@@ -25,4 +25,4 @@ export { default as GoogleReviews } from "./GoogleReviews";
 export { default as ReservationForm } from "./ReservationForm";
 export type { ReservationFormData, ReservationFormProps } from "./ReservationForm";
 export { default as OrderSection } from "./OrderSection";
-export { default as MenuImage } from "./MenuImage";
+export { default as Image } from "./Image";

@@ -23,12 +23,12 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
 
   const linkBaseClasses = "font-accent text-lg transition-colors duration-200";
   const linkVariants = {
-    desktop: "px-4 py-2 rounded-lg hover:bg-accent/10",
-    mobile: "block py-4 hover:bg-accent/5 border-b border-accent/10 last:border-b-0 text-right",
+    desktop: "px-4 py-2 rounded-lg hover:bg-bg-accent/10",
+    mobile: "block py-4 hover:bg-bg-accent/5 border-b border-accent/10 last:border-b-0 text-right",
   };
   const linkStates = {
-    active: "text-accent font-semibold bg-accent/10",
-    inactive: "text-primary hover:text-accent",
+    active: "text-text-accent font-semibold bg-bg-accent/10",
+    inactive: "text-text-primary hover:text-text-accent",
   };
 
   // Función para obtener clases específicas de padding según si es subitem (solo móvil)

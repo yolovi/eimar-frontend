@@ -34,10 +34,10 @@ const ContactButton = ({ type, onClose, className = "" }: ContactButtonProps) =>
 
   const config = buttonConfig[type];
 
-  const baseClasses = "flex-1 h-12 px-4 py-2 rounded-lg font-semibold cursor-pointer transition-all duration-300 backdrop-blur-sm bg-ds-base border-transparent hover:scale-105 hover:shadow-xl hover:border-accent hover:bg-accent/40 flex items-center justify-center";
+  const baseClasses = "flex-1 h-12 px-4 py-2 rounded-lg font-semibold cursor-pointer transition-all duration-300 backdrop-blur-sm bg-bg-primary border-transparent hover:scale-105 hover:shadow-xl hover:border-accent hover:bg-bg-accent/40 flex items-center justify-center";
 
   const buttonStyle = {
-    color: "var(--color-accent)",
+    color: "var(--color-text-accent)",
     boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
   };
 

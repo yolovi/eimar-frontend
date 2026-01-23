@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-ds-base sticky top-0 z-50">
+    <header className="bg-bg-primary sticky top-0 z-50">
       {/* Borde inferior gris sin llegar a los extremos */}
       <div className="relative">
         <div className="w-full px-4 py-3">
@@ -35,7 +35,7 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={handleLogoClick}
               >
-                <Logo size="md" className="text-accent" />
+                <Logo size="md" className="text-text-accent" />
               </Link>
             </div>
 
@@ -87,7 +87,7 @@ const Header = () => {
                 className="hover:opacity-80 transition-opacity"
                 onClick={handleLogoClick}
               >
-                <Logo size="md" className="text-accent" />
+                <Logo size="md" className="text-text-accent" />
               </Link>
             </div>
 

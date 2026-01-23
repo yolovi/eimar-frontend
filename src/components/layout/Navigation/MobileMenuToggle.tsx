@@ -98,16 +98,16 @@ const MobileMenuToggle = () => {
     <>
       {/* Mobile Menu Button - Solo hamburguesa (siempre igual) */}
       <button
-        className="md:hidden flex flex-col justify-center items-center w-8 h- p-1 rounded-md hover:bg-accent/10 transition-colors focus:outline-none cursor-pointer"
+        className="md:hidden flex flex-col justify-center items-center w-8 h- p-1 rounded-md hover:bg-bg-accent/10 transition-colors focus:outline-none cursor-pointer"
         onClick={openMenu}
         disabled={isAnimating}
         aria-label="Abrir menú"
       >
         {/* Hamburger Icon - Siempre igual */}
         <div className="flex flex-col gap-1.5 w-6">
-          <span className="w-full bg-secondary" style={{ height: '1.5px' }} />
-          <span className="w-full bg-secondary" style={{ height: '1.5px' }} />
-          <span className="w-full bg-secondary" style={{ height: '1.5px' }} />
+          <span className="w-full bg-bg-secondary" style={{ height: '1.5px' }} />
+          <span className="w-full bg-bg-secondary" style={{ height: '1.5px' }} />
+          <span className="w-full bg-bg-secondary" style={{ height: '1.5px' }} />
         </div>
       </button>
 
@@ -116,7 +116,7 @@ const MobileMenuToggle = () => {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/50 z-50 md:hidden"
+            className="fixed inset-0 bg-bg-secondary/50 z-50 md:hidden"
             style={{
               top: "0", // Cubrir toda la pantalla desde arriba
               // height: "100vh", // Altura completa del viewport
@@ -129,7 +129,7 @@ const MobileMenuToggle = () => {
           <div
             ref={menuRef}
             className={cn(
-              "fixed right-0 bg-ds-base/98 backdrop-blur-md shadow-2xl z-50 md:hidden",
+              "fixed right-0 bg-bg-primary/98 backdrop-blur-md shadow-2xl z-50 md:hidden",
               "w-72 max-w-[85vw]", // Mayor ancho y mejor proporción
               "overflow-y-auto overscroll-contain" // Scroll interno si es necesario
             )}

@@ -146,14 +146,14 @@ import { formatCurrency } from '@/lib/utils';
 // Ejemplos de uso en componentes
 function MenuCard({ price, date, isActive }) {
   return (
-    <div className={cn('p-4 border', { 'bg-accent': isActive })}>
+    <div className={cn('p-4 border', { 'bg-bg-accent': isActive })}>
       <p>Precio: {formatCurrency(price)}</p>
       <p>Fecha: {formatDate(date)}</p>
     </div>
   );
 }
 
-<Button className={cn('px-4 py-2', isActive && 'bg-accent')}>
+<Button className={cn('px-4 py-2', isActive && 'bg-bg-accent')}>
   {formatCurrency(12.90)}
 </Button>
 ```

@@ -79,7 +79,7 @@ export default function MenuIntro() {
   ];
 
   return (
-    <section className="py-8 bg-ds-base">
+    <section className="py-8 bg-bg-primary">
       <div className="max-w-7xl mx-auto px-4">
         {/* Encabezado de la sección */}
         <div className="text-center mb-12">
@@ -92,7 +92,7 @@ export default function MenuIntro() {
         </div>
 
         {/* Platos destacados (preview) */}
-        <div className="bg-accent/80 rounded-2xl p-8 mt-3.5 mb-12 text-text-inverse">
+        <div className="bg-bg-accent/80 rounded-2xl p-8 mt-3.5 mb-12 text-text-inverse">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
             {/* Contenido textual - 2 columnas */}
             <div className="lg:col-span-2">

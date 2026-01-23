@@ -92,7 +92,7 @@ const About = ({ className }: AboutProps) => {
                   {ABOUT_CONTENT.paragraphs.space}{" "}
                   <span
                     className="font-semibold"
-                    style={{ color: "var(--color-accent)" }}
+                    style={{ color: "var(--color-text-accent)" }}
                   >
                     {ABOUT_CONTENT.paragraphs.spaceHighlight}
                   </span>{" "}
@@ -110,7 +110,7 @@ const About = ({ className }: AboutProps) => {
                   {ABOUT_CONTENT.welcome}{" "}
                   <span
                     className="font-display font-bold text-xl"
-                    style={{ color: "var(--color-accent)" }}
+                    style={{ color: "var(--color-text-accent)" }}
                   >
                     {ABOUT_CONTENT.welcomeHighlight}
                   </span>
@@ -152,7 +152,7 @@ const About = ({ className }: AboutProps) => {
                   {ABOUT_CONTENT.paragraphs.opening}{" "}
                   <span
                     className="font-semibold"
-                    style={{ color: "var(--color-primary)" }}
+                    style={{ color: "var(--color-text-primary)" }}
                   >
                     {ABOUT_CONTENT.paragraphs.openingHighlight}
                   </span>
@@ -161,7 +161,7 @@ const About = ({ className }: AboutProps) => {
                   {ABOUT_CONTENT.paragraphs.space}{" "}
                   <span
                     className="font-semibold"
-                    style={{ color: "var(--color-accent)" }}
+                    style={{ color: "var(--color-text-accent)" }}
                   >
                     {ABOUT_CONTENT.paragraphs.spaceHighlight}
                   </span>{" "}
@@ -197,7 +197,7 @@ const About = ({ className }: AboutProps) => {
               {ABOUT_CONTENT.welcome}{" "}
               <span
                 className="font-display font-bold text-xl"
-                style={{ color: "var(--color-accent)" }}
+                style={{ color: "var(--color-text-accent)" }}
               >
                 {ABOUT_CONTENT.welcomeHighlight}
               </span>

@@ -150,7 +150,10 @@ const ReservationForm = ({
     >
       {/* Header del formulario */}
       <div className="mb-4">
-        <h2 className="ds-h3 mb-2" style={{ color: "var(--color-accent)" }}>
+        <h2
+          className="ds-h3 mb-2"
+          style={{ color: "var(--color-text-accent)" }}
+        >
           {title}
         </h2>
         <p className="ds-body-base">{subtitle}</p>

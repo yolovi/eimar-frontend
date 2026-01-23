@@ -29,7 +29,7 @@ const CloseButton = ({
     lg: 'w-6 h-6'
   };
 
-  const baseClasses = "flex items-center justify-center rounded-full hover:bg-accent/20 hover:text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 disabled:opacity-50 disabled:pointer-events-none";
+  const baseClasses = "flex items-center justify-center rounded-full hover:bg-bg-accent/20 hover:text-text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 disabled:opacity-50 disabled:pointer-events-none";
 
   const positionClass = position === 'absolute' ? 'absolute z-10' : 'relative';
 

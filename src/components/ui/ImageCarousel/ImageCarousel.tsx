@@ -172,7 +172,7 @@ const ImageCarousel = ({
             onClick={goToPrevious}
             className="hidden md:block absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white/35 hover:bg-white/90 shadow-lg hover:shadow-xl p-2 md:p-3 rounded-full transition-all duration-200"
             style={{
-              color: "var(--color-accent)",
+              color: "var(--color-text-accent)",
               border: "1px solid transparent",
             }}
             aria-label="Imágenes anteriores"
@@ -197,9 +197,9 @@ const ImageCarousel = ({
         {currentIndex < maxIndex && (
           <button
             onClick={goToNext}
-            className="hidden md:block absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/35 hover:bg-white/90 shadow-lg hover:shadow-xl p-2 md:p-3 rounded-full transition-all duration-200"
+            className="hidden md:block absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-bg-primary/35 hover:bg-bg-primary/90 shadow-lg hover:shadow-xl p-2 md:p-3 rounded-full transition-all duration-200"
             style={{
-              color: "var(--color-accent)",
+              color: "var(--color-text-accent)",
               border: "1px solid transparent",
             }}
             aria-label="Siguientes imágenes"
@@ -313,8 +313,8 @@ const ImageCarousel = ({
                   style={{
                     backgroundColor:
                       index === currentIndex
-                        ? "var(--color-ds-base)"
-                        : "var(--color-accent)",
+                        ? "var(--color-bg-primary)"
+                        : "var(--color-bg-accent)",
                   }}
                   aria-label={`Ir a imagen ${index + 1}`}
                 />
@@ -331,8 +331,8 @@ const ImageCarousel = ({
                   style={{
                     backgroundColor:
                       index === currentIndex
-                        ? "var(--color-ds-base)"
-                        : "var(--color-accent)",
+                        ? "var(--color-bg-primary)"
+                        : "var(--color-bg-accent)",
                   }}
                   aria-label={`Ir al grupo ${index + 1}`}
                 />

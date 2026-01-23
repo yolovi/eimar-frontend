@@ -30,13 +30,10 @@ interface ContactProps {
 
 const Contact = ({ className }: ContactProps) => {
   const todaySchedule = getTodaySchedule();
-  
+
   // Usar hook centralizado para todas las acciones de contacto
   const {
-    isMounted,
-    isMobile,
     handlePhoneAction,
-    handleReservation,
     handleQuickContact,
     getActionTitle,
   } = useContactActions();
@@ -44,7 +41,7 @@ const Contact = ({ className }: ContactProps) => {
   // Datos de contacto estructurados
   const contactItems = [
     {
-      id: 'location',
+      id: "location",
       icon: (
         <path
           strokeLinecap="round"
@@ -60,9 +57,11 @@ const Contact = ({ className }: ContactProps) => {
             {CONTACT_INFO.address.full}
           </p>
           <button
-            onClick={() => window.open(CONTACT_INFO.coordinates.googleMapsLink, "_blank")}
+            onClick={() =>
+              window.open(CONTACT_INFO.coordinates.googleMapsLink, "_blank")
+            }
             className="text-sm font-medium hover:underline transition-all duration-200"
-            style={{ color: "var(--color-accent)" }}
+            style={{ color: "var(--color-text-accent)" }}
           >
             Abrir en Google Maps →
           </button>
@@ -70,7 +69,7 @@ const Contact = ({ className }: ContactProps) => {
       ),
     },
     {
-      id: 'phone',
+      id: "phone",
       icon: (
         <path
           strokeLinecap="round"
@@ -84,7 +83,7 @@ const Contact = ({ className }: ContactProps) => {
         <button
           onClick={() => handlePhoneAction()}
           className="text-lg font-medium hover:underline transition-all duration-200"
-          style={{ color: "var(--color-accent)" }}
+          style={{ color: "var(--color-text-accent)" }}
           title={getActionTitle("phone")}
         >
           {CONTACT_INFO.phone.primary.display}
@@ -92,7 +91,7 @@ const Contact = ({ className }: ContactProps) => {
       ),
     },
     {
-      id: 'schedule',
+      id: "schedule",
       icon: (
         <path
           strokeLinecap="round"
@@ -107,14 +106,14 @@ const Contact = ({ className }: ContactProps) => {
           <p className="mb-1" style={{ color: "var(--color-text-secondary)" }}>
             De martes a domingo: {todaySchedule.formatted}
           </p>
-          <p className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
             Lunes cerrado
           </p>
         </>
       ),
     },
     {
-      id: 'pets',
+      id: "pets",
       icon: (
         <path
           strokeLinecap="round"
@@ -133,12 +132,15 @@ const Contact = ({ className }: ContactProps) => {
   ];
 
   // Función helper para renderizar cada elemento de contacto
-  const renderContactItem = (item: typeof contactItems[0]) => (
-    <div key={item.id} className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4">
+  const renderContactItem = (item: (typeof contactItems)[0]) => (
+    <div
+      key={item.id}
+      className="flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4"
+    >
       <div className="flex items-center gap-2 lg:w-32 lg:min-w-32">
         <svg
           className="w-5 h-5"
-          style={{ color: "var(--color-accent)" }}
+          style={{ color: "var(--color-text-accent)" }}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -147,9 +149,7 @@ const Contact = ({ className }: ContactProps) => {
         </svg>
         <h4 className="ds-h6-sans">{item.title}</h4>
       </div>
-      <div className="flex-1 text-center lg:text-left">
-        {item.content}
-      </div>
+      <div className="flex-1 text-center lg:text-left">{item.content}</div>
     </div>
   );
 
@@ -157,14 +157,14 @@ const Contact = ({ className }: ContactProps) => {
     <section
       id="contacto"
       className={cn("w-full", className)}
-      style={{ backgroundColor: "var(--color-ds-base)" }}
+      style={{ backgroundColor: "var(--color-bg-primary)" }}
     >
       {/* Sección del mapa e información con fondo gris */}
       <div
         className="w-full py-16"
         style={{
           backgroundColor:
-            "color-mix(in srgb, var(--color-accent) 10%, transparent)",
+            "color-mix(in srgb, var(--color-bg-accent) 10%, transparent)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4">
@@ -206,18 +206,6 @@ const Contact = ({ className }: ContactProps) => {
 
               {/* Botón de reserva - TEMPORALMENTE DESHABILITADO */}
               <div className="flex justify-center lg:justify-start pt-4">
-                {/* 
-              <HeroButton
-                variant="primary"
-                size="md"
-                onClick={handleReservation}
-                className="px-8"
-              >
-                Reservar Mesa
-              </HeroButton>
-              */}
-
-                {/* TODO: Botón temporal con acción de llamada directa. Descomentar botones anteriores cuando estén preparadas las acciones. Eliminar el siguiente temporal */}
                 <HeroButton
                   variant="primary"
                   size="md"
@@ -234,7 +222,7 @@ const Contact = ({ className }: ContactProps) => {
         <div
           id="reviews"
           className="py-12 px-4 mt-6.5"
-          style={{ backgroundColor: "var(--bg-primary)" }}
+          style={{ backgroundColor: " var(--color-bg-accent) 10%," }}
         >
           <GoogleReviews />
         </div>

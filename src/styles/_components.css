@@ -7,13 +7,13 @@
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
     font-weight: 500;
-    background-color: var(--color-accent);
-    color: var(--color-ds-base);
+    background-color: var(--color-bg-accent);
+    color: var(--color-text-inverse);
     transition: background-color 0.2s ease;
   }
 
   .btn:hover {
-    background-color: color-mix(in srgb, var(--color-accent), black 15%);
+    background-color: color-mix(in srgb, var(--color-bg-accent), black 15%);
   }
 
   .ds-card {
@@ -22,8 +22,8 @@
 
   .ds-badge {
     @apply inline-block px-2 py-1 text-xs rounded-md;
-    background-color: var(--bg-tertiary);
-    color: var(--text-tertiary);
+    background-color: var(--color-bg-muted);
+    color: var(--color-text-muted);
   }
 
   /* ===== SISTEMA DE LISTAS EIMAR ===== */
@@ -35,7 +35,7 @@
   .ds-list-bulleted {
     list-style: disc;
     margin-left: 1.25rem;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   .ds-list-bulleted li {
@@ -43,7 +43,7 @@
   }
 
   .ds-list-bulleted li::marker {
-    color: var(--color-accent);
+    color: var(--color-text-accent);
   }
 
   /* ===== SISTEMA DE ALTURAS RESPONSIVAS ===== */

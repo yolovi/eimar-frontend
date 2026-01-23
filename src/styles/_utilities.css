@@ -15,13 +15,13 @@
 
   /* Utilidades de tema */
   .theme-light {
-    --bg-primary: var(--eimar-white-snow);
-    --text-primary: var(--eimar-gray-dark);
+    --bg-primary: var(--color-bg-primary);
+    --text-primary: var(--color-text-primary);
   }
 
   .theme-dark {
-    --bg-primary: var(--eimar-black);
-    --text-primary: var(--eimar-white-snow);
+    --bg-primary: var(--color-bg-secondary);
+    --text-primary: var(--color-text-inverse);
   }
 
   /* Utilidades de transición */

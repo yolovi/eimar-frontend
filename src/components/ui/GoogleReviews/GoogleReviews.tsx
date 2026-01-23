@@ -145,7 +145,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
             key={review.id}
             className="p-6 rounded-lg  shadow-sm transition-shadow duration-200 hover:shadow-md"
             style={{
-              backgroundColor: "var(--color-ds-base)",
+              backgroundColor: "var(--color-bg-primary)",
               opacity: 0.8,
             }}
           >
@@ -179,7 +179,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
                   </div>
                   <span
                     className="text-xs"
-                    style={{ color: "var(--color-text-tertiary)" }}
+                    style={{ color: "var(--color-text-secondary)" }}
                   >
                     {review.date}
                   </span>
@@ -208,8 +208,8 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
               "_blank",
             );
           }}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-accent/10"
-          style={{ color: "var(--color-accent)" }}
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-bg-accent/10"
+          style={{ color: "var(--color-text-accent)" }}
         >
           Ver más reseñas en Google
         </button>
