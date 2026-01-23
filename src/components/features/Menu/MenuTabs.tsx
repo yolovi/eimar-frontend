@@ -8,7 +8,7 @@ interface MenuTabsProps {
   categories: MenuCategory[];
   activeCategory: string;
   onCategoryChange: (categoryId: string) => void;
-  isFixed?: boolean;
+  navbarVisible?: boolean;
 }
 
 /**
@@ -20,13 +20,11 @@ interface MenuTabsProps {
  * - MOBILE: Comportamiento normal para no ocupar espacio
  * Adapta su comportamiento según el espacio disponible.
  */
-function MenuTabs({ categories, activeCategory, onCategoryChange, isFixed = false }: MenuTabsProps) {
+function MenuTabs({ categories, activeCategory, onCategoryChange, navbarVisible = false }: MenuTabsProps) {
   const [hasOverflow, setHasOverflow] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const tabsRef = useRef<HTMLDivElement>(null);
   
   // Hook para detectar mobile de forma reactiva
   const isMobile = useIsMobile();
@@ -43,42 +41,25 @@ function MenuTabs({ categories, activeCategory, onCategoryChange, isFixed = fals
     }
   };
 
-  // Detectar scroll para posición fija en desktop
-  const handleScroll = () => {
-    if (tabsRef.current) {
-      const tabsTop = tabsRef.current.offsetTop;
-      setIsScrolled(window.scrollY > tabsTop);
-    }
-  };
-
   useEffect(() => {
     checkScroll();
-    
-    window.addEventListener('resize', checkScroll);
-    
-    // Solo agregar scroll listener en desktop
-    if (!isMobile) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-    
+    window.addEventListener('resize', checkScroll, { passive: true });
     return () => {
       window.removeEventListener('resize', checkScroll);
-      window.removeEventListener('scroll', handleScroll);
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <div 
-      ref={tabsRef}
       className={`
-        z-30 bg-bg-primary border-b border-gray-100 py-4
-        ${!isMobile && isScrolled 
-          ? 'fixed top-0 left-0 right-0 shadow-lg' 
-          : 'relative shadow-sm'
-        }
+        z-30 bg-bg-primary border-b border-gray-100 py-4  shadow-lg
+        ${!isMobile ? 'sticky' : 'relative'}
       `}
+      style={{
+        top: !isMobile && navbarVisible ? '64px' : !isMobile ? '0px' : 'auto'
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="relative">
           {/* Indicador izquierdo */}
           {hasOverflow && canScrollLeft && (
