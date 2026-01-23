@@ -21,8 +21,7 @@ export { default as ContactButton } from "./buttons/ContactButton";
 // === OTHER UI COMPONENTS ===
 export { default as ImageCarousel } from "./ImageCarousel";
 export { default as ImageSlider } from "./ImageSlider";
-export { default as GoogleReviews } from "./GoogleReviews";
-export { default as ReservationForm } from "./ReservationForm";
+export { default as GoogleReviews } from "./GoogleReviews";export { default as FeaturedReviews } from './SelectedReviews';export { default as ReservationForm } from "./ReservationForm";
 export type { ReservationFormData, ReservationFormProps } from "./ReservationForm";
 export { default as OrderSection } from "./OrderSection";
 export { default as Image } from "./Image";

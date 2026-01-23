@@ -12,6 +12,11 @@
  * - Sistema de variables CSS EIMAR
  * - Placeholders para datos reales
  *
+ * "../RatingDisplay":
+ * usa RatingHeader para el header con rating promedio
+ * usa SimpleHeader para headers sin rating
+ * usa renderStars para renderizar estrellas individuales
+ *
  * USO:
  * import GoogleReviews from '@/components/ui/GoogleReviews';
  * <GoogleReviews />
@@ -19,128 +24,105 @@
 
 "use client";
 
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-
-interface Review {
-  id: string;
-  author: string;
-  rating: number;
-  text: string;
-  date: string;
-  verified?: boolean;
-}
+import { useGoogleReviews } from "@/hooks/useGoogleReviews";
+import { RatingHeader, SimpleHeader, renderStars } from "../RatingDisplay";
 
 interface GoogleReviewsProps {
   className?: string;
 }
 
-// TODO: Mock data - En producción esto vendría de la API de Google Places
-const mockReviews: Review[] = [
-  {
-    id: "1",
-    author: "María González",
-    rating: 5,
-    text: "Excelente restaurante en Paiporta. La comida es deliciosa y el servicio muy atento. Recomiendo especialmente la paella, está espectacular. El ambiente es muy acogedor y familiar.",
-    date: "Hace 2 semanas",
-    verified: true,
-  },
-  {
-    id: "2",
-    author: "Carlos Ruiz",
-    rating: 5,
-    text: "Una experiencia gastronómica increíble. Los platos están elaborados con mucho cariño y se nota la calidad de los ingredientes. El personal es muy profesional y amable.",
-    date: "Hace 1 mes",
-    verified: true,
-  },
-  {
-    id: "3",
-    author: "Ana Martínez",
-    rating: 4,
-    text: "Muy buen restaurante local. Hemos ido en familia y todos hemos quedado muy contentos. Las raciones son generosas y los precios muy justos. Volveremos seguro.",
-    date: "Hace 3 semanas",
-    verified: true,
-  },
-  {
-    id: "4",
-    author: "Jorge López",
-    rating: 5,
-    text: "Descubrimos este restaurante por casualidad y fue todo un acierto. La atención al cliente es excepcional y la comida está buenísima. Totalmente recomendado.",
-    date: "Hace 1 semana",
-    verified: true,
-  },
-];
-
 const GoogleReviews = ({ className }: GoogleReviewsProps) => {
-  // Calcular rating promedio
-  const averageRating =
-    mockReviews.reduce((acc, review) => acc + review.rating, 0) /
-    mockReviews.length;
+  const { data: reviewsData, loading, error, refetch } = useGoogleReviews();
 
-  // Función para renderizar estrellas
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => {
-      const isFilled = index < Math.floor(rating);
-      const isHalf = index < rating && index >= Math.floor(rating);
+  // Estado para alternar texto en SimpleHeader
+  const [headerText, setHeaderText] = useState("Reseñas de Google");
+  const [isUsingSimpleHeader, setIsUsingSimpleHeader] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
-      return (
-        <svg
-          key={index}
-          className="w-4 h-4"
-          style={{
-            color: isFilled || isHalf ? "#fbbf24" : "#e5e7eb", // yellow-400 : gray-200
-          }}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          {isHalf ? (
-            <defs>
-              <linearGradient id={`half-${rating}-${index}`}>
-                <stop offset="50%" stopColor="#fbbf24" />
-                <stop offset="50%" stopColor="#e5e7eb" />
-              </linearGradient>
-            </defs>
-          ) : null}
-          <path
-            fillRule="evenodd"
-            d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z"
-            fill={isHalf ? `url(#half-${rating}-${index})` : "currentColor"}
-          />
-        </svg>
-      );
-    });
+  // Effect para alternar texto cada 3 segundos solo cuando se usa SimpleHeader
+  useEffect(() => {
+    if (!isUsingSimpleHeader) return;
+
+    const interval = setInterval(() => {
+      // Fade out
+      setIsVisible(false);
+      
+      // Cambiar texto después del fade out
+      setTimeout(() => {
+        setHeaderText((prev) =>
+          prev === "Reseñas de Google" ? "Ver más reseñas" : "Reseñas de Google",
+        );
+        // Fade in
+        setIsVisible(true);
+      }, 300); // Duración del fade out
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isUsingSimpleHeader]);
+
+  // Función para abrir Google Reviews
+  const openGoogleReviews = () => {
+    window.open(
+      "https://www.google.com/maps/place/Restaurante+Eimar/@39.4318343,-0.4168656,17z/data=!4m6!3m5!1s0xd604e58f9e16bbf:0x7e141fefed57a1fd!8m2!3d39.431492!4d-0.4142367!16s%2Fg%2F11b7d42z5d",
+      "_blank",
+    );
   };
+
+  // Mostrar loading state
+  if (loading) {
+    return (
+      <div className={cn("w-full", className)}>
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p style={{ color: "var(--color-text-secondary)" }}>
+            Cargando reseñas...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay datos, no renderizar nada
+  if (!reviewsData) {
+    return null;
+  }
+
+  const { reviews, averageRating, totalReviews, restaurantName } = reviewsData;
 
   return (
     <div className={cn("w-full", className)}>
       {/* Header con rating promedio */}
-      <div className="text-center mb-8">
-        <h3
-          className="text-2xl md:text-3xl font-display font-bold mb-4"
-          style={{ color: "var(--color-text-primary)" }}
+      {/* <RatingHeader
+        averageRating={averageRating}
+        totalReviews={totalReviews}
+        error={error}
+      /> */}
+
+      {/* Header sin rating promedio */}
+      <SimpleHeader title={`Reseñas de ${restaurantName}`} />
+
+      {/* Subtítulo alternante y clickeable (solo para SimpleHeader) */}
+      {isUsingSimpleHeader && (
+        <div
+          onClick={openGoogleReviews}
+          className="text-center mb-6 cursor-pointer group"
         >
-          RESEÑAS DE CLIENTES
-        </h3>
-
-        <div className="flex items-center justify-center gap-4 mb-2">
-          <div className="flex items-center gap-1">
-            {renderStars(averageRating)}
-          </div>
-          <span
-            className="text-2xl font-semibold"
-            style={{ color: "var(--color-text-primary)" }}
+          <p
+            className={`text-sm font-medium transition-all duration-300 ease-in-out group-hover:scale-105 ${
+              isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-2'
+            }`}
+            style={{ color: "var(--color-text-accent)" }}
           >
-            {averageRating.toFixed(1)}
-          </span>
+            {headerText}
+          </p>
         </div>
-
-        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-          Basado en {mockReviews.length} reseñas de Google
-        </p>
-      </div>
+      )}
 
       {/* Grid de reseñas */}
       <div className="grid md:grid-cols-2 gap-6">
-        {mockReviews.map((review) => (
+        {reviews.map((review) => (
           <div
             key={review.id}
             className="p-6 rounded-lg  shadow-sm transition-shadow duration-200 hover:shadow-md"
@@ -175,7 +157,7 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
-                    {renderStars(review.rating)}
+                    {renderStars(review.rating, `review-${review.id}`)}
                   </div>
                   <span
                     className="text-xs"
@@ -198,22 +180,18 @@ const GoogleReviews = ({ className }: GoogleReviewsProps) => {
         ))}
       </div>
 
-      {/* Footer con enlace a Google */}
-      <div className="text-center mt-8">
-        <button
-          onClick={() => {
-            // TODO: revisar que --> En producción, esto abriría el perfil de Google del restaurante --> ¿Es posible abrir directamente la sección de reseñas?
-            window.open(
-              "https://maps.google.com/?q=Restaurante+Eimar+Paiporta",
-              "_blank",
-            );
-          }}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-bg-accent/10"
-          style={{ color: "var(--color-text-accent)" }}
-        >
-          Ver más reseñas en Google
-        </button>
-      </div>
+      {/* Footer con enlace a Google - Solo mostrar cuando NO se use SimpleHeader */}
+      {!isUsingSimpleHeader && (
+        <div className="text-center mt-8">
+          <button
+            onClick={openGoogleReviews}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-bg-accent/10"
+            style={{ color: "var(--color-text-accent)" }}
+          >
+            Ver más reseñas en Google
+          </button>
+        </div>
+      )}
     </div>
   );
 };

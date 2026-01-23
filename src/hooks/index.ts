@@ -25,3 +25,6 @@ export {
   getTailwindBreakpoint,
   getDeviceType,
 } from "./useDeviceDetection";
+
+// Google Reviews Hook
+export { useGoogleReviews } from "./useGoogleReviews";

@@ -28,6 +28,7 @@ import {
  * ========================================
  * Estos son los ÚNICOS valores que necesitas modificar.
  * Todo lo demás se genera automáticamente.
+ * TODO: revisar y actualizar estos valores según el restaurante.
  */
 
 // 📞 TELÉFONOS BASE (solo números, sin formato)
