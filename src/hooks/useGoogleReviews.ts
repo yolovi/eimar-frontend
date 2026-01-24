@@ -1,14 +1,16 @@
 /**
  * HOOK - GOOGLE REVIEWS
  * ======================
- * 
+ *
  * Hook personalizado para manejar el estado de las reseñas de Google.
  * Incluye caché en localStorage y manejo de errores.
  */
 
-import { useState, useEffect } from 'react';
-import { FALLBACK_REVIEWS_DATA } from '@/data/reviews';
-import type { Review, ReviewsData } from '@/data/reviews';
+"use client";
+
+import { useState, useEffect } from "react";
+import { FALLBACK_REVIEWS_DATA } from "@/data/reviews";
+import type { Review, ReviewsData } from "@/data/reviews";
 
 interface UseGoogleReviewsReturn {
   data: ReviewsData | null;
@@ -21,7 +23,7 @@ interface UseGoogleReviewsReturn {
 // Estas son reseñas reales de Eimar obtenidas manualmente
 const realFallbackReviews: ReviewsData = FALLBACK_REVIEWS_DATA;
 
-const CACHE_KEY = 'eimar-google-reviews';
+const CACHE_KEY = "eimar-google-reviews";
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hora en millisegundos
 
 export function useGoogleReviews(): UseGoogleReviewsReturn {
@@ -39,7 +41,7 @@ export function useGoogleReviews(): UseGoogleReviewsReturn {
       if (cached) {
         const { data: cachedData, timestamp } = JSON.parse(cached);
         const isValidCache = Date.now() - timestamp < CACHE_DURATION;
-        
+
         if (isValidCache) {
           setData(cachedData);
           setLoading(false);
@@ -48,8 +50,8 @@ export function useGoogleReviews(): UseGoogleReviewsReturn {
       }
 
       // Hacer llamada a nuestra API route (fallback para desarrollo)
-      const response = await fetch('/api/reviews-fallback');
-      
+      const response = await fetch("/api/reviews-fallback");
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
@@ -57,20 +59,21 @@ export function useGoogleReviews(): UseGoogleReviewsReturn {
       const reviewsData: ReviewsData = await response.json();
 
       // Guardar en caché
-      localStorage.setItem(CACHE_KEY, JSON.stringify({
-        data: reviewsData,
-        timestamp: Date.now(),
-      }));
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          data: reviewsData,
+          timestamp: Date.now(),
+        }),
+      );
 
       setData(reviewsData);
-
     } catch (err) {
-      console.error('Error fetching Google reviews:', err);
-      setError(err instanceof Error ? err.message : 'Error desconocido');
-      
+      console.error("Error fetching Google reviews:", err);
+      setError(err instanceof Error ? err.message : "Error desconocido");
+
       // Usar datos centralizados de fallback en caso de error
       setData(FALLBACK_REVIEWS_DATA);
-      
     } finally {
       setLoading(false);
     }
