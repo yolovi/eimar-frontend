@@ -24,14 +24,9 @@ export const NAVIGATION_DATA: NavigationData = {
       label: "Nuestra Carta" 
     },
     subitems: [
-      { href: "/menu#entrantes", label: "Entrantes" },
-      { href: "/menu#ensaladas", label: "Ensaladas" },
-      { href: "/menu#bocadillos", label: "Bocadillos" },
-      { href: "/menu#burgers", label: "Burgers" },
-      { href: "/menu#carnes", label: "Carnes" },
-      { href: "/menu#postres", label: "Postres" },
-      { href: "/menu#bebidas", label: "Bebidas" },
-      //TODO: añadir { href: "/nuestra-carta/almuerzos", label: "Almuerzos" } + Carta (subitems: entrantes, ensaladas...) + menus (fin de semana, festivos, grupos, etc.)
+      { href: "/menu", label: "Carta Completa" },
+      { href: "/menu#almuerzos", label: "Almuerzos" },
+      { href: "/menu#menus-especiales", label: "Menús Especiales" },
     ]
   },
   
@@ -45,13 +40,9 @@ export const NAVIGATION_DATA: NavigationData = {
   // Todos los elementos en formato plano (para mobile)
   all: [
     { href: "/menu", label: "Nuestra Carta" },
-    { href: "/menu#entrantes", label: "Entrantes", isSubItem: true },
-    { href: "/menu#ensaladas", label: "Ensaladas", isSubItem: true },
-    { href: "/menu#bocadillos", label: "Bocadillos", isSubItem: true },
-    { href: "/menu#burgers", label: "Burgers", isSubItem: true },
-    { href: "/menu#carnes", label: "Carnes", isSubItem: true },
-    { href: "/menu#postres", label: "Postres", isSubItem: true },
-    { href: "/menu#bebidas", label: "Bebidas", isSubItem: true },
+    { href: "/menu", label: "Carta Completa", isSubItem: true },
+    { href: "/menu#almuerzos", label: "Almuerzos", isSubItem: true },
+    { href: "/menu#menus-especiales", label: "Menús Especiales", isSubItem: true },
     { href: "#menu-intro", label: "Menú" },
     { href: "#reservas-y-pedidos", label: "Reservas y Pedidos" },
     { href: "#contacto", label: "Contacto" },

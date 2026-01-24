@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn, handleNavigationClick } from "@/lib/utils";
 import { NAVIGATION_DATA } from "@/constants/navigation";
+import DropdownMenu from "./DropdownMenu";
 
 interface NavigationProps {
   isMobile?: boolean;
@@ -15,11 +17,12 @@ interface NavigationProps {
 const Navigation = ({ isMobile = false, showSubItems = false, className, onItemClick }: NavigationProps) => {
   const pathname = usePathname();
   const router = useRouter();
+  
+  // Estado para controlar dropdown móvil
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
 
-  // Determinar qué elementos mostrar usando datos centralizados
-  const navigationItems = showSubItems 
-    ? NAVIGATION_DATA.all 
-    : NAVIGATION_DATA.all.filter(item => !item.isSubItem);
+  // Para móvil, solo usamos la navegación principal (sin subitems legacy)
+  const mobileMainItems = NAVIGATION_DATA.main;
 
   const linkBaseClasses = "font-accent text-lg transition-colors duration-200";
   const linkVariants = {
@@ -31,10 +34,26 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
     inactive: "text-text-primary hover:text-text-accent",
   };
 
-  // Función para obtener clases específicas de padding según si es subitem (solo móvil)
-  const getMobilePadding = (item: any) => {
-    return item.isSubItem ? "px-10" : "px-6";
+  // Función para manejar click en dropdown móvil
+  const handleMobileDropdownClick = () => {
+    setIsMobileDropdownOpen(!isMobileDropdownOpen);
   };
+
+  // Función para manejar click en subitem móvil
+  const handleMobileSubitemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (onItemClick) {
+      onItemClick(); // Cerrar menú inmediatamente
+      setTimeout(() => {
+        handleNavigationClick(e, href, pathname, router, { 
+          onComplete: undefined,
+          isMobile: true 
+        });
+      }, 100);
+    }
+  };
+
+  // Verificar si "Nuestra Carta" está activa
+  const isCartaActive = pathname === '/menu' || pathname.startsWith('/menu');
 
   return (
     <nav
@@ -44,44 +63,117 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
         className
       )}
     >
-      {navigationItems.map((item) => {
-        const isActive = pathname === item.href;
+      {/* Desktop: Dropdown para "Nuestra Carta" + navegación principal */}
+      {!isMobile && (
+        <>
+          <DropdownMenu 
+            mainItem={NAVIGATION_DATA.carta.main}
+            subItems={NAVIGATION_DATA.carta.subitems}
+          />
+          {NAVIGATION_DATA.main.map((item) => {
+            const isActive = pathname === item.href;
 
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              linkBaseClasses,
-              isMobile ? linkVariants.mobile : linkVariants.desktop,
-              isMobile && getMobilePadding(item),
-              isActive ? linkStates.active : linkStates.inactive,
-              // Estilo especial para subitems en mobile
-              item.isSubItem && isMobile && "text-sm text-text-secondary"
-            )}
-            onClick={(e) => {
-              // Si es mobile, cerrar menú primero y ejecutar scroll después
-              if (isMobile && onItemClick) {
-                onItemClick(); // Cerrar menú inmediatamente
-                // Pequeño delay para que el menú termine de cerrarse
-                setTimeout(() => {
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  linkBaseClasses,
+                  linkVariants.desktop,
+                  isActive ? linkStates.active : linkStates.inactive
+                )}
+                onClick={(e) => {
                   handleNavigationClick(e, item.href, pathname, router, { 
-                    onComplete: undefined,
-                    isMobile: true 
+                    onComplete: onItemClick 
                   });
-                }, 100);
-              } else {
-                // Desktop: comportamiento normal
-                handleNavigationClick(e, item.href, pathname, router, { 
-                  onComplete: onItemClick 
-                });
-              }
-            }}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </>
+      )}
+
+      {/* Mobile: Dropdown para "Nuestra Carta" + navegación principal */}
+      {isMobile && (
+        <>
+          {/* Dropdown "Nuestra Carta" en móvil */}
+          <div>
+            {/* Header del dropdown clickeable - SIN flecha visible */}
+            <button
+              onClick={handleMobileDropdownClick}
+              className={cn(
+                linkBaseClasses,
+                linkVariants.mobile,
+                "px-6 w-full text-right",
+                // Estado activo o dropdown abierto
+                (isCartaActive || isMobileDropdownOpen) ? linkStates.active : linkStates.inactive,
+                // Fondo adicional cuando dropdown está abierto
+                isMobileDropdownOpen && "bg-bg-accent/15 border-b border-accent/20"
+              )}
+            >
+              {NAVIGATION_DATA.carta.main.label}
+            </button>
+
+            {/* Subitems del dropdown */}
+            {isMobileDropdownOpen && (
+              <div className="bg-bg-accent/5">
+                {NAVIGATION_DATA.carta.subitems.map((subitem) => {
+                  const isSubActive = pathname === subitem.href;
+                  
+                  return (
+                    <Link
+                      key={subitem.href}
+                      href={subitem.href}
+                      className={cn(
+                        "block py-3 px-10 text-sm font-medium transition-colors duration-200 hover:bg-bg-accent/5 border-b border-accent/10 last:border-b-0 text-right",
+                        isSubActive
+                          ? "text-text-accent bg-bg-accent/10"
+                          : "text-text-secondary hover:text-text-accent"
+                      )}
+                      onClick={(e) => handleMobileSubitemClick(e, subitem.href)}
+                    >
+                      {subitem.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Navegación principal móvil */}
+          {mobileMainItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  linkBaseClasses,
+                  linkVariants.mobile,
+                  "px-6",
+                  isActive ? linkStates.active : linkStates.inactive
+                )}
+                onClick={(e) => {
+                  if (onItemClick) {
+                    onItemClick(); // Cerrar menú inmediatamente
+                    setTimeout(() => {
+                      handleNavigationClick(e, item.href, pathname, router, { 
+                        onComplete: undefined,
+                        isMobile: true 
+                      });
+                    }, 100);
+                  }
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </>
+      )}
       
       {/* Enlace al portafolio - Solo en móvil */}
       {isMobile && (
