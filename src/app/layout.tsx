@@ -12,7 +12,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "../styles/globals.css";
-import { Header } from "@/components/layout";
+import { Footer, Header } from "@/components/layout";
 
 /*
  * CONFIGURACIÓN DE FUENTES CON NEXT/FONT
@@ -124,7 +124,7 @@ export default function RootLayout({
         <Header />
         {/* Header contiene el Navbar para que esté presente en todas las páginas */}
         <main className="min-h-screen">{children}</main>
-        {/* <Footer /> - Cuando esté creado */}
+        <Footer />
       </body>
     </html>
   );

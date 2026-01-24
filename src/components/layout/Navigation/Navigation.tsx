@@ -82,6 +82,26 @@ const Navigation = ({ isMobile = false, showSubItems = false, className, onItemC
           </Link>
         );
       })}
+      
+      {/* Enlace al portafolio - Solo en móvil */}
+      {isMobile && (
+        <div className="mt-6 pt-6 border-t border-accent/10">
+          <div className="px-6 mb-3">
+            <p className="text-xs font-medium text-text-secondary/70 uppercase tracking-wider">
+              Desarrollado por
+            </p>
+          </div>
+          <a
+            href="https://tu-portafolio.com" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block py-3 px-6 text-sm font-medium text-text-accent hover:bg-bg-accent/5 transition-colors duration-200"
+            onClick={onItemClick} // Cerrar menú al hacer click
+          >
+            🌐 Ver mi portafolio →
+          </a>
+        </div>
+      )}
     </nav>
   );
 };
