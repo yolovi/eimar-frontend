@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { MENU_DATA } from '@/data';
 import { Header } from '@/components/layout';
+import { PageHeader, ScrollToTopButton } from '@/components/ui';
 import MenuTabs from './MenuTabs';
 import { MenuCategorySection } from './MenuCards';
-import { ScrollToTopButton } from '@/components/ui';
 import { useIsMobile } from '@/hooks';
 
 /**
@@ -175,17 +175,7 @@ const Menu = () => {
       </div>
 
       {/* Header de la página */}
-      <div className="bg-bg-primary border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <h1 className="ds-h1 mb-4">
-            Nuestra Carta
-          </h1>
-          <p className="ds-body-xl max-w-3xl mx-auto">
-            Descubre nuestra selección de platos elaborados con ingredientes frescos y de temporada. 
-            Cada plato está cuidadosamente preparado para ofrecerte una experiencia gastronómica única.
-          </p>
-        </div>
-      </div>
+      <PageHeader pageType="menu" />
 
       {/* Navegación fija tipo pestañas */}
       <MenuTabs 

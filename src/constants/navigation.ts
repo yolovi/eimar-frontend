@@ -25,7 +25,7 @@ export const NAVIGATION_DATA: NavigationData = {
     },
     subitems: [
       { href: "/menu", label: "Carta Completa" },
-      { href: "/almuerzos", label: "Almuerzos" },
+      { href: "/almuerzos", label: "Desayunos | Almuerzos" },
       { href: "/menus", label: "Menús Especiales" },
     ]
   },
@@ -41,7 +41,7 @@ export const NAVIGATION_DATA: NavigationData = {
   all: [
     { href: "/menu", label: "Nuestra Carta" },
     { href: "/menu", label: "Carta Completa", isSubItem: true },
-    { href: "/almuerzos", label: "Almuerzos", isSubItem: true },
+    { href: "/almuerzos", label: "Desayunos | Almuerzos", isSubItem: true },
     { href: "/menus", label: "Menús Especiales", isSubItem: true },
     { href: "#menu-intro", label: "Menú" },
     { href: "#reservas-y-pedidos", label: "Reservas y Pedidos" },

@@ -77,7 +77,7 @@ const DropdownMenu = ({ mainItem, subItems, className }: DropdownMenuProps) => {
       {/* Dropdown menu */}
       {isOpen && (
         <div 
-          className="absolute top-full left-0 mt-1 min-w-[200px] rounded-lg shadow-lg border z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+          className="absolute top-full left-0 mt-1 min-w-50 rounded-lg shadow-lg border z-50 animate-in fade-in-0 zoom-in-95 duration-200"
           style={{ 
             backgroundColor: "var(--color-bg-primary)",
             borderColor: "var(--color-border-primary)"

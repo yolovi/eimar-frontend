@@ -25,4 +25,5 @@ export { default as GoogleReviews } from "./GoogleReviews";export { default as F
 export type { ReservationFormData, ReservationFormProps } from "./ReservationForm";
 export { default as OrderSection } from "./OrderSection";
 export { default as Image } from "./Image";
+export { PageHeader } from "./PageHeader";
 export { default as ScrollToTopButton } from "./ScrollToTopButton";

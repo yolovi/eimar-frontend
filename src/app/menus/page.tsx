@@ -40,6 +40,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui';
+import { PageHeader } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Menús Especiales - Eimar Paiporta',
@@ -50,15 +51,12 @@ export const metadata: Metadata = {
 export default function MenusPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--color-bg-primary)" }}>
-      {/* Header Hero */}
-      <section className="relative w-full py-16 bg-bg-accent/80">
+      {/* Header principal */}
+      <PageHeader pageType="menus" />
+      
+      {/* Botón de navegación */}
+      <section className="py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="ds-hero-title text-text-inverse mb-4">
-            Menús Especiales
-          </h1>
-          <p className="ds-hero-subtitle text-text-inverse opacity-90 mb-8">
-            Diarios y para Grupos
-          </p>
           <Link href="/menu">
             <Button variant="secondary">
               ← Volver a la Carta
