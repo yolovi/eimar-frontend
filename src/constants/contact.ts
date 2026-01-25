@@ -66,14 +66,116 @@ const BASE_WHATSAPP_MESSAGES = {
 
 // 🕐 HORARIOS BASE
 const BASE_SCHEDULE = {
-  monday: { open: "12:00", close: "16:00", isClosed: false },
-  tuesday: { open: "12:00", close: "16:00", isClosed: false },
-  wednesday: { open: "12:00", close: "16:00", isClosed: false },
-  thursday: { open: "12:00", close: "16:00", isClosed: false },
-  friday: { open: "12:00", close: "16:00", isClosed: false },
-  saturday: { open: "12:00", close: "00:00", isClosed: false },
-  sunday: { open: "12:00", close: "16:00", isClosed: false },
+  monday: { open: "08:00", close: "01:00", isClosed: true },
+  tuesday: { open: "08:00", close: "01:00", isClosed: false },
+  wednesday: { open: "08:00", close: "01:00", isClosed: false },
+  thursday: { open: "08:00", close: "01:00", isClosed: false },
+  friday: { open: "08:00", close: "01:00", isClosed: false },
+  saturday: { open: "08:00", close: "01:00", isClosed: false },
+  sunday: { open: "08:00", close: "01:00", isClosed: false },
 } as const;
+
+// Horario de referencia (generado automáticamente)
+/**
+ * Genera automáticamente el resumen de horarios basándose en BASE_SCHEDULE
+ * Agrupa días con horarios similares y maneja días cerrados
+ */
+const generateScheduleSummary = () => {
+  const days = {
+    monday: 'Lunes',
+    tuesday: 'Martes', 
+    wednesday: 'Miércoles',
+    thursday: 'Jueves',
+    friday: 'Viernes',
+    saturday: 'Sábado',
+    sunday: 'Domingo'
+  };
+
+  // Separar días abiertos y cerrados
+  const openDays: Array<{ day: string; schedule: { open: string; close: string; isClosed: false } }> = [];
+  const closedDays: string[] = [];
+
+  (Object.entries(BASE_SCHEDULE) as Array<[keyof typeof BASE_SCHEDULE, typeof BASE_SCHEDULE[keyof typeof BASE_SCHEDULE]]>).forEach(([dayKey, schedule]) => {
+    const dayName = days[dayKey];
+    if (schedule.isClosed) {
+      closedDays.push(dayName);
+    } else {
+      openDays.push({ day: dayName, schedule: schedule as { open: string; close: string; isClosed: false } });
+    }
+  });
+
+  const summary: { label: string; hours: string; isOpen: boolean }[] = [];
+
+  // Agrupar días abiertos por horario
+  const scheduleGroups: { [key: string]: string[] } = {};
+  openDays.forEach(({ day, schedule }) => {
+    const timeKey = `${schedule.open}-${schedule.close}`;
+    if (!scheduleGroups[timeKey]) {
+      scheduleGroups[timeKey] = [];
+    }
+    scheduleGroups[timeKey].push(day);
+  });
+
+  // Crear etiquetas para días abiertos
+  Object.entries(scheduleGroups).forEach(([timeKey, daysList]) => {
+    const [open, close] = timeKey.split('-');
+    let label: string;
+    
+    if (daysList.length === 1) {
+      label = `${daysList[0]}:`;
+    } else if (daysList.length === 2) {
+      label = `${daysList[0]} y ${daysList[1]}:`;
+    } else {
+      // Para rangos consecutivos, intentar simplificar
+      const dayOrder = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+      const sortedDays = daysList.sort((a, b) => dayOrder.indexOf(a) - dayOrder.indexOf(b));
+      
+      // Verificar si es un rango consecutivo
+      let isConsecutive = true;
+      for (let i = 1; i < sortedDays.length; i++) {
+        const currentIndex = dayOrder.indexOf(sortedDays[i]);
+        const previousIndex = dayOrder.indexOf(sortedDays[i-1]);
+        if (currentIndex !== previousIndex + 1) {
+          isConsecutive = false;
+          break;
+        }
+      }
+      
+      if (isConsecutive && sortedDays.length > 2) {
+        label = `De ${sortedDays[0].toLowerCase()} a ${sortedDays[sortedDays.length - 1].toLowerCase()}:`;
+      } else {
+        label = `${sortedDays.slice(0, -1).join(', ')} y ${sortedDays[sortedDays.length - 1]}:`;
+      }
+    }
+    
+    summary.push({
+      label,
+      hours: `${open} - ${close}`,
+      isOpen: true
+    });
+  });
+
+  // Agregar días cerrados
+  if (closedDays.length > 0) {
+    let closedLabel: string;
+    if (closedDays.length === 1) {
+      closedLabel = `${closedDays[0]}:`;
+    } else {
+      closedLabel = `${closedDays.slice(0, -1).join(', ')} y ${closedDays[closedDays.length - 1]}:`;
+    }
+    
+    summary.push({
+      label: closedLabel,
+      hours: 'Cerrado',
+      isOpen: false
+    });
+  }
+
+  return summary;
+};
+
+// Resumen de horarios generado automáticamente
+export const SCHEDULE_SUMMARY_INFO = generateScheduleSummary();
 
 // 📱 REDES SOCIALES BASE
 const BASE_SOCIAL = {
@@ -121,16 +223,16 @@ export const CONTACT_INFO = {
     number: formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC),
     display: formatPhoneDisplay(BASE_PHONE_PRIMARY, COUNTRY_CODE_DISPLAY),
     link: createWhatsAppLink(
-      formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC)
+      formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC),
     ),
     messages: BASE_WHATSAPP_MESSAGES,
     linkWithMessage: createWhatsAppLink(
       formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC),
-      BASE_WHATSAPP_MESSAGES.general
+      BASE_WHATSAPP_MESSAGES.general,
     ),
     linkWithReservation: createWhatsAppLink(
       formatWhatsAppNumber(BASE_PHONE_PRIMARY, COUNTRY_CODE_NUMERIC),
-      BASE_WHATSAPP_MESSAGES.reservation
+      BASE_WHATSAPP_MESSAGES.reservation,
     ),
   },
 
@@ -150,7 +252,8 @@ export const CONTACT_INFO = {
   // 🗺️ COORDENADAS (generadas automáticamente)
   coordinates: {
     ...BASE_COORDINATES,
-    googleMapsLink: "https://www.google.com/maps/place/Restaurante+Eimar/@39.4318343,-0.4168656,17z/data=!4m6!3m5!1s0xd604e58f9e16bbf:0x7e141fefed57a1fd!8m2!3d39.431492!4d-0.4142367!16s%2Fg%2F11b7d42z5d",
+    googleMapsLink:
+      "https://www.google.com/maps/place/Restaurante+Eimar/@39.4318343,-0.4168656,17z/data=!4m6!3m5!1s0xd604e58f9e16bbf:0x7e141fefed57a1fd!8m2!3d39.431492!4d-0.4142367!16s%2Fg%2F11b7d42z5d",
   },
 
   // 🕐 HORARIOS (referencia directa a la configuración base)
@@ -180,6 +283,9 @@ export const CONTACT_INFO = {
  * ========================================
  * Funciones que usan las utilidades genéricas de @/lib/utils
  * pero están específicamente diseñadas para el contexto del restaurante
+ * 
+ * EXPORTACIONES ADICIONALES:
+ * - SCHEDULE_SUMMARY_INFO: Resumen automático de horarios para UI
  */
 
 /**
@@ -189,7 +295,7 @@ export const CONTACT_INFO = {
  * @example getFormattedSchedule('monday') → "12:00 - 16:00"
  */
 export const getFormattedSchedule = (
-  day: keyof typeof CONTACT_INFO.schedule
+  day: keyof typeof CONTACT_INFO.schedule,
 ): string => {
   const schedule = CONTACT_INFO.schedule[day];
   return formatTimeRange(schedule.open, schedule.close, schedule.isClosed);
