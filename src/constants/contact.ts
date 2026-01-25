@@ -2,11 +2,9 @@
  * CONSTANTES DE CONTACTO - EIMAR
  * ==============================
  *
- * Centraliza toda la información de contacto del restaurante.
+ * Procesa y formatea la información de contacto del restaurante.
+ * Los datos estáticos están en @/data/contact-data.ts
  * Usa utilidades de @/lib/utils para formateo consistente.
- *
- * ⚠️ IMPORTANTE: Solo modifica la sección "CONFIGURACIÓN BASE"
- * Todo lo demás se genera automáticamente.
  *
  * USO:
  * import { CONTACT_INFO } from '@/constants/contact';
@@ -22,60 +20,26 @@ import {
   formatWhatsAppNumber,
 } from "@/lib/utils";
 
+import {
+  BASE_PHONE_PRIMARY,
+  BASE_PHONE_SECONDARY,
+  COUNTRY_CODE_DISPLAY,
+  COUNTRY_CODE_NUMERIC,
+  BASE_EMAIL_DOMAIN,
+  BASE_ADDRESS,
+  BASE_COORDINATES,
+  BASE_WHATSAPP_MESSAGES,
+  BASE_SCHEDULE,
+  BASE_SOCIAL,
+} from "@/data/contact-data";
+
 /**
  * ========================================
- * CONFIGURACIÓN BASE - SOLO CAMBIAR AQUÍ
+ * GENERACIÓN AUTOMÁTICA DE HORARIOS
  * ========================================
- * Estos son los ÚNICOS valores que necesitas modificar.
- * Todo lo demás se genera automáticamente.
- * TODO: revisar y actualizar estos valores según el restaurante.
+ * Lógica para procesar los datos de horarios estáticos
  */
 
-// 📞 TELÉFONOS BASE (solo números, sin formato)
-const BASE_PHONE_PRIMARY = "672149607";
-const BASE_PHONE_SECONDARY = "963123456";
-const COUNTRY_CODE_DISPLAY = "+34"; // Para mostrar
-const COUNTRY_CODE_NUMERIC = "34"; // Para WhatsApp
-
-// 📧 EMAILS BASE
-const BASE_EMAIL_DOMAIN = "restauranteeimar.com";
-
-// 📍 DIRECCIÓN BASE
-const BASE_ADDRESS = {
-  street: "Carrer Mestre Palau, 98",
-  city: "Paiporta",
-  province: "Valencia",
-  postalCode: "46200",
-  country: "España",
-};
-
-// 🗺️ COORDENADAS BASE (Restaurante Eimar, Paiporta)
-// URL exacta: https://www.google.com/maps/place/Restaurante+Eimar/@39.4318343,-0.4168656,17z/data=!4m6!3m5!1s0xd604e58f9e16bbf:0x7e141fefed57a1fd!8m2!3d39.431492!4d-0.4142367
-const BASE_COORDINATES = {
-  lat: 39.431492,
-  lng: -0.4142367,
-};
-
-// 💬 MENSAJES WHATSAPP BASE
-const BASE_WHATSAPP_MESSAGES = {
-  general: "Hola, me gustaría hacer una consulta sobre el restaurante Eimar",
-  reservation:
-    "Hola, me gustaría hacer una reserva en el restaurante Eimar. ¿Podrían ayudarme?",
-  info: "Hola, me gustaría obtener más información sobre el restaurante Eimar.",
-} as const;
-
-// 🕐 HORARIOS BASE
-const BASE_SCHEDULE = {
-  monday: { open: "08:00", close: "01:00", isClosed: true },
-  tuesday: { open: "08:00", close: "01:00", isClosed: false },
-  wednesday: { open: "08:00", close: "01:00", isClosed: false },
-  thursday: { open: "08:00", close: "01:00", isClosed: false },
-  friday: { open: "08:00", close: "01:00", isClosed: false },
-  saturday: { open: "08:00", close: "01:00", isClosed: false },
-  sunday: { open: "08:00", close: "01:00", isClosed: false },
-} as const;
-
-// Horario de referencia (generado automáticamente)
 /**
  * Genera automáticamente el resumen de horarios basándose en BASE_SCHEDULE
  * Agrupa días con horarios similares y maneja días cerrados
@@ -177,30 +141,13 @@ const generateScheduleSummary = () => {
 // Resumen de horarios generado automáticamente
 export const SCHEDULE_SUMMARY_INFO = generateScheduleSummary();
 
-// 📱 REDES SOCIALES BASE
-const BASE_SOCIAL = {
-  instagram: {
-    username: "@restaurante_eimar",
-    baseUrl: "https://instagram.com",
-  },
-  facebook: {
-    name: "Restaurante Eimar Paiporta",
-    baseUrl: "https://facebook.com",
-    slug: "restauranteeimar",
-  },
-  tripadvisor: {
-    slug: "restaurant-eimar-paiporta",
-    baseUrl: "https://tripadvisor.com",
-  },
-} as const;
-
 /**
  * ========================================
- * DATOS GENERADOS AUTOMÁTICAMENTE
+ * DATOS PROCESADOS AUTOMÁTICAMENTE
  * ========================================
- * ⚠️ NO MODIFICAR ESTA SECCIÓN ⚠️
- * Todos estos valores se generan automáticamente
- * a partir de la configuración base de arriba.
+ * ⚠️ Datos generados a partir de @/data/contact-data.ts
+ * Todos estos valores se procesan automáticamente
+ * usando las utilidades de formateo.
  */
 
 export const CONTACT_INFO = {
@@ -282,7 +229,7 @@ export const CONTACT_INFO = {
  * UTILIDADES ESPECÍFICAS DEL DOMINIO RESTAURANTE
  * ========================================
  * Funciones que usan las utilidades genéricas de @/lib/utils
- * pero están específicamente diseñadas para el contexto del restaurante
+ * y los datos estáticos de @/data/contact-data.ts
  * 
  * EXPORTACIONES ADICIONALES:
  * - SCHEDULE_SUMMARY_INFO: Resumen automático de horarios para UI
