@@ -1,6 +1,6 @@
 /**
  * UI components library barrel export
- * Allows: import { Button, HeroButton, ImageCarousel, ImageSlider, GoogleReviews, ReservationForm, OrderSection, ActionButton, MenuIcon, PhoneIcon, WhatsAppIcon, CloseButton } from '@/components/ui'
+ * Allows: import { Button, HeroButton, ImageCarousel, ImageSlider, GoogleReviews, ReservationForm, OrderSection, ActionButton, CloseButton } from '@/components/ui'
  */
 
 // Shared types
@@ -12,12 +12,12 @@ export { Button } from "./buttons/Button";
 export type { ButtonProps, ButtonVariant } from "./buttons/Button";
 export { HeroButton } from "./buttons/HeroButton";
 export type { HeroButtonProps, HeroButtonVariant } from "./buttons/HeroButton";
-export { default as ActionButton } from "./buttons/ActionButton";
-export type { ActionButtonProps } from "./buttons/ActionButton";
-export { MenuIcon, PhoneIcon, WhatsAppIcon } from "./buttons/ActionButton";
 export { default as CloseButton } from "./buttons/CloseButton";
 export type { CloseButtonProps } from "./buttons/CloseButton";
-export { default as ContactButton } from "./buttons/ContactButton";
+
+// === ACTION BUTTONS (NEW UNIFIED SYSTEM) ===
+export { ActionButton } from "./buttons/ActionButton";
+export type { ActionType, ActionVariant, ActionSize, ActionStyle } from "./buttons/ActionButton";
 // === OTHER UI COMPONENTS ===
 export { default as ImageCarousel } from "./ImageCarousel";
 export { default as ImageSlider } from "./ImageSlider";

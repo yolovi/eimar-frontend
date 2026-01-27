@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Navigation from "./Navigation";
-import { HeroButton, CloseButton, ContactButton } from "@/components/ui";
+import { HeroButton, CloseButton, ActionButton } from "@/components/ui";
+import { CONTACT_INFO } from "@/constants/contact";
 import { cn, handleSectionNavigation } from "@/lib/utils";
 
 const MobileMenuToggle = () => {
@@ -172,8 +173,22 @@ const MobileMenuToggle = () => {
               >
                 {/* Iconos de contacto estilo HeroButton personalizado */}
                 <div className="flex gap-4 w-full mb-2">
-                  <ContactButton type="phone" onClose={closeMenu} />
-                  <ContactButton type="whatsapp" onClose={closeMenu} />
+                  <ActionButton 
+                    action="phone" 
+                    variant="icon"
+                    size="md"
+                    style="primary"
+                    fullWidth
+                    onClose={closeMenu}
+                  />
+                  <ActionButton 
+                    action="whatsapp" 
+                    variant="icon"
+                    size="md"
+                    style="primary"
+                    fullWidth
+                    onClose={closeMenu}
+                  />
                 </div>
 
                 <HeroButton
@@ -195,6 +210,25 @@ const MobileMenuToggle = () => {
                 >
                   Reservar Mesa
                 </HeroButton>
+
+                {/* Línea divisoria */}
+                <div className="w-full h-px bg-accent/20 my-4" />
+
+                {/* Desarrollado por */}
+                <div className="text-center">
+                  <p className="text-xs font-medium text-text-secondary/70 mb-2">
+                    {CONTACT_INFO.developer.label}
+                  </p>
+                  <a
+                    href={CONTACT_INFO.developer.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-text-accent hover:opacity-80 transition-opacity duration-200 underline"
+                    onClick={closeMenu}
+                  >
+                    {CONTACT_INFO.developer.name}
+                  </a>
+                </div>
               </div>
             </div>
           </div>

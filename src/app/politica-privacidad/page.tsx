@@ -5,6 +5,7 @@
  */
 
 import { Metadata } from "next";
+import { Icons } from "@/lib/icons";
 
 export const metadata: Metadata = {
   title: "Política de Privacidad | Restaurante Eimar",
@@ -36,8 +37,8 @@ export default function PoliticaPrivacidadPage() {
                 <strong>Restaurante Eimar</strong><br/>
                 Carrer Mestre Palau, 98<br/>
                 46200 Paiporta, Valencia<br/>
-                📧 info@restauranteeimar.com<br/>
-                📞 +34 672 149 607
+                <Icons.email className="inline w-4 h-4 mr-1" /> info@restauranteeimar.com<br/>
+                <Icons.phone className="inline w-4 h-4 mr-1" /> +34 672 149 607
               </p>
             </section>
 
@@ -131,9 +132,9 @@ export default function PoliticaPrivacidadPage() {
                 Si tienes dudas sobre esta política de privacidad o quieres ejercer tus derechos:
               </p>
               <ul className="list-none space-y-1 mt-2">
-                <li>📧 Email: info@restauranteeimar.com</li>
-                <li>📞 Teléfono: +34 672 149 607</li>
-                <li>📍 Dirección: Carrer Mestre Palau, 98, Paiporta, Valencia</li>
+                <li><Icons.email className="inline w-4 h-4 mr-1" /> Email: info@restauranteeimar.com</li>
+                <li><Icons.phone className="inline w-4 h-4 mr-1" /> Teléfono: +34 672 149 607</li>
+                <li><Icons.location className="inline w-4 h-4 mr-1" /> Dirección: Carrer Mestre Palau, 98, Paiporta, Valencia</li>
               </ul>
             </section>
 

@@ -7,6 +7,8 @@
  */
 
 import { CONTACT_INFO, getTodaySchedule } from '@/constants/contact';
+import { openPhoneAction, openWhatsApp } from '@/lib/contact-actions';
+import { Icons } from '@/lib/icons';
 
 // EJEMPLO 1: Componente de información de contacto
 export const ContactInfoCard = () => {
@@ -87,7 +89,7 @@ export const QuickCallButton = () => (
     className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
     title={`Llamar: ${CONTACT_INFO.phone.primary.display}`}
   >
-    📞 Llamar ahora
+    <Icons.phone className="inline w-4 h-4 mr-1" /> Llamar ahora
   </button>
 );
 
@@ -104,7 +106,7 @@ export const WhatsAppButton = ({ message = "" }) => {
       rel="noopener noreferrer"
       className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
     >
-      💬 WhatsApp
+      <Icons.whatsapp size={16} /> WhatsApp
     </a>
   );
 };
@@ -116,9 +118,9 @@ export const ContactFooter = () => (
       {/* Contacto */}
       <div>
         <h4 className="font-semibold mb-2">Contacto</h4>
-        <p>📞 {CONTACT_INFO.phone.primary.display}</p>
-        <p>💬 {CONTACT_INFO.whatsapp.display}</p>
-        <p>📧 {CONTACT_INFO.email.main}</p>
+        <p><Icons.phone className="inline w-4 h-4 mr-1" /> {CONTACT_INFO.phone.primary.display}</p>
+        <p><Icons.whatsapp className="inline w-4 h-4 mr-1" /> {CONTACT_INFO.whatsapp.display}</p>
+        <p><Icons.email className="inline w-4 h-4 mr-1" /> {CONTACT_INFO.email.main}</p>
       </div>
       
       {/* Ubicación */}
@@ -134,10 +136,10 @@ export const ContactFooter = () => (
         <h4 className="font-semibold mb-2">Síguenos</h4>
         <div className="space-y-1">
           <a href={CONTACT_INFO.social.instagram.url} target="_blank" className="block text-blue-600 hover:underline">
-            📷 {CONTACT_INFO.social.instagram.username}
+            <Icons.instagram className="inline w-4 h-4 mr-1" /> {CONTACT_INFO.social.instagram.username}
           </a>
           <a href={CONTACT_INFO.social.facebook.url} target="_blank" className="block text-blue-600 hover:underline">
-            👥 {CONTACT_INFO.social.facebook.name}
+            <Icons.facebook className="inline w-4 h-4 mr-1" /> {CONTACT_INFO.social.facebook.name}
           </a>
         </div>
       </div>

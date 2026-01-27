@@ -50,8 +50,11 @@ export function getDeviceInfo(): DeviceInfo {
   }
 
   const userAgent = navigator.userAgent.toLowerCase();
-  const isMobile = window.innerWidth < 768 || /mobile|android|iphone|ipod|blackberry|iemobile|opera mini/.test(userAgent);
-  const isTablet = /ipad|tablet|kindle/.test(userAgent) && window.innerWidth >= 768;
+  const isMobile =
+    window.innerWidth < 768 ||
+    /mobile|android|iphone|ipod|blackberry|iemobile|opera mini/.test(userAgent);
+  const isTablet =
+    /ipad|tablet|kindle/.test(userAgent) && window.innerWidth >= 768;
 
   return {
     isMobile,
@@ -65,11 +68,14 @@ export function getDeviceInfo(): DeviceInfo {
  * Abre acción de teléfono adaptativa según dispositivo
  * - Móvil: Abre marcador telefónico
  * - Desktop: Abre WhatsApp con mensaje informativo
- * 
+ *
  * @param customMessage - Mensaje personalizado para WhatsApp (opcional)
  * @param forcePhone - Forzar llamada telefónica independientemente del dispositivo
  */
-export function openPhoneAction(customMessage?: string, forcePhone: boolean = false): void {
+export function openPhoneAction(
+  customMessage?: string,
+  forcePhone: boolean = false,
+): void {
   const { isMobile } = getDeviceInfo();
 
   if (isMobile || forcePhone) {
@@ -78,7 +84,10 @@ export function openPhoneAction(customMessage?: string, forcePhone: boolean = fa
   } else {
     // En desktop: abrir WhatsApp con mensaje
     const message = customMessage || CONTACT_INFO.whatsapp.messages.info;
-    const whatsappUrl = createWhatsAppLink(CONTACT_INFO.whatsapp.number, message);
+    const whatsappUrl = createWhatsAppLink(
+      CONTACT_INFO.whatsapp.number,
+      message,
+    );
     window.open(whatsappUrl, "_blank");
   }
 }
@@ -86,26 +95,35 @@ export function openPhoneAction(customMessage?: string, forcePhone: boolean = fa
 /**
  ** openWhatsApp:
  * Abre WhatsApp con mensaje personalizado
- * 
+ *
  * @param message - Mensaje para enviar (opcional, usa mensaje general por defecto)
  * @param openInNewTab - Abrir en nueva pestaña (default: true)
  */
-export function openWhatsApp(message?: string, openInNewTab: boolean = true): void {
+export function openWhatsApp(
+  message?: string,
+  openInNewTab: boolean = true,
+): void {
   const finalMessage = message || CONTACT_INFO.whatsapp.messages.general;
-  const whatsappUrl = createWhatsAppLink(CONTACT_INFO.whatsapp.number, finalMessage);
+  const whatsappUrl = createWhatsAppLink(
+    CONTACT_INFO.whatsapp.number,
+    finalMessage,
+  );
   const target = openInNewTab ? "_blank" : "_self";
-  
+
   window.open(whatsappUrl, target);
 }
 
 /**
  ** openWhatsAppReservation:
  * Abre WhatsApp con mensaje de reserva
- * 
+ *
  * @param reservationData - Datos de la reserva (opcional)
  * @param customMessage - Mensaje personalizado que sobrescribe los datos (opcional)
  */
-export function openWhatsAppReservation(reservationData?: ReservationData, customMessage?: string): void {
+export function openWhatsAppReservation(
+  reservationData?: ReservationData,
+  customMessage?: string,
+): void {
   let message: string;
 
   if (customMessage) {
@@ -122,23 +140,27 @@ export function openWhatsAppReservation(reservationData?: ReservationData, custo
 /**
  ** formatReservationMessage:
  * Formatea datos de reserva en mensaje de WhatsApp
- * 
+ *
  * @param data - Datos de la reserva
  * @returns Mensaje formateado para WhatsApp
  */
 export function formatReservationMessage(data: ReservationData): string {
   const header = "Hola! Me gustaría hacer una reserva:";
   const footer = "\n¡Gracias!";
-  
-  const details = [
-    data.name && `🏷️ Nombre: ${data.name}`,
-    data.phone && `📞 Teléfono: ${data.phone}`,
-    data.date && `📅 Fecha: ${data.date}`,
-    data.time && `🕐 Hora: ${data.time}`,
-    data.people && `👥 Personas: ${data.people}`,
-  ].filter(Boolean).join("\n");
 
-  return details ? `${header}\n\n${details}${footer}` : CONTACT_INFO.whatsapp.messages.reservation;
+  const details = [
+    data.name && `- Nombre: ${data.name}`,
+    data.phone && `- Teléfono: ${data.phone}`,
+    data.date && `- Fecha: ${data.date}`,
+    data.time && `- Hora: ${data.time}`,
+    data.people && `- Personas: ${data.people}\n`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return details
+    ? `${header}\n\n${details}${footer}`
+    : CONTACT_INFO.whatsapp.messages.reservation;
 }
 
 /**
@@ -160,14 +182,14 @@ export function openWhatsAppQuickContact(): void {
 /**
  ** getContactActionLabel:
  * Obtiene etiqueta apropiada para acción de contacto según dispositivo
- * 
+ *
  * @param actionType - Tipo de acción
  * @param deviceInfo - Información del dispositivo (opcional, se detecta automáticamente)
  * @returns Etiqueta apropiada para mostrar al usuario
  */
 export function getContactActionLabel(
   actionType: "phone" | "whatsapp" | "reservation" = "phone",
-  deviceInfo?: DeviceInfo
+  deviceInfo?: DeviceInfo,
 ): string {
   const device = deviceInfo || getDeviceInfo();
 
@@ -192,14 +214,14 @@ export function getContactActionLabel(
 /**
  ** getContactActionTitle:
  * Obtiene título descriptivo para acción de contacto según dispositivo
- * 
+ *
  * @param actionType - Tipo de acción
  * @param deviceInfo - Información del dispositivo (opcional)
  * @returns Título descriptivo para atributo title/aria-label
  */
 export function getContactActionTitle(
   actionType: "phone" | "whatsapp" | "reservation" = "phone",
-  deviceInfo?: DeviceInfo
+  deviceInfo?: DeviceInfo,
 ): string {
   const device = deviceInfo || getDeviceInfo();
 

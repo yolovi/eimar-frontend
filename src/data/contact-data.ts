@@ -19,8 +19,8 @@
  */
 
 // 📞 TELÉFONOS BASE (solo números, sin formato)
-export const BASE_PHONE_PRIMARY = "672149607";
-export const BASE_PHONE_SECONDARY = "963123456";
+export const BASE_PHONE_PRIMARY = "621046486"; /*TODO: Cambiar al número real del restaurante*/
+export const BASE_PHONE_SECONDARY = "963123456"; /*TODO: Cambiar al número real del restaurante*/
 export const COUNTRY_CODE_DISPLAY = "+34"; // Para mostrar
 export const COUNTRY_CODE_NUMERIC = "34"; // Para WhatsApp
 
@@ -77,4 +77,11 @@ export const BASE_SOCIAL = {
     slug: "restaurant-eimar-paiporta",
     baseUrl: "https://tripadvisor.com",
   },
+} as const;
+
+// 🔧 DATOS DE DESARROLLO
+export const BASE_DEVELOPER = {
+  name: "KOMOREBI",
+  url: "https://github.com/yolovi",
+  label: "Desarrollado por"
 } as const;

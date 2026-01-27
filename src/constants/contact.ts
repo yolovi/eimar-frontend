@@ -31,6 +31,7 @@ import {
   BASE_WHATSAPP_MESSAGES,
   BASE_SCHEDULE,
   BASE_SOCIAL,
+  BASE_DEVELOPER,
 } from "@/data/contact-data";
 
 /**
@@ -222,7 +223,12 @@ export const CONTACT_INFO = {
       url: `${BASE_SOCIAL.tripadvisor.baseUrl}/${BASE_SOCIAL.tripadvisor.slug}`,
     },
   },
-} as const;
+  // 🔧 INFORMACIÓN DE DESARROLLO (generada automáticamente)
+  developer: {
+    name: BASE_DEVELOPER.name,
+    url: BASE_DEVELOPER.url,
+    label: BASE_DEVELOPER.label,
+  },} as const;
 
 /**
  * ========================================

@@ -6,15 +6,11 @@
  * Proporciona una interfaz limpia para importar hooks desde un solo punto.
  *
  * USO:
- * import { useContactActions, useSimpleContactActions } from '@/hooks';
+ * import { useContact } from '@/hooks';
  */
 
-// Contact Actions Hooks
-export {
-  useContactActions,
-  useSimpleContactActions,
-  type UseContactActionsReturn,
-} from "./useContactActions";
+// Simple unified contact hook
+export { useContact } from "./useContact";
 
 // Device Detection Hooks
 export {

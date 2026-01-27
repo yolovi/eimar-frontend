@@ -21,7 +21,8 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button, OrderSection } from "@/components/ui";
-import { useContactActions } from "@/hooks";
+import { useContact } from "@/hooks";
+import { formatReservationMessage } from "@/lib/contact-actions";
 
 export interface ReservationFormData {
   name: string;
@@ -53,7 +54,19 @@ const ReservationForm = ({
   className = "",
 }: ReservationFormProps) => {
   // Hook para manejar acciones de contacto centralizadamente
-  const { handleReservation } = useContactActions();
+  const { sendWhatsApp } = useContact();
+  
+  // Función para enviar reserva con datos del formulario
+  const sendReservationWhatsApp = (data: ReservationFormData) => {
+    const reservationMessage = formatReservationMessage({
+      name: data.name,
+      phone: data.phone,
+      date: data.date,
+      time: data.time,
+      people: data.people
+    });
+    sendWhatsApp(reservationMessage);
+  };
   // Constantes de estilos para evitar repetición
   const inputBaseStyles =
     "w-full px-4 py-3 border rounded-lg transition-colors";
@@ -133,8 +146,8 @@ const ReservationForm = ({
       if (onSubmit) {
         onSubmit(formData);
       } else {
-        // Envío por defecto usando hook centralizado
-        handleReservation(formData);
+        // Envío por defecto usando hook centralizado con datos reales
+        sendReservationWhatsApp(formData);
       }
     } finally {
       setIsSubmitting(false);
@@ -144,7 +157,7 @@ const ReservationForm = ({
   return (
     <div
       className={cn(
-        "bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl",
+        "bg-bg-primary/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl",
         className,
       )}
     >

@@ -1,3 +1,9 @@
-export { default } from './ActionButton';
-export type { ActionButtonProps } from './ActionButton';
-export { MenuIcon, PhoneIcon, WhatsAppIcon } from './icons';
+/**
+ * ACTION BUTTON INDEX - EIMAR
+ * ===========================
+ * 
+ * Exportación centralizada del componente ActionButton
+ */
+
+export { default as ActionButton } from './ActionButton';
+export type { ActionType, ActionVariant, ActionSize, ActionStyle } from './ActionButton';

@@ -21,14 +21,8 @@
 "use client";
 
 import { cn, navigateToMenu } from "@/lib/utils";
-import {
-  ReservationForm,
-  ActionButton,
-  MenuIcon,
-  PhoneIcon,
-  WhatsAppIcon,
-} from "@/components/ui";
-import { useContactActions } from "@/hooks";
+import { ReservationForm, ActionButton } from "@/components/ui";
+import { Icons } from "@/lib/icons";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +32,6 @@ export interface ReservationsProps {
   subtitleBold?: string;
   imageSrc?: string;
   imageAlt?: string;
-  height?: "sm" | "md" | "lg" | "xl" | "full";
   className?: string;
 }
 
@@ -55,7 +48,7 @@ const RESERVATIONS_CONTENT = {
       content: [
         "Almuerzo: De 12:00h a 16:00h",
         "Cena (Viernes y Sábado): De 20:00h a 00:00h",
-        "Reservas recomendadas especialmente en fines de semana",
+        "Se recomienda reservar con antelación en fines de semana",
       ],
     },
     general: {
@@ -73,18 +66,14 @@ const RESERVATIONS_CONTENT = {
 const Reservations = ({
   imageSrc = "/images/restaurant/reservation-table.png",
   imageAlt = "Interior del restaurante Eimar con ambiente acogedor",
-  height = "lg",
   className,
 }: ReservationsProps) => {
-  // Hook centralizado para acciones de contacto
-  const { handleDirectCall, handleReservation } = useContactActions();
-
   const router = useRouter();
 
   return (
     <section
       id="reservas-y-pedidos"
-      className={cn("w-full py-12 mb-4", className)}
+      className={cn("w-full mb-12", className)}
       style={{ backgroundColor: "var(--color-bg-primary)" }}
       aria-label="Reservation section"
     >
@@ -131,7 +120,10 @@ const Reservations = ({
                     >
                       Reservas y Pedidos
                     </h1>
-                    <p className="ds-hero-subtitle mb-8" style={{ color: "var(--color-text-inverse)" }}>
+                    <p
+                      className="ds-hero-subtitle mb-8"
+                      style={{ color: "var(--color-text-inverse)" }}
+                    >
                       Disfruta de la experiencia Eimar
                       <br />
                       <span
@@ -145,26 +137,42 @@ const Reservations = ({
                     </p>
                     {/* Botones de acción */}
                     <div className="flex gap-6 justify-center">
-                      <ActionButton
-                        icon={MenuIcon}
-                        label="Carta"
-                        onClick={() => navigateToMenu(router)}
-                        ariaLabel="Ver carta del restaurante"
-                      />
+                      <div className="flex flex-col items-center gap-2">
+                        <button
+                          onClick={() => navigateToMenu(router)}
+                          className="w-12 h-12 flex items-center justify-center rounded-full backdrop-blur-sm bg-bg-primary/10 text-text-inverse hover:bg-white/20 hover:scale-105 hover:shadow-xl transition-all duration-300"
+                          aria-label="Ver carta del restaurante"
+                        >
+                          <Icons.menu size={20} />
+                        </button>
+                        <span className="text-sm font-medium text-text-muted!">
+                          Carta
+                        </span>
+                      </div>
 
-                      <ActionButton
-                        icon={PhoneIcon}
-                        label="Llamar"
-                        onClick={() => handleDirectCall()}
-                        ariaLabel="Llamar al restaurante"
-                      />
+                      <div className="flex flex-col items-center gap-2">
+                        <ActionButton
+                          action="phone"
+                          variant="round"
+                          style="secondary"
+                          size="md"
+                        />
+                        <span className="text-sm font-medium text-text-muted!">
+                          Llamar
+                        </span>
+                      </div>
 
-                      <ActionButton
-                        icon={WhatsAppIcon}
-                        label="WhatsApp"
-                        onClick={() => handleReservation()}
-                        ariaLabel="Contactar por WhatsApp"
-                      />
+                      <div className="flex flex-col items-center gap-2">
+                        <ActionButton
+                          action="whatsapp"
+                          variant="round"
+                          style="secondary"
+                          size="md"
+                        />
+                        <span className="text-sm font-medium text-text-muted!">
+                          WhatsApp
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

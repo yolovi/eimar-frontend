@@ -18,15 +18,16 @@ export { HeroButton } from "./HeroButton";
 export type { HeroButtonProps, HeroButtonVariant } from "./HeroButton";
 
 // Acciones rápidas (teléfono, WhatsApp, etc.)
-export { default as ActionButton } from "./ActionButton";
+export { ActionButton } from "./ActionButton";
 
 // Cerrar modales, overlays, etc.
 export { default as CloseButton } from "./CloseButton";
 export type { CloseButtonProps } from "./CloseButton";
 
-// Contacto (teléfono, WhatsApp)
-export { default as ContactButton } from "./ContactButton";
-
 // === TIPOS COMPARTIDOS ===
 // Base types que usan todos los botones para consistencia
-export type { BaseButtonSize, BaseButtonProps, ButtonWithIconsProps } from "./shared";
+export type {
+  BaseButtonSize,
+  BaseButtonProps,
+  ButtonWithIconsProps,
+} from "./shared";

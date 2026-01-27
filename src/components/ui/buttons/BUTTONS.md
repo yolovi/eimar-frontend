@@ -12,7 +12,6 @@ Esta aplicación tiene **5 tipos diferentes de botón**, cada uno optimizado par
 | `HeroButton` | Hero sections | Estilo destacado para landing pages |
 | `ActionButton` | Acciones específicas | Con iconos predefinidos (menú, teléfono, WhatsApp) |
 | `CloseButton` | Cerrar elementos | Para modales, overlays, sidebars |
-| `ContactButton` | Contacto rápido | Teléfono y WhatsApp con estilos específicos |
 
 ### 🔄 **Opciones de Import**
 
@@ -33,7 +32,6 @@ import { BaseButtonProps, ButtonWithIconsProps } from "@/components/ui/shared";
 - **HeroButton**: CTAs principales, landing pages  
 - **ActionButton**: Menús móviles, contacto rápido
 - **CloseButton**: Cerrar modales, overlays
-- **ContactButton**: Botones de contacto en sidebars, footers
 
 ### 📁 **Estructura de Archivos**
 
@@ -44,7 +42,6 @@ ui/
 ├── HeroButton/              # 🌟 Para hero sections  
 ├── ActionButton/            # ⚡ Con iconos predefinidos
 ├── CloseButton/             # ✖️ Para cerrar elementos
-├── ContactButton/           # 📞 Contacto (teléfono/WhatsApp)
 └── shared/                  # 🔧 Tipos base compartidos
 ```
 
