@@ -1,51 +1,92 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { MENU_DATA } from '@/data';
-import { Header } from '@/components/layout';
-import { PageHeader, ScrollToTopButton } from '@/components/ui';
-import MenuTabs from './MenuTabs';
-import { MenuCategorySection } from './MenuCards';
-import { useIsMobile } from '@/hooks';
+import { useState, useEffect } from "react";
+import { MENU_DATA } from "@/data";
+import { Header } from "@/components/layout";
+import { PageHeader, ScrollToTopButton } from "@/components/ui";
+import MenuTabs from "./MenuTabs";
+import { MenuCategorySection } from "./MenuCards";
+import { useIsMobile } from "@/hooks";
 
 /**
  * COMPONENTE PRINCIPAL DEL MENÚ
  * =============================
- * 
+ *
  * Página completa del menú con navegación fija tipo pestañas.
  * Maneja el estado de la categoría activa y el scroll entre secciones.
  */
 const Menu = () => {
-  const [activeCategory, setActiveCategory] = useState<string>(MENU_DATA[0]?.id || 'entrantes');
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>(
+    MENU_DATA[0]?.id || "entrantes",
+  );
   const [showNavbar, setShowNavbar] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [clickTimer, setClickTimer] = useState<NodeJS.Timeout | null>(null);
-  
+
   // Hook para detectar mobile de forma reactiva
   const isMobile = useIsMobile();
 
-  // Cambiar categoría y hacer scroll suave
+  // Detectar hash en la URL al cargar - SOLO para navegación externa
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && hash.startsWith("menu-")) {
+      const categoryFromHash = hash.replace("menu-", "");
+      const validCategory = MENU_DATA.find(
+        (cat) => cat.id === categoryFromHash,
+      );
+
+      if (validCategory) {
+        setActiveCategory(categoryFromHash);
+        // Scroll directo al título de la sección sin animación
+        setTimeout(() => {
+          const sectionElement = document.getElementById(hash);
+          if (sectionElement) {
+            // Buscar el título (h2) dentro de la sección
+            const titleElement = sectionElement.querySelector('.ds-section-title');
+            const targetElement = titleElement || sectionElement;
+            
+            // Calcular posición con offset para header/tabs
+            const headerOffset = isMobile ? 120 : 180;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            // Scroll directo sin animación para carga inmediata
+            window.scrollTo({
+              top: Math.max(0, offsetPosition),
+              behavior: "auto" // Sin animación para carga directa
+            });
+          }
+        }, 150); // Un poco más de tiempo para asegurar renderizado
+      }
+    } else {
+      // Si no hay hash, ir a la primera categoría (vista completa)
+      setActiveCategory(MENU_DATA[0]?.id || "entrantes");
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [isMobile]);
+
+  // Cambiar categoría - SIMPLE
   const handleCategoryChange = (categoryId: string) => {
-    // No es necesario el chequeo de isScrolling si usamos CSS para el scroll
     setActiveCategory(categoryId);
-    
-    // Cerrar card expandida al cambiar categoría
     setExpandedCard(null);
 
-    const element = document.getElementById(categoryId);
-    if (element) {
-      // Hacemos un scroll suave a la sección
-      // El offset se ajustará dependiendo de si el navbar y las tabs están visibles
-      const headerOffset = (!isMobile) ? 160 : 80; // Ajusta este valor según la altura de tus headers fijos
-      const elementPosition = element.getBoundingClientRect().top;
+    const sectionElement = document.getElementById(`menu-${categoryId}`);
+    if (sectionElement) {
+      // Buscar el título (h2) dentro de la sección
+      const titleElement = sectionElement.querySelector('.ds-section-title');
+      const targetElement = titleElement || sectionElement;
+      
+      // Calcular posición con offset para header/tabs
+      const headerOffset = isMobile ? 120 : 180;
+      const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
+      
+      // Scroll suave al título
       window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
+        top: Math.max(0, offsetPosition),
+        behavior: "smooth"
       });
     }
   };
@@ -53,7 +94,7 @@ const Menu = () => {
   // Manejar click en cards con timer para evitar activaciones accidentales
   const handleCardClick = (cardId: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    
+
     // Si hay un timer corriendo, cancelarlo (doble click o click rápido)
     if (clickTimer) {
       clearTimeout(clickTimer);
@@ -73,7 +114,7 @@ const Menu = () => {
       setExpandedCard(cardId);
       setClickTimer(null);
     }, 150);
-    
+
     setClickTimer(timer);
   };
 
@@ -98,77 +139,58 @@ const Menu = () => {
     };
   }, [clickTimer]);
 
-  // Detectar scroll para mostrar navbar y actualizar categoría activa
+  // Detectar scroll para mostrar navbar - SIN actualización automática de categorías
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // --- Lógica de visibilidad del Navbar ---
+
+      // --- Solo lógica de visibilidad del Navbar ---
       if (currentScrollY > lastScrollY) {
-        setScrollDirection('down');
+        setScrollDirection("down");
       } else {
-        setScrollDirection('up');
+        setScrollDirection("up");
       }
-      
+
       if (isMobile) {
-        if (scrollDirection === 'up' && currentScrollY > 200) {
+        if (scrollDirection === "up" && currentScrollY > 200) {
           setShowNavbar(true);
-        } else if (scrollDirection === 'down' || currentScrollY < 100) {
+        } else if (scrollDirection === "down" || currentScrollY < 100) {
           setShowNavbar(false);
         }
       }
-      
+
       setLastScrollY(currentScrollY);
-
-      // --- Lógica para actualizar la categoría activa en scroll ---
-      if (!isScrolling) {
-        let currentCategory = '';
-        const headerOffset = (!isMobile) ? 180 : 100; // Offset mayor para asegurar que el título esté visible
-
-        for (const category of MENU_DATA) {
-          const element = document.getElementById(category.id);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top <= headerOffset) {
-              currentCategory = category.id;
-            }
-          }
-        }
-
-        if (currentCategory && activeCategory !== currentCategory) {
-          setActiveCategory(currentCategory);
-        }
-      }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY, scrollDirection, isMobile, activeCategory, isScrolling]);
+  }, [lastScrollY, scrollDirection, isMobile]);
 
   // Detectar hover en la zona superior para desktop
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isMobile) return;
-      
+
       if (e.clientY < 60) {
         setShowNavbar(true);
-      } else if (e.clientY > 150 && window.scrollY > 200) { // Ocultar solo si hemos scrolleado un poco
+      } else if (e.clientY > 150 && window.scrollY > 200) {
+        // Ocultar solo si hemos scrolleado un poco
         setShowNavbar(false);
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
   }, [isMobile]);
 
   return (
     <div className="min-h-screen bg-gray-50" onClick={handleClickOutside}>
       {/* Navbar deslizante desde arriba */}
-      <div 
+      <div
         className={`fixed top-0 left-0 right-0 z-40 bg-bg-primary transform transition-transform duration-300 ease-in-out ${
-          showNavbar ? 'translate-y-0' : '-translate-y-full'
+          showNavbar ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         <Header />
@@ -178,7 +200,7 @@ const Menu = () => {
       <PageHeader pageType="menu" />
 
       {/* Navegación fija tipo pestañas */}
-      <MenuTabs 
+      <MenuTabs
         categories={MENU_DATA}
         activeCategory={activeCategory}
         onCategoryChange={handleCategoryChange}
@@ -188,7 +210,7 @@ const Menu = () => {
       {/* Contenido del menú */}
       <main>
         {MENU_DATA.map((category) => (
-          <MenuCategorySection 
+          <MenuCategorySection
             key={category.id}
             category={category}
             isActive={activeCategory === category.id}
@@ -207,11 +229,19 @@ const Menu = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-text-secondary">
             <div>
               <h4 className="font-medium text-text-primary mb-2">Alérgenos</h4>
-              <p>Consulta con nuestro personal sobre alérgenos e intolerancias alimentarias</p>
+              <p>
+                Consulta con nuestro personal sobre alérgenos e intolerancias
+                alimentarias
+              </p>
             </div>
             <div>
-              <h4 className="font-medium text-text-primary mb-2">Ingredientes</h4>
-              <p>Utilizamos productos frescos y de temporada de proveedores locales</p>
+              <h4 className="font-medium text-text-primary mb-2">
+                Ingredientes
+              </h4>
+              <p>
+                Utilizamos productos frescos y de temporada de proveedores
+                locales
+              </p>
             </div>
             <div>
               <h4 className="font-medium text-text-primary mb-2">Precios</h4>
@@ -222,6 +252,6 @@ const Menu = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Menu;

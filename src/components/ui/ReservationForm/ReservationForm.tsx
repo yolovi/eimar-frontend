@@ -149,6 +149,16 @@ const ReservationForm = ({
         // Envío por defecto usando hook centralizado con datos reales
         sendReservationWhatsApp(formData);
       }
+      
+      // Limpiar formulario después del envío exitoso
+      setFormData({
+        name: "",
+        phone: "",
+        date: getTodayDate(),
+        time: "12:00",
+        people: "",
+      });
+      setErrors({});
     } finally {
       setIsSubmitting(false);
     }

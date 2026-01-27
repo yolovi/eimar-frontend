@@ -166,6 +166,10 @@ input[type="button"] {
 }
 
 /* Asegurar consistencia en elementos de Next.js - aquí sí usar !important porque son estilos de framework */
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 #__next,
