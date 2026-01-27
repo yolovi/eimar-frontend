@@ -46,7 +46,7 @@ export default function ReservationsPage() {
         title="Reserva tu Mesa o Haz tu Pedido"
         subtitle="En Eimar Paiporta te esperamos con la mejor comida mediterránea"
         subtitleBold="Reservas fáciles por WhatsApp o teléfono"
-        height="xl"
+        // height="xl"
       />
       
       {/* Contenido adicional SEO para la página dedicada */}
